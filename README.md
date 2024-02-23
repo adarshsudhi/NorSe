@@ -12,6 +12,8 @@
     <li>Queue Management (Seperate for offline and online)</li>
     <li>Lyrics Supported (Limited numbers of songs only)</li>
     <li>Download songs from Youtube</li>
+    <li>No ads</li>
+    <li>No Subscriptions</li>
   </ul>
   <p>and Much more</p>
 
