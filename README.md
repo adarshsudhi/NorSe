@@ -15,12 +15,7 @@
   </ul>
   <p>and Much more</p>
 
-  <h1>Screenshots</h1>
-<p align='left'>
-<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/discover.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
-</p>
-
-
+  
 <h3 align="center">License :scroll:</h3>
 
 ```
@@ -51,6 +46,13 @@ Use of this software under any "non-free" license is NOT permitted.
 See the [GNU General Public License](https://github.com/adarshsudhi/Nebula/blob/main/LICENSE) for more details.
 
 ---
+
+  <h1>Screenshots</h1>
+<p align='left'>
+<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/discover.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
+</p>
+
+
 
 
 <h1 align='center'>Disclaimer</h1>
