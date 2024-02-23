@@ -1,4 +1,4 @@
-<h1>Nebula</h1>
+<h1>Nebula music player</h1>
 <p>An opensource music player made with flutter (Currently only for android)</p>  
 <h1>Features</h1>
   <ul>
@@ -16,10 +16,18 @@
   <p>and Much more</p>
 
   
+
+
+  <h1>Screenshots</h1>
+<p align='left'>
+<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/discover.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
+</p>
+
+
 <h3 align="center">License :scroll:</h3>
 
 ```
-Copyright © 2023 Adarsh N S
+Copyright © 2024 Adarsh N S
 
 Nebula is a free software licensed under GPL v3.0
 It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -46,13 +54,6 @@ Use of this software under any "non-free" license is NOT permitted.
 See the [GNU General Public License](https://github.com/adarshsudhi/Nebula/blob/main/LICENSE) for more details.
 
 ---
-
-  <h1>Screenshots</h1>
-<p align='left'>
-<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/discover.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
-</p>
-
-
 
 
 <h1 align='center'>Disclaimer</h1>
