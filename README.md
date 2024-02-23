@@ -70,3 +70,5 @@ of the songs and other content through the third-party plugins.
 By using the app, you agree to use the songs and other content only for personal, non-commercial purposes
 and in compliance with all applicable laws and regulations.
 ```
+
+#Do you like the project ? 
