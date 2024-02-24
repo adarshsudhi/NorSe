@@ -7,6 +7,8 @@ import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testonlin
 import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testplayerscreen.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/SearchResultPage/SearchResultPage.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/backupandrestore/backupandrestore.dart';
+import 'package:nebula/features/Presentation/Pages/subscreens/youtubescreen/ytdetails.dart';
+import 'package:nebula/features/Presentation/Pages/subscreens/youtubescreen/ytpage.dart';
 import '../../features/Presentation/Pages/DownloadPages/Downloadpages.dart';
 import '../../features/Presentation/Pages/Favpage/localfavsongpage.dart';
 import '../../features/Presentation/Pages/onlinefavepage.dart';
@@ -65,7 +67,10 @@ Route<dynamic>? onGenerate(RouteSettings settings){
        case Backupandrestore.backupandrestore:
           return MaterialPageRoute(builder: (_)=> const Backupandrestore());
 
-          
+       case Ytdetailss.ytdetails:
+          final args = settings.arguments as Ytdetailss;
+          return MaterialPageRoute(builder: (_)=>Ytdetailss(video: args.video,));
+
       default:
     }
     return null;

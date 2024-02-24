@@ -31,11 +31,12 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
           log('Failed');
         }, (r) async{
 
-  final Temp = await getTemporaryDirectory();
+  final temp = await getTemporaryDirectory();
 
-  String tempDirectory = Temp.path;
+  String tempDirectory = temp.path;
 
   final audio = r;
+
   final audioStream = YoutubeExplode().videos.streamsClient.get(r);
 
   final fileName = '${event.info.title}.${audio.container.name}'
@@ -68,18 +69,13 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
       emit(const YtdownloadState.initial());
    }else{
       
-  IOSink output = file.openWrite(mode: FileMode.writeOnlyAppend);
-
+  IOSink output = file.openWrite(mode: FileMode.writeOnly);
 
   int len = audio.size.totalBytes;
 
   int count = 0;
 
-  String msg = 'Downloading ${event.info.title}.${audio.container.name}';
-
-  stdout.writeln(msg);
-
-  await for (final data in audioStream) {
+  await for (List<int> data in audioStream) {
     
     count += data.length;
 
@@ -89,7 +85,7 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
 
     emit(YtdownloadState.downloading(progresscontroller.stream));
 
-    output.add(data);
+     output.add(data);
   }
     
   await MetadataGod.writeMetadata(

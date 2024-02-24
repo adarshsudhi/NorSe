@@ -10,7 +10,8 @@ class YtsearchState with _$YtsearchState {
   )=_Searchedvideo;
   const factory YtsearchState.loader() = _Loading;
   const factory YtsearchState.fres(
-    VideoSearchList videos,
+    List<Video> videos,
+    List<Video> videos1,
     bool isloading,
     bool isfailed,
   ) = _Free;

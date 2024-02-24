@@ -71,5 +71,7 @@ class APIRepositoryimp implements APIRepository {
   
   @override
   Future<Either<Failures, VideoSearchList>> getsearchvideo(String query)=>apIremoteDatasource.getsearchvideo(query);
-
+  
+  @override
+  Future<Either<Failures, dynamic>> getplaylist(String id, String mode) => apIremoteDatasource.getplaylist(id, mode);
 }

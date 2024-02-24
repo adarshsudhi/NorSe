@@ -29,4 +29,5 @@ abstract class APIremoteDatasource {
   Future<Either<Failures,AudioOnlyStreamInfo>> getstream(String id);
   Future<Either<Failures,String>>getlyrices(String id);
   Future<Either<Failures,VideoSearchList>>getsearchvideo(String query);
+  Future<Either<Failures,dynamic>>getplaylist(String id,String mode);
 }

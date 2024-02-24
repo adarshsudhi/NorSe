@@ -444,8 +444,8 @@ mixin _$YtsearchState {
             VideoSearchList videos, bool isloading, bool isfailed)
         searchedvideo,
     required TResult Function() loader,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
+    required TResult Function(List<Video> videos, List<Video> videos1,
+            bool isloading, bool isfailed)
         fres,
   }) =>
       throw _privateConstructorUsedError;
@@ -455,7 +455,8 @@ mixin _$YtsearchState {
     TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult? Function()? loader,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult? Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
   }) =>
       throw _privateConstructorUsedError;
@@ -465,7 +466,8 @@ mixin _$YtsearchState {
     TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult Function()? loader,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
     required TResult orElse(),
   }) =>
@@ -558,8 +560,8 @@ class _$InitialImpl implements _Initial {
             VideoSearchList videos, bool isloading, bool isfailed)
         searchedvideo,
     required TResult Function() loader,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
+    required TResult Function(List<Video> videos, List<Video> videos1,
+            bool isloading, bool isfailed)
         fres,
   }) {
     return initial();
@@ -572,7 +574,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult? Function()? loader,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult? Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
   }) {
     return initial?.call();
@@ -585,7 +588,8 @@ class _$InitialImpl implements _Initial {
     TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult Function()? loader,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
     required TResult orElse(),
   }) {
@@ -725,8 +729,8 @@ class _$SearchedvideoImpl implements _Searchedvideo {
             VideoSearchList videos, bool isloading, bool isfailed)
         searchedvideo,
     required TResult Function() loader,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
+    required TResult Function(List<Video> videos, List<Video> videos1,
+            bool isloading, bool isfailed)
         fres,
   }) {
     return searchedvideo(videos, isloading, isfailed);
@@ -739,7 +743,8 @@ class _$SearchedvideoImpl implements _Searchedvideo {
     TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult? Function()? loader,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult? Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
   }) {
     return searchedvideo?.call(videos, isloading, isfailed);
@@ -752,7 +757,8 @@ class _$SearchedvideoImpl implements _Searchedvideo {
     TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult Function()? loader,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
     required TResult orElse(),
   }) {
@@ -855,8 +861,8 @@ class _$LoadingImpl implements _Loading {
             VideoSearchList videos, bool isloading, bool isfailed)
         searchedvideo,
     required TResult Function() loader,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
+    required TResult Function(List<Video> videos, List<Video> videos1,
+            bool isloading, bool isfailed)
         fres,
   }) {
     return loader();
@@ -869,7 +875,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult? Function()? loader,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult? Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
   }) {
     return loader?.call();
@@ -882,7 +889,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult Function()? loader,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
     required TResult orElse(),
   }) {
@@ -940,7 +948,8 @@ abstract class _$$FreeImplCopyWith<$Res> {
           _$FreeImpl value, $Res Function(_$FreeImpl) then) =
       __$$FreeImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({VideoSearchList videos, bool isloading, bool isfailed});
+  $Res call(
+      {List<Video> videos, List<Video> videos1, bool isloading, bool isfailed});
 }
 
 /// @nodoc
@@ -954,14 +963,19 @@ class __$$FreeImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? videos = null,
+    Object? videos1 = null,
     Object? isloading = null,
     Object? isfailed = null,
   }) {
     return _then(_$FreeImpl(
       null == videos
-          ? _value.videos
+          ? _value._videos
           : videos // ignore: cast_nullable_to_non_nullable
-              as VideoSearchList,
+              as List<Video>,
+      null == videos1
+          ? _value._videos1
+          : videos1 // ignore: cast_nullable_to_non_nullable
+              as List<Video>,
       null == isloading
           ? _value.isloading
           : isloading // ignore: cast_nullable_to_non_nullable
@@ -977,10 +991,27 @@ class __$$FreeImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FreeImpl implements _Free {
-  const _$FreeImpl(this.videos, this.isloading, this.isfailed);
+  const _$FreeImpl(final List<Video> videos, final List<Video> videos1,
+      this.isloading, this.isfailed)
+      : _videos = videos,
+        _videos1 = videos1;
 
+  final List<Video> _videos;
   @override
-  final VideoSearchList videos;
+  List<Video> get videos {
+    if (_videos is EqualUnmodifiableListView) return _videos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_videos);
+  }
+
+  final List<Video> _videos1;
+  @override
+  List<Video> get videos1 {
+    if (_videos1 is EqualUnmodifiableListView) return _videos1;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_videos1);
+  }
+
   @override
   final bool isloading;
   @override
@@ -988,7 +1019,7 @@ class _$FreeImpl implements _Free {
 
   @override
   String toString() {
-    return 'YtsearchState.fres(videos: $videos, isloading: $isloading, isfailed: $isfailed)';
+    return 'YtsearchState.fres(videos: $videos, videos1: $videos1, isloading: $isloading, isfailed: $isfailed)';
   }
 
   @override
@@ -996,7 +1027,8 @@ class _$FreeImpl implements _Free {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FreeImpl &&
-            const DeepCollectionEquality().equals(other.videos, videos) &&
+            const DeepCollectionEquality().equals(other._videos, _videos) &&
+            const DeepCollectionEquality().equals(other._videos1, _videos1) &&
             (identical(other.isloading, isloading) ||
                 other.isloading == isloading) &&
             (identical(other.isfailed, isfailed) ||
@@ -1004,8 +1036,12 @@ class _$FreeImpl implements _Free {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(videos), isloading, isfailed);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_videos),
+      const DeepCollectionEquality().hash(_videos1),
+      isloading,
+      isfailed);
 
   @JsonKey(ignore: true)
   @override
@@ -1021,11 +1057,11 @@ class _$FreeImpl implements _Free {
             VideoSearchList videos, bool isloading, bool isfailed)
         searchedvideo,
     required TResult Function() loader,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
+    required TResult Function(List<Video> videos, List<Video> videos1,
+            bool isloading, bool isfailed)
         fres,
   }) {
-    return fres(videos, isloading, isfailed);
+    return fres(videos, videos1, isloading, isfailed);
   }
 
   @override
@@ -1035,10 +1071,11 @@ class _$FreeImpl implements _Free {
     TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult? Function()? loader,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult? Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
   }) {
-    return fres?.call(videos, isloading, isfailed);
+    return fres?.call(videos, videos1, isloading, isfailed);
   }
 
   @override
@@ -1048,12 +1085,13 @@ class _$FreeImpl implements _Free {
     TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
         searchedvideo,
     TResult Function()? loader,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
+    TResult Function(List<Video> videos, List<Video> videos1, bool isloading,
+            bool isfailed)?
         fres,
     required TResult orElse(),
   }) {
     if (fres != null) {
-      return fres(videos, isloading, isfailed);
+      return fres(videos, videos1, isloading, isfailed);
     }
     return orElse();
   }
@@ -1097,10 +1135,11 @@ class _$FreeImpl implements _Free {
 }
 
 abstract class _Free implements YtsearchState {
-  const factory _Free(final VideoSearchList videos, final bool isloading,
-      final bool isfailed) = _$FreeImpl;
+  const factory _Free(final List<Video> videos, final List<Video> videos1,
+      final bool isloading, final bool isfailed) = _$FreeImpl;
 
-  VideoSearchList get videos;
+  List<Video> get videos;
+  List<Video> get videos1;
   bool get isloading;
   bool get isfailed;
   @JsonKey(ignore: true)

@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
@@ -60,6 +59,7 @@ class _MainHomePageState extends State<MainHomePage> {
     scaffoldKey.currentState!.closeDrawer();
   }
   void call()async{
+    BlocProvider.of<YtsearchBloc>(context).add(const YtsearchEvent.freestate());
     BlocProvider.of<PlaylistBloc>(context).add(const PlaylistEvent.getallplaylist());
     BlocProvider.of<FavoriteplaylistBloc>(context).add(const FavoriteplaylistEvent.getallsongs());
     BlocProvider.of<TrendingSongBloc>(context).add(TrendingSongs());

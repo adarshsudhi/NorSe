@@ -62,6 +62,7 @@ import 'package:nebula/features/Domain/UseCases/Sql_UseCase/userdetails_usecase.
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getaudiostream_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getsearchvideo_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getvideoinfo_usecase.dart';
+import 'package:nebula/features/Domain/UseCases/yt_usecase/getytplaylist_usecase.dart';
 import 'package:nebula/features/Presentation/Bloc/Albumsongs/albums_songs_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/Download_Bloc/download_song_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
@@ -182,6 +183,7 @@ Future<void>init()async{
     di.registerLazySingleton(() => Getsearchvideousecase(repository: di.call()));
     di.registerLazySingleton(() => Backupdatausecase(repository: di.call()));
     di.registerLazySingleton(() => Restoredatausecase(repository: di.call()));
+    di.registerLazySingleton(() => Getplaylistusecase(repository: di.call()));
 
 
 

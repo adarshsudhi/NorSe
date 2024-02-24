@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -460,6 +459,20 @@ class APIremotedatasourceimp implements APIremoteDatasource {
           return right(list);
          }
         return left(const Failures.serverfailure());     
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  
+  @override
+  Future<Either<Failures,dynamic>> getplaylist(String id,String mode) async{
+    try {
+      if (mode == 'playlist') {
+         List<Video> playlist = await yt.playlists.getVideos(id).toList();
+         return right(playlist);
+      } else {
+        throw Exception('not a mode');
+      }
     } catch (e) {
       throw Exception(e.toString());
     }
