@@ -1,5 +1,5 @@
 <h1>Nebula music player</h1>
-<p>An opensource music player made with flutter (Currently only for android)</p>  
+<p>An Opensource music player made with flutter (Currently only for android)</p>  
 <h1>Features</h1>
   <ul>
     <li>High Quality Streaming</li>
@@ -12,6 +12,8 @@
     <li>Queue Management (Seperate for offline and online)</li>
     <li>Lyrics Supported (Limited numbers of songs only)</li>
     <li>Download songs from Youtube</li>
+    <li>No ads</li>
+    <li>No Subscriptions</li>
   </ul>
   <p>and Much more</p>
 
@@ -23,6 +25,8 @@
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/discover.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
 </p>
 
+<h1>Do you like the project ?</h1>
+<a href="https://www.buymeacoffee.com/adarshadarz" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 <h3 align="center">License :scroll:</h3>
 
@@ -68,3 +72,5 @@ of the songs and other content through the third-party plugins.
 By using the app, you agree to use the songs and other content only for personal, non-commercial purposes
 and in compliance with all applicable laws and regulations.
 ```
+
+
