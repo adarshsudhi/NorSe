@@ -96,8 +96,8 @@ class _YoutubepageState extends State<Youtubepage> {
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Textutil(text: videos[index].title, fontsize: 15, color: Colors.white, fontWeight: FontWeight.normal),
-                                                        Textutil(text: videos[index].title, fontsize: 9, color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.normal)
+                                                        Textutil(text: vidoes1[index].title, fontsize: 15, color: Colors.white, fontWeight: FontWeight.normal),
+                                                        Textutil(text: vidoes1[index].title, fontsize: 9, color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.normal)
                                                       ],
                                                     ),
                                                   )
