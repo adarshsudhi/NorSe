@@ -93,12 +93,12 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
   @override
   Future<Either<Failures, List<SongModel>>> getallsongs() async {
     try {
-      final songs =
-          await onAudioQuery.querySongs(
+      List<SongModel> songs = await onAudioQuery.querySongs(
             sortType: SongSortType.DATE_ADDED,
             orderType: OrderType.DESC_OR_GREATER,
             uriType: UriType.EXTERNAL,
             path: '/storage/emulated/0');
+
       if (songs.isNotEmpty) {
         return right(songs);
       }
