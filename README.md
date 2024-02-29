@@ -1,5 +1,5 @@
 <h1>Nebula</h1>
-<p>An Opensource music player made with flutter (Currently only for android)</p>  
+<p>An Opensource music player build with flutter (Currently only for android)</p>  
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/initial.jpg?raw=true" width=100%">
 <h1>Features</h1>
   <ul>
