@@ -23,7 +23,7 @@
 
   <h1>Screenshots</h1>
 <p align='left'>
-<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/Screenshot_20240224-191243_Nebula-portrait.png" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
+<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/discover.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/local.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/playlist.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/albums.png?raw=true" width="32%">
 </p>
 
 <h1>Do you like the project ?</h1>
