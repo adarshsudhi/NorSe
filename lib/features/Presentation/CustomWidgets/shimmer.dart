@@ -28,11 +28,11 @@ class Songloadingwidget extends StatelessWidget {
     height: size.height / 5.7,
     child: Shimmer.fromColors(
       period: const Duration(seconds: 2),
-      baseColor:  const Color.fromARGB(255, 18, 41, 61),
-      highlightColor:  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+      baseColor:  const Color.fromARGB(255, 39, 39, 41),
+      highlightColor:  const Color.fromARGB(255, 39, 39, 41).withOpacity(0.5),
       child: Container(
         decoration: BoxDecoration(
-      color: const Color.fromARGB(255, 3, 33, 57),
+      color: const Color.fromARGB(255, 39, 39, 41),
       borderRadius: BorderRadius.circular(10),
         ),
       )),
@@ -43,11 +43,11 @@ class Songloadingwidget extends StatelessWidget {
                 width: size.width/3.4,
                 child: Shimmer.fromColors(
       period: const Duration(seconds: 2),
-      baseColor:  const Color.fromARGB(255, 18, 41, 61),
-      highlightColor:  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+      baseColor:  const Color.fromARGB(255, 39, 39, 41),
+      highlightColor:  const Color.fromARGB(255, 39, 39, 41).withOpacity(0.5),
       child: Container(
         decoration: BoxDecoration(
-      color: const Color.fromARGB(255, 3, 33, 57),
+      color: const Color.fromARGB(255, 39, 39, 41),
       borderRadius: BorderRadius.circular(20),
     ),
       )),
@@ -103,12 +103,12 @@ class Searchsongloading extends StatelessWidget {
                                         width: 50,
                                         child: Shimmer.fromColors(
                                         period: const Duration(seconds: 2),
-                                        baseColor:  const Color.fromARGB(255, 18, 41, 61),
-                                        highlightColor:  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+                                        baseColor:  const Color.fromARGB(255, 21, 21, 21),
+                                        highlightColor:  const Color.fromARGB(255, 42, 42, 42).withOpacity(0.5),
                                         child: Container(
                                           decoration: BoxDecoration(
                                         color: const Color.fromARGB(255, 3, 33, 57),
-                                        borderRadius: BorderRadius.circular(50),
+                                        borderRadius: BorderRadius.circular(5),
                                           ),
                                         )),
                                       ),
@@ -116,11 +116,11 @@ class Searchsongloading extends StatelessWidget {
                                       height: 7,
                                       child: Shimmer.fromColors(
       period: const Duration(seconds: 2),
-      baseColor:  const Color.fromARGB(255, 18, 41, 61),
-      highlightColor:  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+      baseColor:  const Color.fromARGB(255, 17, 17, 17),
+      highlightColor:  const Color.fromARGB(255, 38, 38, 38).withOpacity(0.5),
       child: Container(
         decoration: BoxDecoration(
-      color: const Color.fromARGB(255, 3, 33, 57),
+      color: const Color.fromARGB(255, 0, 0, 0),
       borderRadius: BorderRadius.circular(10),
     ),
       )),
@@ -129,11 +129,11 @@ class Searchsongloading extends StatelessWidget {
                                       height: 10,
                                       child: Shimmer.fromColors(
       period: const Duration(seconds: 2),
-      baseColor:  const Color.fromARGB(255, 18, 41, 61),
-      highlightColor:  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+      baseColor:  const Color.fromARGB(255, 23, 22, 22),
+      highlightColor:  const Color.fromARGB(255, 37, 37, 37).withOpacity(0.5),
       child: Container(
         decoration: BoxDecoration(
-      color: const Color.fromARGB(255, 3, 33, 57),
+      color: const Color.fromARGB(255, 0, 0, 0),
       borderRadius: BorderRadius.circular(10),
     ),
       )),

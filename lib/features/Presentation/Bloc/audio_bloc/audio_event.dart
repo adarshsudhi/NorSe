@@ -25,7 +25,21 @@ class AudioEvent with _$AudioEvent {
     List<SongModel> songs,
     List<Map<String,dynamic>> favsongs,
     int index
+
   ) = _Localaudio;
+
+  const factory AudioEvent.ytaudio(
+    List<Video> audios,
+    int index,
+    String author,
+    String audiotitle,
+  )=_Ytaudio;
+
+  const factory AudioEvent.parseytaudio(
+    List<Video> videos,
+    bool neweventdispached,
+    Video currentvideo,
+   ) = _Parseytaudio;
 
   const factory AudioEvent.pause() = _Pause;
   const factory AudioEvent.resume() = _Resume; 

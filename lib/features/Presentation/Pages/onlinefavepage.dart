@@ -9,6 +9,7 @@ import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
 import 'package:nebula/features/Presentation/Pages/MainHomePage/MainHomePage.dart';
 import '../../Domain/Entity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import '../Bloc/Library/song/library_bloc/library_bloc.dart';
+import '../CustomWidgets/backgroundGradient.dart';
 import 'subscreens/SongDetailsPage/SongDetailsPage.dart';
 
 class Onlinefavscreen extends StatefulWidget {
@@ -48,17 +49,7 @@ class _OnlinefavscreenState extends State<Onlinefavscreen> {
         width: MediaQuery.sizeOf(context).width,
         child:  Stack(
           children: [
-                      Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-              Colors.indigo,
-              Colors.black
-            ])
-          ),
-        ),  
+ const backgroundgradient(), 
                   Container(
             color: Colors.black.withOpacity(0.8),
           ),

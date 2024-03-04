@@ -317,7 +317,7 @@ class _MySongPageState extends State<MySongPage> {
                                               itemBuilder: (context, index) {
                                                 return Padding(
                                                   padding: const EdgeInsets.only(bottom: 5),
-                                                  child: GestureDetector(
+                                                  child: InkWell(
                                                     onTap: () {
                                                     BlocProvider.of<AudioBloc>(context).add(AudioEvent.localaudio(songlist,[],index));
                                                     },
@@ -333,6 +333,12 @@ class _MySongPageState extends State<MySongPage> {
                                                             QueryArtworkWidget(
                                                               artworkHeight: 55,
                                                               artworkWidth: 60,
+                                                              nullArtworkWidget: SizedBox(
+                                                                height: 55,
+                                                                width: 60,
+                                                                child: Image.asset('assets/musical-note.png',
+                                                                color: Colors.white.withOpacity(0.5),),
+                                                              ),
                                                               artworkBorder: BorderRadius.circular(10),
                                                               id: songlist[index].id,
                                                               type: ArtworkType.AUDIO),
@@ -341,8 +347,8 @@ class _MySongPageState extends State<MySongPage> {
                                                                 child: Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [                                      
-                                                                       Textutil(text: songlist[index].displayNameWOExt, fontsize:18, color: Colors.white, fontWeight: FontWeight.bold),
-                                                                       Textutil(text: songlist[index].artist!=null?songlist[index].artist!:"unknown", fontsize:13, color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.bold)
+                                                                       Textutil(text: songlist[index].displayNameWOExt, fontsize:15, color: Colors.white, fontWeight: FontWeight.bold),
+                                                                       Textutil(text: songlist[index].artist!=null?songlist[index].artist!:"unknown", fontsize:10, color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.bold)
                                                                   ],
                                                                 ),
                                                               ),

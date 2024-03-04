@@ -607,7 +607,7 @@ class Lastsession extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 340,
+        height: 330,
         child: Column(
           crossAxisAlignment:
               CrossAxisAlignment.start,
@@ -897,7 +897,7 @@ class TrendingImageWidgets extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(5),
                     color: Colors.transparent,
                   ),
                   child: SizedBox(

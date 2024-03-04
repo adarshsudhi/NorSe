@@ -74,7 +74,6 @@ dependencies:
   just_audio_background: ^0.0.1-beta.11
   url_launcher: ^6.2.4
   flip_card: ^0.7.0
-  upi_india: ^3.0.1
 
 dev_dependencies:
   flutter_test:

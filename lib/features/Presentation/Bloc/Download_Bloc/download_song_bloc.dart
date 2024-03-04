@@ -28,6 +28,7 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
     List<Map<String,dynamic>> streams = [];
 
 
+
     additem(String id,int index,bool isloading)async{
       
            if (!streams.any((element) => element['id'] == id)) {
@@ -50,25 +51,25 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
       await additem(event.key,event.itemstreamindex,true);
  
       try {
-      double progress = 0.0; 
       Directory temp = await getTemporaryDirectory();
       String tempDirectory = temp.path;
-      String path = "/storage/emulated/0/Music/${event.songname}.m4a";
-      String artworkpath = '$tempDirectory/${event.songname}.jpg';
+      String filename = event.songname;
+      String path = "/storage/emulated/0/Music/$filename.m4a";
+      String artworkpath = '$tempDirectory/$filename.jpg';
       File file = File(path);
       if (await file.exists()) {
          Spaces.showtoast('File exists in $path');
       }else{
       try {
        await downloadSongUseCase.call(event.url, (count, total) { 
-            progress = (count/total) * 100;
+           double progress = (count/total) * 100;
             (streams.firstWhere((element) => element['id'] == event.key)['stream'] as StreamController<double>).add(progress);
             emit(DownloadSongStarted(streams: streams));
         },path);
         await downloadArworkUseCase.call(event.artworkurl, (count, total) {}, artworkpath);
         
         Tag tag = Tag(
-        title: event.songname,
+        title: filename,
         artist: event.artists,
         artwork: artworkpath,
         album: event.albumname,

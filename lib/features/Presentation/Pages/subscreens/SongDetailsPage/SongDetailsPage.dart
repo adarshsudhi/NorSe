@@ -106,13 +106,13 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                           height: size.height / 2,
                           child: Shimmer.fromColors(
                               period: const Duration(seconds: 2),
-                              baseColor: const Color.fromARGB(255, 18, 41, 61),
+                              baseColor: const Color.fromARGB(255, 8, 8, 8),
                               highlightColor:
-                                  const Color.fromARGB(255, 2, 38, 68)
+                                  const Color.fromARGB(255, 67, 67, 67)
                                       .withOpacity(0.5),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 3, 33, 57),
+                                  color: const Color.fromARGB(255, 67, 67, 67),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               )),
@@ -185,18 +185,16 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                           child: Shimmer.fromColors(
                                               period:
                                                   const Duration(seconds: 2),
-                                              baseColor: const Color.fromARGB(
-                                                  255, 18, 41, 61),
+                                              baseColor: Color.fromARGB(255, 0, 0, 0),
                                               highlightColor:
-                                                  const Color.fromARGB(
-                                                          255, 2, 38, 68)
+                                                  Color.fromARGB(255, 22, 22, 22)
                                                       .withOpacity(0.5),
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   color: const Color.fromARGB(
                                                       255, 3, 33, 57),
                                                   borderRadius:
-                                                      BorderRadius.circular(20),
+                                                      BorderRadius.circular(2),
                                                 ),
                                               )),
                                         ),
@@ -206,11 +204,9 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                           child: Shimmer.fromColors(
                                               period:
                                                   const Duration(seconds: 2),
-                                              baseColor: const Color.fromARGB(
-                                                  255, 18, 41, 61),
+                                              baseColor: Color.fromARGB(255, 0, 0, 0),
                                               highlightColor:
-                                                  const Color.fromARGB(
-                                                          255, 2, 38, 68)
+                                                  Color.fromARGB(255, 40, 40, 40)
                                                       .withOpacity(0.5),
                                               child: Container(
                                                 decoration: BoxDecoration(
@@ -227,16 +223,13 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                           child: Shimmer.fromColors(
                                               period:
                                                   const Duration(seconds: 2),
-                                              baseColor: const Color.fromARGB(
-                                                  255, 18, 41, 61),
+                                              baseColor: const Color.fromARGB(255, 1, 1, 1),
                                               highlightColor:
-                                                  const Color.fromARGB(
-                                                          255, 2, 38, 68)
+                                                  const Color.fromARGB(255, 36, 36, 36)
                                                       .withOpacity(0.5),
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 3, 33, 57),
+                                                  color: Color.fromARGB(255, 1, 1, 1),
                                                   borderRadius:
                                                       BorderRadius.circular(20),
                                                 ),
@@ -681,6 +674,11 @@ class Spaceadjust extends StatelessWidget {
     return BlocBuilder<AudioBloc,AudioState>(
       builder: (context, state) {
        return state.maybeWhen(
+        youtubesong: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
+          return const SizedBox(
+            height: 70,
+          );
+        },
         onlinesongs: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
           return const SizedBox(
             height: 70,
@@ -779,57 +777,6 @@ class Songtiles extends StatelessWidget {
          )
         ],
       )
-       
-      /* ListTile(
-        leading: Container(
-          height: 90,
-          width: 55,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              image: DecorationImage(
-                  image: CachedNetworkImageProvider(image), fit: BoxFit.cover)),
-        ),
-        title: AutoSizeText(
-          name,
-          style: Spaces.Getstyle(
-              15, const Color.fromARGB(255, 255, 255, 255), FontWeight.bold),
-          overflow: TextOverflow.ellipsis,
-        ), // Text(name,style: GoogleFonts.aBeeZee(color: const Color.fromARGB(255, 255, 255, 255),fontSize: 15),),
-        subtitle: Text(
-          artist,
-          style: GoogleFonts.aBeeZee(
-              fontSize: 9, color: const Color.fromARGB(255, 252, 250, 250)),
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: SizedBox(
-           width: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-
-              visible2 != true
-                  ? const SizedBox()
-                  : IconButton(
-                      onPressed: ontap,
-                      icon: Icon(icons2, size: 20, color: Colors.white)),
-              
-                visible1 != true
-                  ? const SizedBox()
-                  : PopupMenuButton(
-                        itemBuilder:
-                             (BuildContext contex) {
-                           return [
-                             PopupMenuItem(
-                                 onTap: ontapqueue,
-                                 child: const Text(
-                                     'Add to Queue')),
-                           ];
-                           },
-                      ),
-            ],
-          ),
-        ),
-      ), */
     );
   }
 }

@@ -56,8 +56,8 @@ class DownlaodQueue extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-              Color.fromARGB(255, 7, 12, 32),
-              Colors.black
+                           Color.fromARGB(255, 2, 1, 19),
+                           Color.fromARGB(255, 0, 0, 0)
             ])
           ),
           height: MediaQuery.sizeOf(context).height,
@@ -185,7 +185,10 @@ class _tilesitemsState extends State<Tilesitems> {
                               builder:(context, snapshot) {
                
                 if (snapshot.hasData && snapshot.data != null) {
-                   return  Stack(
+                   return snapshot.connectionState == ConnectionState.waiting ? const SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: CircularProgressIndicator(color: Colors.white,)) :Stack(
                      alignment: Alignment.center,
                      children: [
                        CircularProgressIndicator(value: snapshot.data!/100,color: const Color.fromARGB(255, 0, 4, 255),strokeWidth: 5,),

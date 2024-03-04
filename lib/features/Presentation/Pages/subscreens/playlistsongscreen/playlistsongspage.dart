@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/playlistsongs_bloc/playlistsongs_bloc.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../../../../../../configs/constants/Spaces.dart';
 import '../../../Bloc/audio_bloc/audio_bloc.dart';
+import '../../../CustomWidgets/backgroundGradient.dart';
 import '../../Favpage/localfavsongpage.dart';
 import '../../MainHomePage/MainHomePage.dart';
 import '../SongDetailsPage/SongDetailsPage.dart';
@@ -55,17 +55,7 @@ class _PlaylistsongspageState extends State<Playlistsongspage> {
         width: size.width,
         child: Stack(
           children: [
-                      Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-            Colors.indigo,
-            Colors.black
-          ])
-        ),
-                ),  
+                      const backgroundgradient(), 
                 Container(
           color: Colors.black.withOpacity(0.8),
         ),

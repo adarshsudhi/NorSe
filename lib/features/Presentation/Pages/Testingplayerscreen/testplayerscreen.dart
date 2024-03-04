@@ -184,9 +184,11 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                             artworkBorder: BorderRadius.circular(20),
                                             size: 550,
                                             artworkFit: BoxFit.fitWidth,
+                                            artworkQuality: FilterQuality.low,
                                             keepOldArtwork: true,
                                             artworkBlendMode: BlendMode.colorBurn,
                                             id: state.audios[index].id,
+                                            nullArtworkWidget: Image.asset('assets/musical-note.png',color: Colors.white,scale: 2,),
                                             type: ArtworkType.AUDIO),
                                         )
                                       ),
@@ -199,13 +201,11 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                                         children: [
                                 Padding(
                                  padding: const EdgeInsets.symmetric(horizontal: 26),
-                                 child: Text(
-                                 state.audios[songindex].title,
-                                 style: Spaces.Getstyle(
-                                   35, Colors.white, FontWeight.normal),
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.center,
-                                   ),
+                                 child: SizedBox(
+                                height: 50,
+                                width: double.infinity,
+                                child: Spaces.songtitle(audios[songindex].title,30,Colors.white,FontWeight.bold,context),
+                               )
                                     ),
                                    Padding(
                                      padding: const EdgeInsets.symmetric(horizontal: 26),
@@ -302,8 +302,8 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                      },
                                    ),
                                    PlayIcons(
-                                     iconscolors: const Color.fromARGB(
-                                         255, 255, 255, 255),
+                                   iconscolors: state.audioPlayer.hasPrevious? const Color.fromARGB(255, 255, 255, 255)
+                                                        :Colors.white.withOpacity(0.3),
                                      iconsize: 35,
                                      playicons: CupertinoIcons.backward_end_fill,
                                      ontap: () async {
@@ -353,8 +353,8 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                      ],
                                    ),
                                    PlayIcons(
-                                     iconscolors: const Color.fromARGB(
-                                         255, 255, 255, 255),
+                                     iconscolors: state.audioPlayer.hasNext? const Color.fromARGB(255, 255, 255, 255)
+                                                        :Colors.white.withOpacity(0.3),
                                      iconsize: 35,
                                      playicons: CupertinoIcons.forward_end_fill,
                                      ontap: () async {

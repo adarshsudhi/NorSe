@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/backupandrestorebloc/bloc/backup_and_restore_bloc.dart';
 
 import '../../../../../configs/constants/Spaces.dart';
+import '../../../CustomWidgets/backgroundGradient.dart';
 
 class Backupandrestore extends StatelessWidget {
   static const String backupandrestore = './backuprestore';
@@ -24,17 +25,7 @@ class Backupandrestore extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-              Colors.indigo,
-              Colors.black
-            ])
-          ),
-        ),  
+       const backgroundgradient(),
                   Container(
             color: Colors.black.withOpacity(0.8),
           ),

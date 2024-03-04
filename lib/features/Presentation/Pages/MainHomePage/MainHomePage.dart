@@ -12,6 +12,7 @@ import 'package:nebula/features/Presentation/Pages/Aboutpage/aboutpage.dart';
 import 'package:nebula/features/Presentation/Pages/Settings/settingspage.dart';
 import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testonlineplayerscreen.dart';
 import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testplayerscreen.dart';
+import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testytplayerscreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:nebula/injection_container.dart' as di;
@@ -22,6 +23,7 @@ import '../../Bloc/LocalSongs_bloc/localsong_bloc.dart';
 import '../../Bloc/Trending_Song_bloc/trending_song_bloc.dart';
 import '../../Bloc/favorite_bloc/favoriteplaylist_bloc.dart';
 import '../../Bloc/ytsearch_bloc/ytsearch_bloc.dart';
+import '../../CustomWidgets/backgroundGradient.dart';
 import '../DownloadPages/Downloadpages.dart';
 import '../HomePage.dart';
 import '../MySongPage.dart';
@@ -172,17 +174,7 @@ class _MainHomePageState extends State<MainHomePage> {
       ]),
       body: Stack(
        children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-              Colors.indigo,
-              Colors.black
-            ])
-          ),
-        ),
+        const backgroundgradient(),
          pages[Currentindex],
          const Align(
        alignment: Alignment.bottomCenter,
@@ -191,7 +183,8 @@ class _MainHomePageState extends State<MainHomePage> {
        ],
       ),
       drawer: Drawer(
-       backgroundColor:Colors.black.withOpacity(0.95),
+     backgroundColor: Colors.black.withOpacity(0.9),
+     surfaceTintColor: Colors.transparent,
        child: Column(
          children: [
            Expanded(
@@ -205,7 +198,7 @@ class _MainHomePageState extends State<MainHomePage> {
                        children: [
                          SizedBox(
                            width:double.infinity,
-                           child: Image.asset('assets/sound-wave.png',fit: BoxFit.fill,color: Colors.blue.withOpacity(0.1),)),
+                           child: Image.asset('assets/sound-wave.png',fit: BoxFit.fill,color: const Color.fromARGB(255, 157, 157, 157).withOpacity(0.1),)),
                            Column(
                              crossAxisAlignment: CrossAxisAlignment.center,
                              mainAxisAlignment: MainAxisAlignment.center,
@@ -262,6 +255,8 @@ class _MainHomePageState extends State<MainHomePage> {
   }
 }
 
+
+
 class Draweritems extends StatelessWidget {
   final VoidCallback ontap;
   final String title;
@@ -300,43 +295,53 @@ class BottomMusicBar extends StatelessWidget {
     return BlocBuilder<AudioBloc,AudioState>(
       builder: (context, state) {
         return state.maybeWhen(
-            onlinesongs: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
-              return isloading == true? const MusicBottomBarloading(): StreamBuilder(
+            youtubesong: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
+              return isloading == true || audios.isEmpty ? const MusicBottomBarloading() :
+              StreamBuilder(
               stream: valueStream,
               builder:(context, snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
 
-                 int songindex = snapshot.data!.maybeMap(orElse: () => 0,onlinestreams: (val)=>val.index);
+                 int songindex = snapshot.data!.maybeMap(orElse: () => 0,youtubestreams: (val)=>val.index);
 
                  PlayerState dupplayerstate = PlayerState(false,ProcessingState.loading);
                   
-                 PlayerState playerState = snapshot.data!.maybeMap(orElse: ()=>dupplayerstate,onlinestreams: (value) => value.playerState,);
+                 PlayerState playerState = snapshot.data!.maybeMap(orElse: ()=>dupplayerstate,youtubestreams: (value) => value.playerState,);
 
-                 
-                    
+                                  
             return  GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context,Onlineplayerscreen.onlineplayerscreen);
+              Navigator.pushNamed(context,Testytplayer.testytplayer);
             },
             child: Container(
               height: 70,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white
+                borderRadius: BorderRadius.circular(0),
+                color: Colors.white,
+                gradient: Spaces.musicgradient()
               ),
               child: Center(
                 child: ListTile(
-                  leading: Container(
-                     clipBehavior: Clip.antiAlias,
-                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40)
+                  leading: Hero(
+                    tag: '1',
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                       clipBehavior: Clip.antiAlias,
+                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40)
+                      ),
+                      child: Image.network(
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset('assets/musical-note.png',color: Colors.black.withOpacity(0.5),);
+                        },
+                        audios[songindex].imageurl,fit: BoxFit.cover,)
                     ),
-                    child: Image.network(audios[songindex].imageurl,)
                   ),
                   title: SizedBox(
                     height: 20,
                     width: 150,
-                    child: Textutil(text: audios[songindex].title, fontsize: 15, color: Colors.black, fontWeight:FontWeight.bold),
+                    child: Textutil(text: audios[songindex].title, fontsize: 15, color: Colors.white, fontWeight:FontWeight.bold),
                   ),
                   subtitle: SizedBox(
                     height: 12,
@@ -345,12 +350,12 @@ class BottomMusicBar extends StatelessWidget {
                   ),
                   trailing: SizedBox(
                     width: 150,
-                    child: Row(
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(onPressed: (){
-                          BlocProvider.of<AudioBloc>(context).add(const AudioEvent.SeekPreviousAudio());
-                        }, icon: const Icon(Icons.skip_previous,color: Colors.black,)),
+                           BlocProvider.of<AudioBloc>(context).add(const AudioEvent.SeekPreviousAudio());
+                        }, icon: const Icon(CupertinoIcons.backward_end_fill,color: Colors.white,size: 15,)),
                         GestureDetector(
                           onTap: () {
                             playerState.playing == true?
@@ -362,14 +367,100 @@ class BottomMusicBar extends StatelessWidget {
                             width: 45,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
-                              color: Colors.black
+                              color: Colors.white
                             ),
-                            child: Icon(playerState.playing == true? CupertinoIcons.pause:CupertinoIcons.play_arrow,color: Colors.white,size: 19,),
+                            child:  Icon(playerState.playing == true? CupertinoIcons.pause:CupertinoIcons.play_arrow,color: Colors.black,size: 19,),
                           ),
                         ),
                         IconButton(onPressed: (){
                           BlocProvider.of<AudioBloc>(context).add(const AudioEvent.seeknextaudio());
-                        }, icon: const Icon(Icons.skip_next,color: Colors.black,))
+                        }, icon: const Icon(CupertinoIcons.forward_end_fill,color: Colors.white,size: 15,))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+         }else{
+         return const SizedBox();
+            }
+              },);
+            },
+            onlinesongs: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
+              return isloading == true?
+              const MusicBottomBarloading() 
+              : 
+              StreamBuilder(
+              stream: valueStream,
+              builder:(context, snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+
+                 int songindex = snapshot.data!.maybeMap(orElse: () => 0,onlinestreams: (val)=>val.index);
+
+                 PlayerState dupplayerstate = PlayerState(false,ProcessingState.loading);
+                  
+                 PlayerState playerState = snapshot.data!.maybeMap(orElse: ()=>dupplayerstate,onlinestreams: (value) => value.playerState,);
+
+                                  
+            return  GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context,Onlineplayerscreen.onlineplayerscreen);
+            },
+            child: Container(
+              height: 70,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(0),
+                gradient: Spaces.musicgradient()
+              ),
+              child: Center(
+                child: ListTile(
+                  leading: Container(
+                    height: 50,
+                    width: 50,
+                     clipBehavior: Clip.antiAlias,
+                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40)
+                    ),
+                    child: Image.network(audios[songindex].imageurl,fit: BoxFit.cover,)
+                  ),
+                  title: SizedBox(
+                    height: 20,
+                    width: 150,
+                    child: Textutil(text: audios[songindex].title, fontsize: 15, color: Colors.white, fontWeight:FontWeight.bold),
+                  ),
+                  subtitle: SizedBox(
+                    height: 12,
+                    width: 100,
+                    child: Textutil(text: audios[songindex].artist, fontsize: 10, color: Colors.grey, fontWeight:FontWeight.normal),
+                  ),
+                  trailing: SizedBox(
+                    width: 150,
+                    child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(onPressed: (){
+                           BlocProvider.of<AudioBloc>(context).add(const AudioEvent.SeekPreviousAudio());
+                        }, icon: const Icon(CupertinoIcons.backward_end_fill,color: Colors.white,size: 15,)),
+                        GestureDetector(
+                          onTap: () {
+                            playerState.playing == true?
+                            BlocProvider.of<AudioBloc>(context).add(const AudioEvent.pause()):
+                            BlocProvider.of<AudioBloc>(context).add(const AudioEvent.resume());
+                          },
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.white
+                            ),
+                            child:  Icon(playerState.playing == true? CupertinoIcons.pause:CupertinoIcons.play_arrow,color: Colors.black,size: 19,),
+                          ),
+                        ),
+                        IconButton(onPressed: (){
+                          BlocProvider.of<AudioBloc>(context).add(const AudioEvent.seeknextaudio());
+                        }, icon: const Icon(CupertinoIcons.forward_end_fill,color: Colors.white,size: 15,))
                       ],
                     ),
                   ),
@@ -404,8 +495,14 @@ class BottomMusicBar extends StatelessWidget {
                   child: Container(
                     height: 70,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white
+                      borderRadius: BorderRadius.circular(0),
+                      gradient: const LinearGradient(
+                        colors: [
+                                 Color.fromARGB(255, 62, 62, 62),
+                                 Color.fromARGB(255, 47, 47, 47),
+                                 Color.fromARGB(255, 25, 25, 25),
+                                 Color.fromARGB(255, 0, 0, 0)
+                      ])
                     ),
                     child: Center(
                       child: ListTile(
@@ -433,7 +530,7 @@ class BottomMusicBar extends StatelessWidget {
                   title: SizedBox(
                     height: 20,
                     width: 150,
-                    child: Textutil(text: audios[songindex].title, fontsize: 15, color: Colors.black, fontWeight:FontWeight.bold),
+                    child: Textutil(text: audios[songindex].title, fontsize: 15, color: Colors.white, fontWeight:FontWeight.bold),
                   ),
                   subtitle: SizedBox(
                     height: 12,
@@ -447,7 +544,7 @@ class BottomMusicBar extends StatelessWidget {
                       children: [
                         IconButton(onPressed: (){
                            BlocProvider.of<AudioBloc>(context).add(const AudioEvent.SeekPreviousAudio());
-                        }, icon: const Icon(Icons.skip_previous,color: Colors.black,)),
+                        }, icon: const Icon(CupertinoIcons.backward_end_fill,color: Colors.white,size: 15,)),
                         GestureDetector(
                           onTap: () {
                             playerState.playing == true?
@@ -459,14 +556,14 @@ class BottomMusicBar extends StatelessWidget {
                             width: 45,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
-                              color: Colors.black
+                              color: Colors.white
                             ),
-                            child:  Icon(playerState.playing == true? CupertinoIcons.pause:CupertinoIcons.play_arrow,color: Colors.white,size: 19,),
+                            child:  Icon(playerState.playing == true? CupertinoIcons.pause:CupertinoIcons.play_arrow,color: Colors.black,size: 19,),
                           ),
                         ),
                         IconButton(onPressed: (){
                           BlocProvider.of<AudioBloc>(context).add(const AudioEvent.seeknextaudio());
-                        }, icon: const Icon(Icons.skip_next,color: Colors.black,))
+                        }, icon: const Icon(CupertinoIcons.forward_end_fill,color: Colors.white,size: 15,))
                       ],
                     ),
                   ),
@@ -498,53 +595,37 @@ class MusicBottomBarloading extends StatelessWidget {
     return Container(
             height: 70,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white
+              borderRadius: BorderRadius.circular(5),
+                  gradient: Spaces.musicgradient()
             ),
             child: Center(
               child: ListTile(
-                leading:   Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(30)
-                    ),
-                  ),
-                title: Container(
-                  height: 12,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey
-                  ),
+                leading: const CircularProgressIndicator(
+                  color: Colors.black,
                 ),
-                subtitle: Container(
-                  height: 12,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey
-                  ),
-                ),
+                title: const Loadingcustomgradient(),
+                subtitle: const Loadingcustomgradient(),
                 trailing: SizedBox(
                   width: 150,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(onPressed: (){}, icon: const Icon(Icons.skip_previous,color: Colors.black,)),
-                      Container(
-                        height: 45,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.black
+                  child:Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(onPressed: (){
+                           BlocProvider.of<AudioBloc>(context).add(const AudioEvent.SeekPreviousAudio());
+                        }, icon: const Icon(CupertinoIcons.backward_end_fill,color: Colors.white,size: 15,)),
+                        Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.white
+                          ),
+                          child:  const Icon(CupertinoIcons.play_arrow,color: Colors.black,size: 19,),
                         ),
-                        child: const Icon(Icons.play_arrow,color: Colors.white,size: 19,),
-                      ),
-                      IconButton(onPressed: (){}, icon: const Icon(Icons.skip_next,color: Colors.black,))
-                    ],
-                  ),
+                        IconButton(onPressed: (){
+                        }, icon: const Icon(CupertinoIcons.forward_end_fill,color: Colors.white,size: 15,))
+                      ],
+                    ),
                 ),
               ),
             ),
@@ -552,4 +633,19 @@ class MusicBottomBarloading extends StatelessWidget {
   }
 }
 
+class Loadingcustomgradient extends StatelessWidget {
+  const Loadingcustomgradient({
+    super.key,
+  });
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 12,
+      width: 150,
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 75, 75, 75),
+        borderRadius: BorderRadius.circular(20)
+      ),
+    );
+  }}

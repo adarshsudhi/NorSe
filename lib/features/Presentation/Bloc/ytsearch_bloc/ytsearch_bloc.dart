@@ -16,6 +16,7 @@ part 'ytsearch_bloc.freezed.dart';
 class YtsearchBloc extends Bloc<YtsearchEvent, YtsearchState> {
   YtsearchBloc() : super( const _Initial()) {
     on<_Getsearch>((event, emit) async{
+
        emit(const YtsearchState.loader());
        dartz.Either<Failures,VideoSearchList> videos = await di.di<Getsearchvideousecase>().call(event.query);
        videos.fold((l) {
@@ -24,13 +25,16 @@ class YtsearchBloc extends Bloc<YtsearchEvent, YtsearchState> {
          emit(YtsearchState.searchedvideo(r,false,false));
        });
     });
+    
     on<_Freestate>((event, emit)async{
       dartz.Either<Failures,dynamic> playlist0 = await di.di<Getplaylistusecase>()
       .call('https://www.youtube.com/watch?v=gvyUuxdRdR4&list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI', 'playlist');
       dartz.Either<Failures,dynamic> playlist1 = await di.di<Getplaylistusecase>()
-      .call('https://www.youtube.com/watch?v=VAdGW7QDJiU&list=PLO7-VO1D0_6NmK47v6tpOcxurcxdW-hZa&pp=iAQB','playlist');
+      .call('https://www.youtube.com/playlist?list=PLO7-VO1D0_6N2ePPlPE9NKCgUBA15aOk2','playlist');
+            dartz.Either<Failures,dynamic> playlist2 = await di.di<Getplaylistusecase>()
+      .call('https://www.youtube.com/playlist?list=PLHuHXHyLu7BHdV9kfWgHYPxwj57C_hSWw','playlist');
       if (await state.maybeWhen(
-        fres: (videos, videos1, isloading, isfailed) {
+        fres: (videos,videos1,video2,isloading, isfailed) {
           if (videos.isEmpty) {
             return false;
           } else {
@@ -46,9 +50,12 @@ class YtsearchBloc extends Bloc<YtsearchEvent, YtsearchState> {
          if (r is List<Video>) {
             await playlist0.fold((l) async{
                throw Exception('playlistfailed0');
-            }, (t) {
+            }, (t) async{
               if (t is List<Video>) {
-                 emit(YtsearchState.fres(r,t,false, false));
+                await playlist2.fold((l) {},
+                (q)async{
+                   emit(YtsearchState.fres(r,t,q,false, false));
+                });
               }
             });
          }

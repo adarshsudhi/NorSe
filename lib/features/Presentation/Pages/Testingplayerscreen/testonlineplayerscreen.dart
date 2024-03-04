@@ -136,16 +136,18 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                       child: Material(
                                         elevation: 6,
                                         surfaceTintColor: Colors.transparent,
-                                        color: Colors.black,
+                                        color: Colors.transparent,
+                                        shadowColor: Colors.transparent,
                                         borderRadius: BorderRadius.circular(20),
                                         child: Hero(
                                           tag: '2',
                                           child: Container(
                                             clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
+                                              color: Colors.transparent,
                                               borderRadius: BorderRadius.circular(20)
                                             ),
-                                            child: CachedNetworkImage(imageUrl: img,fit: BoxFit.fill,)),
+                                            child: CachedNetworkImage(imageUrl: img,fit: BoxFit.fitWidth,)),
                                         ),
                                       ),
                                     );
@@ -216,7 +218,11 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                 children: [
                                 Padding(
                                padding: const EdgeInsets.only(right: 35,left: 35),
-                               child: Text(audios[songindex].title,style: Spaces.Getstyle(35,Colors.white,FontWeight.bold),textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,),
+                               child: SizedBox(
+                                height: 50,
+                                width: double.infinity,
+                                child: Spaces.songtitle(audios[songindex].title,30,Colors.white,FontWeight.bold,context),
+                               )
                               ),  Padding(
                               padding: const EdgeInsets.only(right: 30,left: 30),
                               child: Text(audios[songindex].artist,style: Spaces.Getstyle(12,Colors.white,FontWeight.bold),textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,),
@@ -286,7 +292,8 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                                                BlocProvider.of<AudioBloc>(context).add(AudioEvent.loopon(islooped));
                                                           }
                                                         },),
-                                                        PlayIcons(iconscolors: const Color.fromARGB(255, 255, 255, 255),iconsize: 30,playicons: CupertinoIcons.backward_end_fill,ontap: () async{
+                                                        PlayIcons(iconscolors: state.audioPlayer.hasPrevious? const Color.fromARGB(255, 255, 255, 255)
+                                                        :Colors.white.withOpacity(0.3),iconsize: 30,playicons: CupertinoIcons.backward_end_fill,ontap: () async{
                                                         BlocProvider.of<AudioBloc>(context).add(const AudioEvent.SeekPreviousAudio());
                                                         _controller.animateToPage(state.audioPlayer.previousIndex!, duration: const Duration(seconds: 1), curve: Curves.easeInOut);
                                                         },),
@@ -320,7 +327,8 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                                                ),
                                                           ],
                                                         ),
-                                                        PlayIcons(iconscolors: const Color.fromARGB(255, 255, 255, 255),iconsize: 30,playicons: CupertinoIcons.forward_end_fill,ontap: () async{
+                                                        PlayIcons(iconscolors: state.audioPlayer.hasNext? const Color.fromARGB(255, 255, 255, 255)
+                                                        :Colors.white.withOpacity(0.3),iconsize: 30,playicons: CupertinoIcons.forward_end_fill,ontap: () async{
                                                        
                                                        BlocProvider.of<AudioBloc>(context).add(const AudioEvent.seeknextaudio());  
                                                         _controller.animateToPage(state.audioPlayer.nextIndex!, duration: const Duration(seconds: 1), curve: Curves.easeIn);

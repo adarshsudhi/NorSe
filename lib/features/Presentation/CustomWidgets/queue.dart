@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:nebula/features/Presentation/CustomWidgets/backgroundGradient.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
 import '../../../configs/constants/Spaces.dart';
@@ -86,10 +87,10 @@ class _ReorderState extends State<Reorder> {
       ),
       body: Stack(
         children: [
+              
+              const backgroundgradient(),
               Container(
-                decoration:  BoxDecoration(
-                  color: Colors.indigo.withOpacity(0.4)
-                ),
+                color: Colors.black.withOpacity(0.7),
               ),
                           Align(
                 alignment: Alignment.bottomCenter,
@@ -108,17 +109,7 @@ class _ReorderState extends State<Reorder> {
                    ),
                  ),
                ), 
-                 Container(
-                   height: MediaQuery.sizeOf(context).height,
-                   width: MediaQuery.sizeOf(context).width,
-                   decoration: BoxDecoration(
-                                         gradient: RadialGradient(
-                  center: Alignment.center,
-                  colors: [
-                Colors.black.withOpacity(0.4),
-                        Colors.black.withOpacity(0.4)
-                                                 ])),
-                                           ),
+              
           SafeArea(
             child: Column(
              children: [
@@ -152,9 +143,15 @@ class _ReorderState extends State<Reorder> {
             ],
           ),
            const SizedBox(width: 10,),
-             QueryArtworkWidget(
+            QueryArtworkWidget(
              id: audios[index].id, 
              type: ArtworkType.AUDIO,
+             nullArtworkWidget: SizedBox(
+               height: 50,
+                width: 50,
+              child: Image.asset('assets/musical-note.png',
+               color: Colors.white.withOpacity(0.5),),
+                 ),
              keepOldArtwork: true,
              artworkBorder: BorderRadius.circular(10),
              ),
@@ -217,6 +214,12 @@ class _ReorderState extends State<Reorder> {
               keepOldArtwork: true,
               size: 250,
               id: audios[index].id, 
+              nullArtworkWidget: SizedBox(
+              height: 50,
+              width: 50,
+              child: Image.asset('assets/musical-note.png',
+              color: Colors.white.withOpacity(0.5),),
+               ),
               artworkBorder: BorderRadius.circular(10),
               type: ArtworkType.AUDIO),
               Expanded(
@@ -271,12 +274,12 @@ class _ReorderState extends State<Reorder> {
             QueryArtworkWidget(
               keepOldArtwork: true,
               size: 250,
-              nullArtworkWidget: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-              ),
+              nullArtworkWidget:SizedBox(
+                  height: 50,
+                   width: 50,
+                   child: Image.asset('assets/musical-note.png',
+                    color: Colors.white.withOpacity(0.5),),
+                         ),
               id : audios[index].id, 
               artworkBorder: BorderRadius.circular(10),
               type: ArtworkType.AUDIO),

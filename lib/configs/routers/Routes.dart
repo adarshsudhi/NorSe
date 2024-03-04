@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:nebula/features/Data/Models/onlinesongmodel.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/onlinequeue.dart';
 import 'package:nebula/features/Presentation/Pages/Aboutpage/aboutpage.dart';
 import 'package:nebula/features/Presentation/Pages/MainHomePage/MainHomePage.dart';
 import 'package:nebula/features/Presentation/Pages/Settings/settingspage.dart';
 import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testonlineplayerscreen.dart';
 import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testplayerscreen.dart';
+import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testytplayerscreen.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/SearchResultPage/SearchResultPage.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/backupandrestore/backupandrestore.dart';
+import 'package:nebula/features/Presentation/Pages/subscreens/playlistsongscreen/youtube_playlistpage.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/youtubescreen/ytdetails.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/youtubescreen/ytpage.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../features/Presentation/Pages/DownloadPages/Downloadpages.dart';
 import '../../features/Presentation/Pages/Favpage/localfavsongpage.dart';
 import '../../features/Presentation/Pages/onlinefavepage.dart';
@@ -60,16 +63,29 @@ Route<dynamic>? onGenerate(RouteSettings settings){
        case Onlinequeue.onlinequeuescreen:
           final args = settings.arguments as Onlinequeue;
           return MaterialPageRoute(builder: (_)=> Onlinequeue(audios: args.audios,audioPlayer: args.audioPlayer,));
+          
 
        case Settingpage.settingpage:
           return MaterialPageRoute(builder: (_)=> const Settingpage());
 
+
        case Backupandrestore.backupandrestore:
           return MaterialPageRoute(builder: (_)=> const Backupandrestore());
 
+
+       case Testytplayer.testytplayer:
+          return MaterialPageRoute(builder: (_)=>const Testytplayer());
+
+
        case Ytdetailss.ytdetails:
-          final args = settings.arguments as Ytdetailss;
-          return MaterialPageRoute(builder: (_)=>Ytdetailss(video: args.video,));
+          final args = settings.arguments as OnlineSongModel;
+          return MaterialPageRoute(builder: (_)=>Ytdetailss(onlineSongModel: args,));
+
+
+       case Youtubeplaylistpage.youtubeplaylistpage:
+          final args = settings.arguments as List<Video>;
+          return MaterialPageRoute(builder: (_)=>Youtubeplaylistpage(songs: args));
+
 
       default:
     }

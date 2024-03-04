@@ -11,6 +11,7 @@ import '../../../../Domain/UseCases/Sql_UseCase/addtodownloads_Usecase.dart';
 import '../../../Bloc/SearchSong_bloc/search_song_bloc.dart';
 import '../../../Bloc/audio_bloc/audio_bloc.dart';
 import '../../../CustomWidgets/CustomSearchTextFormfield.dart';
+import '../../../CustomWidgets/backgroundGradient.dart';
 import '../../../CustomWidgets/shimmer.dart';
 import '../../Testingplayerscreen/testonlineplayerscreen.dart';
 import '../SongDetailsPage/SongDetailsPage.dart';
@@ -59,17 +60,7 @@ class _SearchResultPageState extends State<SearchResultscreen> {
                padding: const EdgeInsets.only(top: 10,left: 2),
                child: Stack(
                  children: [
-                 Container(
-             decoration: const BoxDecoration(
-               gradient: LinearGradient(
-                 begin: Alignment.topLeft,
-                 end: Alignment.bottomRight,
-                 colors: [
-                 Colors.indigo,
-                 Colors.black
-               ])
-             ),
-                     ),
+   const backgroundgradient(),
                      Container(
              color: Colors.black.withOpacity(0.8),
                      ),

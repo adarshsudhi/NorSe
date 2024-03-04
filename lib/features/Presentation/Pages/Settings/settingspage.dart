@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
+import 'package:nebula/features/Presentation/CustomWidgets/backgroundGradient.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/backupandrestore/backupandrestore.dart';
 
 class Settingpage extends StatelessWidget {
@@ -21,17 +22,7 @@ class Settingpage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-              Colors.indigo,
-              Colors.black
-            ])
-          ),
-        ),  
+         const backgroundgradient(), 
                   Container(
             color: Colors.black.withOpacity(0.8),
           ),

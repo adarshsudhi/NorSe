@@ -6,6 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/features/Data/Models/onlinesongmodel.dart';
 import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
+import 'package:nebula/features/Presentation/CustomWidgets/backgroundGradient.dart';
 
 class Onlinequeue extends StatefulWidget {
   static const onlinequeuescreen = './onlinequeue';
@@ -84,10 +85,9 @@ class _OnlinequeueState extends State<Onlinequeue> {
         width: MediaQuery.sizeOf(context).width,
         child: Stack(
           children: [
-            Container(
-                decoration:  BoxDecoration(
-                  color: Colors.indigo.withOpacity(0.4)
-                ),
+                    const backgroundgradient(),
+                                  Container(
+                color: Colors.black.withOpacity(0.7),
               ),
                           Align(
                           alignment: Alignment.bottomCenter,
@@ -106,17 +106,8 @@ class _OnlinequeueState extends State<Onlinequeue> {
                              ),
                            ),
                          ), 
-                           Container(
-                             height: MediaQuery.sizeOf(context).height,
-                             width: MediaQuery.sizeOf(context).width,
-                             decoration: BoxDecoration(
-                                                   gradient: RadialGradient(
-                            center: Alignment.center,
-                            colors: [
-                          Colors.black.withOpacity(0.4),
-                                  Colors.black.withOpacity(0.4)
-                     ])),
-               ),
+                      
+                   
             SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +211,11 @@ class _OnlinequeueState extends State<Onlinequeue> {
                                         color: Colors.black,
                                         borderRadius:BorderRadius.circular(10)
                                       ),
-                                      child: CachedNetworkImage(imageUrl: songs.imageurl),
+                                      child: CachedNetworkImage(
+                                        errorWidget: (context, url, error) {
+                                          return Image.asset('assets/musical-note.png',color: Colors.white.withOpacity(0.5),);
+                                        },
+                                        imageUrl: songs.imageurl),
                                     ),
                                     const SizedBox(width: 10,),
                                     Expanded(
