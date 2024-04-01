@@ -19,21 +19,18 @@ mixin _$YtsearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String query) getsearchdetails,
     required TResult Function() freestate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String query)? getsearchdetails,
     TResult? Function()? freestate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String query)? getsearchdetails,
     TResult Function()? freestate,
     required TResult orElse(),
   }) =>
@@ -41,21 +38,18 @@ mixin _$YtsearchEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_Getsearch value) getsearchdetails,
     required TResult Function(_Freestate value) freestate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_Getsearch value)? getsearchdetails,
     TResult? Function(_Freestate value)? freestate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_Getsearch value)? getsearchdetails,
     TResult Function(_Freestate value)? freestate,
     required TResult orElse(),
   }) =>
@@ -119,7 +113,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String query) getsearchdetails,
     required TResult Function() freestate,
   }) {
     return started();
@@ -129,7 +122,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String query)? getsearchdetails,
     TResult? Function()? freestate,
   }) {
     return started?.call();
@@ -139,7 +131,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String query)? getsearchdetails,
     TResult Function()? freestate,
     required TResult orElse(),
   }) {
@@ -153,7 +144,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_Getsearch value) getsearchdetails,
     required TResult Function(_Freestate value) freestate,
   }) {
     return started(this);
@@ -163,7 +153,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_Getsearch value)? getsearchdetails,
     TResult? Function(_Freestate value)? freestate,
   }) {
     return started?.call(this);
@@ -173,7 +162,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_Getsearch value)? getsearchdetails,
     TResult Function(_Freestate value)? freestate,
     required TResult orElse(),
   }) {
@@ -186,145 +174,6 @@ class _$StartedImpl implements _Started {
 
 abstract class _Started implements YtsearchEvent {
   const factory _Started() = _$StartedImpl;
-}
-
-/// @nodoc
-abstract class _$$GetsearchImplCopyWith<$Res> {
-  factory _$$GetsearchImplCopyWith(
-          _$GetsearchImpl value, $Res Function(_$GetsearchImpl) then) =
-      __$$GetsearchImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String query});
-}
-
-/// @nodoc
-class __$$GetsearchImplCopyWithImpl<$Res>
-    extends _$YtsearchEventCopyWithImpl<$Res, _$GetsearchImpl>
-    implements _$$GetsearchImplCopyWith<$Res> {
-  __$$GetsearchImplCopyWithImpl(
-      _$GetsearchImpl _value, $Res Function(_$GetsearchImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? query = null,
-  }) {
-    return _then(_$GetsearchImpl(
-      null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$GetsearchImpl implements _Getsearch {
-  const _$GetsearchImpl(this.query);
-
-  @override
-  final String query;
-
-  @override
-  String toString() {
-    return 'YtsearchEvent.getsearchdetails(query: $query)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetsearchImpl &&
-            (identical(other.query, query) || other.query == query));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, query);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GetsearchImplCopyWith<_$GetsearchImpl> get copyWith =>
-      __$$GetsearchImplCopyWithImpl<_$GetsearchImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String query) getsearchdetails,
-    required TResult Function() freestate,
-  }) {
-    return getsearchdetails(query);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String query)? getsearchdetails,
-    TResult? Function()? freestate,
-  }) {
-    return getsearchdetails?.call(query);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String query)? getsearchdetails,
-    TResult Function()? freestate,
-    required TResult orElse(),
-  }) {
-    if (getsearchdetails != null) {
-      return getsearchdetails(query);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_Getsearch value) getsearchdetails,
-    required TResult Function(_Freestate value) freestate,
-  }) {
-    return getsearchdetails(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_Getsearch value)? getsearchdetails,
-    TResult? Function(_Freestate value)? freestate,
-  }) {
-    return getsearchdetails?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_Getsearch value)? getsearchdetails,
-    TResult Function(_Freestate value)? freestate,
-    required TResult orElse(),
-  }) {
-    if (getsearchdetails != null) {
-      return getsearchdetails(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Getsearch implements YtsearchEvent {
-  const factory _Getsearch(final String query) = _$GetsearchImpl;
-
-  String get query;
-  @JsonKey(ignore: true)
-  _$$GetsearchImplCopyWith<_$GetsearchImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -366,7 +215,6 @@ class _$FreestateImpl implements _Freestate {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String query) getsearchdetails,
     required TResult Function() freestate,
   }) {
     return freestate();
@@ -376,7 +224,6 @@ class _$FreestateImpl implements _Freestate {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String query)? getsearchdetails,
     TResult? Function()? freestate,
   }) {
     return freestate?.call();
@@ -386,7 +233,6 @@ class _$FreestateImpl implements _Freestate {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String query)? getsearchdetails,
     TResult Function()? freestate,
     required TResult orElse(),
   }) {
@@ -400,7 +246,6 @@ class _$FreestateImpl implements _Freestate {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_Getsearch value) getsearchdetails,
     required TResult Function(_Freestate value) freestate,
   }) {
     return freestate(this);
@@ -410,7 +255,6 @@ class _$FreestateImpl implements _Freestate {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_Getsearch value)? getsearchdetails,
     TResult? Function(_Freestate value)? freestate,
   }) {
     return freestate?.call(this);
@@ -420,7 +264,6 @@ class _$FreestateImpl implements _Freestate {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_Getsearch value)? getsearchdetails,
     TResult Function(_Freestate value)? freestate,
     required TResult orElse(),
   }) {
@@ -440,9 +283,6 @@ mixin _$YtsearchState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
-        searchedvideo,
     required TResult Function() loader,
     required TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)
@@ -452,8 +292,6 @@ mixin _$YtsearchState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult? Function()? loader,
     TResult? Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -463,8 +301,6 @@ mixin _$YtsearchState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult Function()? loader,
     TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -475,7 +311,6 @@ mixin _$YtsearchState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Searchedvideo value) searchedvideo,
     required TResult Function(_Loading value) loader,
     required TResult Function(_Free value) fres,
   }) =>
@@ -483,7 +318,6 @@ mixin _$YtsearchState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Searchedvideo value)? searchedvideo,
     TResult? Function(_Loading value)? loader,
     TResult? Function(_Free value)? fres,
   }) =>
@@ -491,7 +325,6 @@ mixin _$YtsearchState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Searchedvideo value)? searchedvideo,
     TResult Function(_Loading value)? loader,
     TResult Function(_Free value)? fres,
     required TResult orElse(),
@@ -556,9 +389,6 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
-        searchedvideo,
     required TResult Function() loader,
     required TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)
@@ -571,8 +401,6 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult? Function()? loader,
     TResult? Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -585,8 +413,6 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult Function()? loader,
     TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -603,7 +429,6 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Searchedvideo value) searchedvideo,
     required TResult Function(_Loading value) loader,
     required TResult Function(_Free value) fres,
   }) {
@@ -614,7 +439,6 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Searchedvideo value)? searchedvideo,
     TResult? Function(_Loading value)? loader,
     TResult? Function(_Free value)? fres,
   }) {
@@ -625,7 +449,6 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Searchedvideo value)? searchedvideo,
     TResult Function(_Loading value)? loader,
     TResult Function(_Free value)? fres,
     required TResult orElse(),
@@ -639,183 +462,6 @@ class _$InitialImpl implements _Initial {
 
 abstract class _Initial implements YtsearchState {
   const factory _Initial() = _$InitialImpl;
-}
-
-/// @nodoc
-abstract class _$$SearchedvideoImplCopyWith<$Res> {
-  factory _$$SearchedvideoImplCopyWith(
-          _$SearchedvideoImpl value, $Res Function(_$SearchedvideoImpl) then) =
-      __$$SearchedvideoImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({VideoSearchList videos, bool isloading, bool isfailed});
-}
-
-/// @nodoc
-class __$$SearchedvideoImplCopyWithImpl<$Res>
-    extends _$YtsearchStateCopyWithImpl<$Res, _$SearchedvideoImpl>
-    implements _$$SearchedvideoImplCopyWith<$Res> {
-  __$$SearchedvideoImplCopyWithImpl(
-      _$SearchedvideoImpl _value, $Res Function(_$SearchedvideoImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? videos = null,
-    Object? isloading = null,
-    Object? isfailed = null,
-  }) {
-    return _then(_$SearchedvideoImpl(
-      null == videos
-          ? _value.videos
-          : videos // ignore: cast_nullable_to_non_nullable
-              as VideoSearchList,
-      null == isloading
-          ? _value.isloading
-          : isloading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      null == isfailed
-          ? _value.isfailed
-          : isfailed // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$SearchedvideoImpl implements _Searchedvideo {
-  const _$SearchedvideoImpl(this.videos, this.isloading, this.isfailed);
-
-  @override
-  final VideoSearchList videos;
-  @override
-  final bool isloading;
-  @override
-  final bool isfailed;
-
-  @override
-  String toString() {
-    return 'YtsearchState.searchedvideo(videos: $videos, isloading: $isloading, isfailed: $isfailed)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SearchedvideoImpl &&
-            const DeepCollectionEquality().equals(other.videos, videos) &&
-            (identical(other.isloading, isloading) ||
-                other.isloading == isloading) &&
-            (identical(other.isfailed, isfailed) ||
-                other.isfailed == isfailed));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(videos), isloading, isfailed);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SearchedvideoImplCopyWith<_$SearchedvideoImpl> get copyWith =>
-      __$$SearchedvideoImplCopyWithImpl<_$SearchedvideoImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
-        searchedvideo,
-    required TResult Function() loader,
-    required TResult Function(List<Video> videos, List<Video> videos1,
-            List<Video> videos2, bool isloading, bool isfailed)
-        fres,
-  }) {
-    return searchedvideo(videos, isloading, isfailed);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
-    TResult? Function()? loader,
-    TResult? Function(List<Video> videos, List<Video> videos1,
-            List<Video> videos2, bool isloading, bool isfailed)?
-        fres,
-  }) {
-    return searchedvideo?.call(videos, isloading, isfailed);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
-    TResult Function()? loader,
-    TResult Function(List<Video> videos, List<Video> videos1,
-            List<Video> videos2, bool isloading, bool isfailed)?
-        fres,
-    required TResult orElse(),
-  }) {
-    if (searchedvideo != null) {
-      return searchedvideo(videos, isloading, isfailed);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Searchedvideo value) searchedvideo,
-    required TResult Function(_Loading value) loader,
-    required TResult Function(_Free value) fres,
-  }) {
-    return searchedvideo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Searchedvideo value)? searchedvideo,
-    TResult? Function(_Loading value)? loader,
-    TResult? Function(_Free value)? fres,
-  }) {
-    return searchedvideo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Searchedvideo value)? searchedvideo,
-    TResult Function(_Loading value)? loader,
-    TResult Function(_Free value)? fres,
-    required TResult orElse(),
-  }) {
-    if (searchedvideo != null) {
-      return searchedvideo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Searchedvideo implements YtsearchState {
-  const factory _Searchedvideo(final VideoSearchList videos,
-      final bool isloading, final bool isfailed) = _$SearchedvideoImpl;
-
-  VideoSearchList get videos;
-  bool get isloading;
-  bool get isfailed;
-  @JsonKey(ignore: true)
-  _$$SearchedvideoImplCopyWith<_$SearchedvideoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -857,9 +503,6 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
-        searchedvideo,
     required TResult Function() loader,
     required TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)
@@ -872,8 +515,6 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult? Function()? loader,
     TResult? Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -886,8 +527,6 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult Function()? loader,
     TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -904,7 +543,6 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Searchedvideo value) searchedvideo,
     required TResult Function(_Loading value) loader,
     required TResult Function(_Free value) fres,
   }) {
@@ -915,7 +553,6 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Searchedvideo value)? searchedvideo,
     TResult? Function(_Loading value)? loader,
     TResult? Function(_Free value)? fres,
   }) {
@@ -926,7 +563,6 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Searchedvideo value)? searchedvideo,
     TResult Function(_Loading value)? loader,
     TResult Function(_Free value)? fres,
     required TResult orElse(),
@@ -1073,9 +709,6 @@ class _$FreeImpl implements _Free {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(
-            VideoSearchList videos, bool isloading, bool isfailed)
-        searchedvideo,
     required TResult Function() loader,
     required TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)
@@ -1088,8 +721,6 @@ class _$FreeImpl implements _Free {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult? Function()? loader,
     TResult? Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -1102,8 +733,6 @@ class _$FreeImpl implements _Free {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VideoSearchList videos, bool isloading, bool isfailed)?
-        searchedvideo,
     TResult Function()? loader,
     TResult Function(List<Video> videos, List<Video> videos1,
             List<Video> videos2, bool isloading, bool isfailed)?
@@ -1120,7 +749,6 @@ class _$FreeImpl implements _Free {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Searchedvideo value) searchedvideo,
     required TResult Function(_Loading value) loader,
     required TResult Function(_Free value) fres,
   }) {
@@ -1131,7 +759,6 @@ class _$FreeImpl implements _Free {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Searchedvideo value)? searchedvideo,
     TResult? Function(_Loading value)? loader,
     TResult? Function(_Free value)? fres,
   }) {
@@ -1142,7 +769,6 @@ class _$FreeImpl implements _Free {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Searchedvideo value)? searchedvideo,
     TResult Function(_Loading value)? loader,
     TResult Function(_Free value)? fres,
     required TResult orElse(),

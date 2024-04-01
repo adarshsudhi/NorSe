@@ -1,10 +1,9 @@
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nebula/features/Data/Models/onlinesongmodel.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/features/Presentation/Bloc/Albumsongs/albums_songs_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
@@ -13,12 +12,11 @@ import 'package:nebula/features/Presentation/Bloc/Library/playlist/libraryplayli
 import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
 import 'package:nebula/features/Presentation/Pages/MainHomePage/MainHomePage.dart';
 import 'package:nebula/injection_container.dart' as di;
-
 import '../../../../Domain/Entity/SongsDetailsEntity/SongsEntity.dart';
 import '../../../../Domain/UseCases/Sql_UseCase/addtodownloads_Usecase.dart';
 import '../../../Bloc/Library/album/libraryalbumlike/libraryalbumlike_bloc.dart';
-import '../../HomePage.dart';
-import '../../Testingplayerscreen/testonlineplayerscreen.dart';
+import '../../musicplayerpage/testonlineplayerscreen.dart';
+
 
 class SongDetailsPage extends StatefulWidget {
   static const String SongDetials = '/SongDetailPage';
@@ -41,50 +39,53 @@ class SongDetailsPage extends StatefulWidget {
 
 class _SongDetailsPageState extends State<SongDetailsPage> {
 
-  PanelController controller = PanelController();
-
-  Color? colors;
   @override
   void initState() {
     super.initState();
     if (widget.type == 'album') {
       BlocProvider.of<AlbumsSongsBloc>(context)
           .add(GetAlbumSongsEvent(albumurl: widget.albumurl));
-      BlocProvider.of<LibraryalbumlikeBloc>(context).add(LibraryalbumlikeEvent.checkforalbum(widget.id));
+      BlocProvider.of<LibraryalbumlikeBloc>(context)
+          .add(LibraryalbumlikeEvent.checkforalbum(widget.id));
     } else if (widget.type == 'playlist') {
       BlocProvider.of<AlbumsSongsBloc>(context)
           .add(GetPlaylistsSongsEvent(id: widget.id));
-      BlocProvider.of<LibraryplaylistlikeBloc>(context).add(LibraryplaylistlikeEvent.chechifplaylistavai(widget.id));
+      BlocProvider.of<LibraryplaylistlikeBloc>(context)
+          .add(LibraryplaylistlikeEvent.chechifplaylistavai(widget.id));
     }
   }
 
-  _calllibrary(){
+  _calllibrary() {
     Future.delayed(const Duration(milliseconds: 100)).then((value) {
-      BlocProvider.of<LibraryalbumBloc>(context).add(const LibraryalbumEvent.getalbumsongs());
+      BlocProvider.of<LibraryalbumBloc>(context)
+          .add(const LibraryalbumEvent.getalbumsongs());
     });
   }
 
-  _callplaylist(){
+  _callplaylist() {
     Future.delayed(const Duration(milliseconds: 100)).then((value) {
-      BlocProvider.of<LibraryplaylistBloc>(context).add(const LibraryplaylistEvent.getlibraryplaylist());
+      BlocProvider.of<LibraryplaylistBloc>(context)
+          .add(const LibraryplaylistEvent.getlibraryplaylist());
     });
   }
 
-   _addetails(String name,String image,String id,String url,String type){
-          AlbumElements albumElements = AlbumElements(
-               id: id,
-                name: name,
-                    year: 'NULL',
-             type: 'null',
-          language: 'null',
-                Artist: 'null',
-                 url: url,
-                   image: image.replaceAll('150x150', '500x500'));
+  _addetails(String name, String image, String id, String url, String type) {
+    AlbumElements albumElements = AlbumElements(
+        id: id,
+        name: name,
+        year: 'NULL',
+        type: 'null',
+        language: 'null',
+        Artist: 'null',
+        url: url,
+        image: image.replaceAll('150x150', '500x500'));
 
-                type=="album" ?
-                 BlocProvider.of<LibraryalbumlikeBloc>(context).add(LibraryalbumlikeEvent.addtolibrary('album',albumElements)):
-                 BlocProvider.of<LibraryplaylistlikeBloc>(context).add(LibraryplaylistlikeEvent.addtolibrary('playlist', albumElements));
-              }
+    type == "album"
+        ? BlocProvider.of<LibraryalbumlikeBloc>(context)
+            .add(LibraryalbumlikeEvent.addtolibrary('album', albumElements))
+        : BlocProvider.of<LibraryplaylistlikeBloc>(context).add(
+            LibraryplaylistlikeEvent.addtolibrary('playlist', albumElements));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,211 +100,204 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
               BlocBuilder<AlbumsSongsBloc, AlbumsSongsState>(
                 builder: (context, state) {
                   if (state is AlbumsSongsloading) {
-                    return SizedBox.expand(
-                        child: Stack(
-                      children: [
-                        SizedBox(
-                          height: size.height / 2,
-                          child: Shimmer.fromColors(
-                              period: const Duration(seconds: 2),
-                              baseColor: const Color.fromARGB(255, 8, 8, 8),
-                              highlightColor:
-                                  const Color.fromARGB(255, 67, 67, 67)
-                                      .withOpacity(0.5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 67, 67, 67),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              )),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: size.height,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [
-                                  Colors.transparent,
-                                  Colors.black.withOpacity(0.5),
-                                  Colors.black,
-                                  Colors.black,
-                                  Colors.black
-                                ],
-                                    end: Alignment.bottomCenter,
-                                    begin: Alignment.topCenter)),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SizedBox(
-                            height: size.height / 1.5,
-                            child: Column(
-                              children: [
-                                Spaces.Kheight20,
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleText(
-                                          titleTextt: 'Related Songs'),
-                                      Row(
-                                        children: [
-                                          IconButton(onPressed: (){
-                                          
-                                          }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,)),
-                                          const SizedBox(width: 30,),
-                                          Container(
-                                            height: 50,
-                                            width: 50,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 255, 255, 255),
-                                                borderRadius:
-                                                    BorderRadius.circular(50)),
-                                            child: const Center(
-                                              child: Icon(Icons.play_arrow),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: 10,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        leading: SizedBox(
-                                          height: 50,
-                                          width: 50,
-                                          child: Shimmer.fromColors(
-                                              period:
-                                                  const Duration(seconds: 2),
-                                              baseColor: Color.fromARGB(255, 0, 0, 0),
-                                              highlightColor:
-                                                  Color.fromARGB(255, 22, 22, 22)
-                                                      .withOpacity(0.5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 3, 33, 57),
-                                                  borderRadius:
-                                                      BorderRadius.circular(2),
-                                                ),
-                                              )),
-                                        ),
-                                        title: SizedBox(
-                                          height: 10,
-                                          width: size.width / 3.4,
-                                          child: Shimmer.fromColors(
-                                              period:
-                                                  const Duration(seconds: 2),
-                                              baseColor: Color.fromARGB(255, 0, 0, 0),
-                                              highlightColor:
-                                                  Color.fromARGB(255, 40, 40, 40)
-                                                      .withOpacity(0.5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 3, 33, 57),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                              )),
-                                        ),
-                                        subtitle: SizedBox(
-                                          height: 8,
-                                          width: size.width / 3.4,
-                                          child: Shimmer.fromColors(
-                                              period:
-                                                  const Duration(seconds: 2),
-                                              baseColor: const Color.fromARGB(255, 1, 1, 1),
-                                              highlightColor:
-                                                  const Color.fromARGB(255, 36, 36, 36)
-                                                      .withOpacity(0.5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Color.fromARGB(255, 1, 1, 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                              )),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const Spaceadjust()
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ));
+                    return SizedBox.expand(child: Songslistloading(size: size));
                   } else if (state is AlbumsSongsloaded) {
                     return Stack(
                       children: [
-                        SlidingUpPanel(
-                          color: Colors.transparent,
-                          backdropColor: Colors.black,
-                          backdropEnabled: true,
-                          maxHeight: size.height,
-                          minHeight: size.height/1.5,
-                          panelBuilder: (sc) {
-                             return Container(
-                              color: Colors.transparent,
-                             height: size.height / 1.5,
-                               child: Column(
-                              children: [
-                                Spaces.Kheight20,
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                        SizedBox(
+                          height: size.height,
+                          width: size.width,
+                          child: ImageFiltered(
+                              imageFilter:
+                                  ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.imageurl,
+                                fit: BoxFit.cover,
+                              )),
+                        ),
+                        Container(
+                          color: Colors.black,
+                          height: size.height,
+                          width: size.width,
+                        ),
+                        CustomScrollView(
+                          slivers: [
+                            SliverAppBar(
+                              leading: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.white,
+                                    size: 20,
+                                  )),
+                              pinned: true,
+                              expandedHeight: 280,
+                              foregroundColor: Colors.transparent,
+                              automaticallyImplyLeading: false,
+                              backgroundColor: Colors.transparent,
+                              flexibleSpace: FlexibleSpaceBar(
+                                background: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: widget.imageurl
+                                          .replaceAll('150x150', '500x500'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                            Colors.black,
+                                            Colors.transparent
+                                          ])),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SliverToBoxAdapter(
+                                child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: SizedBox(
+                                height: 70,
+                                width: double.infinity,
+                                child: Center(
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const TitleText(
-                                          titleTextt: 'Related Songs'),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Textutil(
+                                                text: widget.name,
+                                                fontsize: 16,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700),
+                                            Row(
+                                              children: [
+                                                Textutil(
+                                                    text: "${widget.type}  •  ",
+                                                    fontsize: 13,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                                Textutil(
+                                                    text:
+                                                        "songs ${state.songs.length}",
+                                                    fontsize: 10,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                       Row(
                                         children: [
-                                          BlocBuilder<LibraryalbumlikeBloc,LibraryalbumlikeState>(
+                                          BlocBuilder<LibraryalbumlikeBloc,
+                                              LibraryalbumlikeState>(
                                             builder: (context, state) {
                                               return state.maybeWhen(
                                                 ispresent: (ispresent) {
-                                                  return ispresent? IconButton(onPressed: (){
-                                            _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'album');
-                                            _calllibrary();
-                                           }, icon: const Icon(Icons.favorite,color: Colors.red,size: 27,)):
-                                           IconButton(onPressed: (){
-                                              _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'album');
-                                              _calllibrary();
-                                           }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,));
+                                                  return ispresent
+                                                      ? IconButton(
+                                                          onPressed: () {
+                                                            _addetails(
+                                                                widget.name,
+                                                                widget.imageurl,
+                                                                widget.id,
+                                                                widget.albumurl,
+                                                                'album');
+                                                            _calllibrary();
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.favorite,
+                                                            color: Colors.red,
+                                                            size: 27,
+                                                          ))
+                                                      : IconButton(
+                                                          onPressed: () {
+                                                            _addetails(
+                                                                widget.name,
+                                                                widget.imageurl,
+                                                                widget.id,
+                                                                widget.albumurl,
+                                                                'album');
+                                                            _calllibrary();
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.favorite,
+                                                            color: Colors.white,
+                                                            size: 27,
+                                                          ));
                                                 },
                                                 removed: () {
-                                                     return IconButton(onPressed: (){
-                                                _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'album');
-                                              _calllibrary();
-                                           }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,));
+                                                  return IconButton(
+                                                      onPressed: () {
+                                                        _addetails(
+                                                            widget.name,
+                                                            widget.imageurl,
+                                                            widget.id,
+                                                            widget.albumurl,
+                                                            'album');
+                                                        _calllibrary();
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.favorite,
+                                                        color: Colors.white,
+                                                        size: 27,
+                                                      ));
                                                 },
                                                 added: () {
-                                                  return IconButton(onPressed: (){
-                                               _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'album');
-                                              _calllibrary();
-                                           }, icon: const Icon(Icons.favorite,color: Colors.red,size: 27,));
+                                                  return IconButton(
+                                                      onPressed: () {
+                                                        _addetails(
+                                                            widget.name,
+                                                            widget.imageurl,
+                                                            widget.id,
+                                                            widget.albumurl,
+                                                            'album');
+                                                        _calllibrary();
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.favorite,
+                                                        color: Colors.red,
+                                                        size: 27,
+                                                      ));
                                                 },
-                                                orElse: ()=>IconButton(onPressed: (){
-                                               _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'album');
-                                              _calllibrary();
-                                           }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,)),);
+                                                orElse: () => IconButton(
+                                                    onPressed: () {
+                                                      _addetails(
+                                                          widget.name,
+                                                          widget.imageurl,
+                                                          widget.id,
+                                                          widget.albumurl,
+                                                          'album');
+                                                      _calllibrary();
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.favorite,
+                                                      color: Colors.white,
+                                                      size: 27,
+                                                    )),
+                                              );
                                             },
-                                           ),
-                                          const SizedBox(width: 30,),
+                                          ),
+                                          const SizedBox(
+                                            width: 30,
+                                          ),
                                           Container(
                                               height: 50,
                                               width: 50,
@@ -311,10 +305,307 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                                   color: const Color.fromARGB(
                                                       255, 255, 255, 255),
                                                   borderRadius:
-                                                      BorderRadius.circular(50)),
+                                                      BorderRadius.circular(
+                                                          50)),
+                                              child: IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    Icons.play_arrow,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 0, 0),
+                                                  ))),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )),
+                            SliverPadding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              sliver: SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      childCount: state.songs.length,
+                                      (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Recents(state.songs, index, context,
+                                        widget.name);
+                                    BlocProvider.of<AudioBloc>(context).add(
+                                        AudioEvent.onlineaudio(
+                                            state.songs[index].id,
+                                            index,
+                                            state.songs[index].songs,
+                                            state.songs[index].image,
+                                            widget.name,
+                                            state.songs[index].primaryArtists,
+                                            const [],
+                                            state.songs,
+                                            const [],
+                                            const []));
+                                  },
+                                  child: Songtiles(
+                                    name: state.songs[index].name,
+                                    image: state.songs[index].image,
+                                    artist: state.songs[index].primaryArtists,
+                                    icons1: Icons.add_to_queue,
+                                    icons2: Icons.download_outlined,
+                                    visible1: true,
+                                    visible2: true,
+                                    ontapqueue: () {
+                                      OnlineSongModel onlineSongModel =
+                                          OnlineSongModel(
+                                              id: state.songs[index].id,
+                                              title: state.songs[index].name,
+                                              imageurl:
+                                                  state.songs[index].image,
+                                              downloadurl:
+                                                  state.songs[index].songs,
+                                              artist: state
+                                                  .songs[index].primaryArtists);
+                                      BlocProvider.of<AudioBloc>(context).add(
+                                          AudioEvent.addtonlinequeue(
+                                              'online', onlineSongModel));
+                                    },
+                                    ontap: () async {
+                                      final data = state.songs[index];
+                                      AlbumElements albumElements =
+                                          AlbumElements(
+                                              id: data.id,
+                                              name: data.name,
+                                              year: data.year,
+                                              type: widget.name,
+                                              language: 'null',
+                                              Artist: data.primaryArtists,
+                                              url: data.songs,
+                                              image: data.image);
+                                      await di
+                                          .di<addtodownloadsUsecase>()
+                                          .call(albumElements);
+                                    },
+                                  ),
+                                );
+                              })),
+                            )
+                          ],
+                        ),
+                      ],
+                    );
+                  } else if (state is playlistsongs) {
+                    return Stack(
+                      children: [
+                        SizedBox(
+                          height: size.height,
+                          width: size.width,
+                          child: ImageFiltered(
+                              imageFilter:
+                                  ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.imageurl,
+                                fit: BoxFit.cover,
+                              )),
+                        ),
+                        Container(
+                          color: Colors.black,
+                          height: size.height,
+                          width: size.width,
+                        ),
+                        CustomScrollView(
+                          slivers: [
+                            SliverAppBar(
+                              leading: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.white,
+                                    size: 20,
+                                  )),
+                              pinned: true,
+                              expandedHeight: 280,
+                              foregroundColor: Colors.transparent,
+                              automaticallyImplyLeading: false,
+                              backgroundColor: Colors.transparent,
+                              flexibleSpace: FlexibleSpaceBar(
+                                collapseMode: CollapseMode.parallax,
+                                background: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: widget.imageurl
+                                          .replaceAll('150x150', '500x500'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                            Colors.black,
+                                            Colors.transparent
+                                          ])),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SliverToBoxAdapter(
+                                child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: SizedBox(
+                                height: 70,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Textutil(
+                                                text: widget.name,
+                                                fontsize: 16,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700),
+                                            Row(
+                                              children: [
+                                                Textutil(
+                                                    text: "${widget.type}  •  ",
+                                                    fontsize: 13,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                                Textutil(
+                                                    text:
+                                                        "songs ${state.songs.length}",
+                                                    fontsize: 10,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          BlocBuilder<LibraryplaylistlikeBloc,
+                                              LibraryplaylistlikeState>(
+                                            builder: (context, state) {
+                                              return state.maybeWhen(
+                                                  ifpresent: (ispresent) {
+                                                if (ispresent) {
+                                                  return IconButton(
+                                                      onPressed: () {
+                                                        _addetails(
+                                                            widget.name,
+                                                            widget.imageurl,
+                                                            widget.id,
+                                                            widget.albumurl,
+                                                            'playlist');
+                                                        _callplaylist();
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.favorite,
+                                                        color: Colors.red,
+                                                        size: 27,
+                                                      ));
+                                                } else {
+                                                  return IconButton(
+                                                      onPressed: () {
+                                                        _addetails(
+                                                            widget.name,
+                                                            widget.imageurl,
+                                                            widget.id,
+                                                            widget.albumurl,
+                                                            'playlist');
+                                                        _callplaylist();
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.favorite,
+                                                        color: Colors.white,
+                                                        size: 27,
+                                                      ));
+                                                }
+                                              }, removed: () {
+                                                return IconButton(
+                                                    onPressed: () {
+                                                      _addetails(
+                                                          widget.name,
+                                                          widget.imageurl,
+                                                          widget.id,
+                                                          widget.albumurl,
+                                                          'playlist');
+                                                      _callplaylist();
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.favorite,
+                                                      color: Colors.white,
+                                                      size: 27,
+                                                    ));
+                                              }, added: () {
+                                                return IconButton(
+                                                    onPressed: () {
+                                                      _addetails(
+                                                          widget.name,
+                                                          widget.imageurl,
+                                                          widget.id,
+                                                          widget.albumurl,
+                                                          'playlist');
+                                                      _callplaylist();
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.favorite,
+                                                      color: Colors.red,
+                                                      size: 27,
+                                                    ));
+                                              }, orElse: () {
+                                                return IconButton(
+                                                    onPressed: () {
+                                                      _addetails(
+                                                          widget.name,
+                                                          widget.imageurl,
+                                                          widget.id,
+                                                          widget.albumurl,
+                                                          'playlist');
+                                                      _callplaylist();
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.favorite,
+                                                      color: Colors.white,
+                                                      size: 27,
+                                                    ));
+                                              });
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            width: 30,
+                                          ),
+                                          Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 255, 255, 255),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50)),
                                               child: IconButton(
                                                   onPressed: () {
-                                                   
+                                                    List<Map> moreinfo = [];
+                                                    for (var itemss
+                                                        in state.songs) {
+                                                      moreinfo.add(
+                                                          itemss.more_info);
+                                                    }
                                                   },
                                                   icon: const Icon(
                                                     Icons.play_arrow,
@@ -326,328 +617,85 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                     ],
                                   ),
                                 ),
-                                Expanded(
-                                  child:ListView.builder(
-                                   padding: EdgeInsets.zero,
-                                   itemCount: state.songs.length,
-                                   itemBuilder: (context, index) {
-                                     return InkWell(
-                                       onTap: () {
-                                        
-                                         Recents(state.songs, index, context,widget.name);
-
-                                          BlocProvider.of<AudioBloc>(context)
-                                                     .add(AudioEvent.
-                                                     onlineaudio(
-                                                      state.songs[index].id, 
-                                                      index,
-                                                      state.songs[index].songs, 
-                                                      state.songs[index].image, 
-                                                      widget.name, 
-                                                      state.songs[index].primaryArtists, 
-                                                     const [], 
-                                                      state.songs,
-                                                     const [], 
-                                                     const []));
-
-                                       },
-                                       child: Songtiles(
-                                         name: state.songs[index].name,
-                                         image: state.songs[index].image,
-                                         artist:
-                                             state.songs[index].primaryArtists,
-                                         icons1: Icons.add_to_queue,
-                                         icons2: Icons.download_outlined,
-                                         visible1: true,
-                                         visible2: true,
-                                         ontapqueue: () {
-                                         OnlineSongModel onlineSongModel = OnlineSongModel(
-                                         id: state.songs[index].id, 
-                                         title: state.songs[index].name, 
-                                         imageurl: state.songs[index].image, 
-                                         downloadurl: state.songs[index].songs, 
-                                         artist: state.songs[index].primaryArtists);
-                                                    
-                                          BlocProvider.of<AudioBloc>(context).add(AudioEvent.addtonlinequeue('online',onlineSongModel));
-                                         },
-                                         ontap: () async {
-                                           final data = state.songs[index];
-                                           AlbumElements albumElements =
-                                               AlbumElements(
-                                                   id: data.id,
-                                                   name: data.name,
-                                                   year: data.year,
-                                                   type: widget.name,
-                                                   language: 'null',
-                                                   Artist: data.primaryArtists,
-                                                   url: data.songs,
-                                                   image: data.image);
-                                           await di
-                                               .di<addtodownloadsUsecase>()
-                                               .call(albumElements);
-                                         },
-                                       ),
-                                     );
-                                   },
-                                    ),
-                                ),
-                                const Spaceadjust()
-                              ],
-                                                       ),
-                                                     );
-                          },
-                          body: Stack(
-                            children: [
-                             SizedBox(
-                            height: size.height / 2,
-                            child: CachedNetworkImage(
-                              imageUrl: widget.imageurl
-                                  .replaceAll('150x150', '500x500'),
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: size.height,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.8),
-                                    Colors.black,
-                                    Colors.black,
-                                    Colors.black
-                                  ],
-                                      end: Alignment.bottomCenter,
-                                      begin: Alignment.topCenter)),
-                            ),
-                          ),   
-                            ],
-                          ),
-                        ),
-                        
-                      ],
-                    );
-                  } else if (state is playlistsongs) {
-                    return SizedBox(
-                      height: size.height,
-                      width: size.width,
-                      child: Stack(
-                        children: [
-                          SlidingUpPanel(
-                            backdropColor: Colors.black,
-                            backdropEnabled: true,
-                            color: Colors.transparent,
-                            maxHeight: size.height,
-                            minHeight: size.height/1.5,
-                            body: Stack(
-                              children: [
-                                SizedBox(
-                            height: size.height / 2,
-                            child: CachedNetworkImage(
-                              imageUrl: widget.imageurl
-                                  .replaceAll('150x150', '500x500'),
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: size.height,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.8),
-                                    Colors.black,
-                                    Colors.black,
-                                    Colors.black
-                                  ],
-                                      end: Alignment.bottomCenter,
-                                      begin: Alignment.topCenter)),
-                            ),
-                          ),
-                              ],
-                            ),
-                            panelBuilder: (sc) {
-                              return Container(
-                                decoration: const BoxDecoration(color: Colors.transparent),
-                              height: size.height / 1.5,
-                              child: Column(
-                                children: [
-                                  Spaces.Kheight20,
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const TitleText(
-                                            titleTextt: 'Related Songs'),
-                                        Row(
-                                          children: [
-                                            BlocBuilder<LibraryplaylistlikeBloc,LibraryplaylistlikeState>(
-                                              builder: (context, state) {
-                                                return state.maybeWhen(
-                                                  ifpresent: (ispresent) {
-                                                     if (ispresent) {
-                                                      return IconButton(onPressed: (){
-                                               _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'playlist');
-                                               _callplaylist();
-                                            }, icon: const Icon(Icons.favorite,color: Colors.red,size: 27,));
-                                                     }else{
-                                                    return IconButton(onPressed: (){
-                                               _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'playlist');
-                                              _callplaylist();
-                                             }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,));}
-                                                  },
-                                                  removed: () {
-                                                   return IconButton(onPressed: (){
-                                              _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'playlist');
-                                              _callplaylist();
-                                            }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,));
-                                                  },
-                                                  added: () {
-                                                    return IconButton(onPressed: (){
-                                              _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'playlist');
-                                              _callplaylist();
-                                            }, icon: const Icon(Icons.favorite,color: Colors.red,size: 27,));
-                                                  },
-                                                  orElse: (){
-                                                  return IconButton(onPressed: (){
-                                              _addetails(widget.name,widget.imageurl,widget.id, widget.albumurl, 'playlist');
-                                              _callplaylist();
-                                            }, icon: const Icon(Icons.favorite,color: Colors.white,size: 27,));
-                                                });
-                                              },
-                                            ),
-                                            const SizedBox(width: 30,),
-                                            Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                    color: const Color.fromARGB(
-                                                        255, 255, 255, 255),
-                                                    borderRadius:
-                                                        BorderRadius.circular(50)),
-                                                child: IconButton(
-                                                    onPressed: () {
-                                                      List<Map> moreinfo = [];
-                                                      for (var itemss  in state.songs) {
-                                                         moreinfo.add(itemss.more_info);
-                                                      }
-                                                     
-                                                      
-                                                    
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.play_arrow,
-                                                      color: Color.fromARGB(
-                                                          255, 0, 0, 0),
-                                                    ))),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: state.songs.isNotEmpty
-                                          ? ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              itemCount: state.songs.length,
-                                              itemBuilder: (context, index) {
-                                                return InkWell(
-                                                  onTap: () {
-                                                    List<Map> moreinfo = [];
-                                                    moreinfo.isNotEmpty?moreinfo.clear():null;
-                                                      for (var itemss  in state.songs) {
-                                                         moreinfo.add(itemss.more_info);
-                                                      }
-                                                    Recents(state.songs, index,
-                                                        context,widget.name);
-
-                                                       BlocProvider.of<AudioBloc>(context)
-                                                     .add(AudioEvent.
-                                                     onlineaudio(
-                                                      state.songs[index].id, 
-                                                      index,
-                                                      state.songs[index].downloadUrl, 
-                                                      state.songs[index].images, 
-                                                      widget.name, 
-                                                      state.songs[index].primaryArtists, 
-                                                     moreinfo, 
-                                                     const [],
-                                                     const [], 
-                                                     state.songs));
-     
-                                                  },
-                                                  child: Songtiles(
-                                                    name:
-                                                        state.songs[index].name,
-                                                    image: state
-                                                        .songs[index].images,
-                                                    artist: state.songs[index]
-                                                        .primaryArtists,
-                                                    icons1: Icons.more_vert,
-                                                    icons2:
-                                                        Icons.download_outlined,
-                                                    visible1: true,
-                                                    visible2: true,
-                                                    ontapqueue: () {
-                                                      OnlineSongModel onlineSongModel = OnlineSongModel(
-                                                        id: state.songs[index].id, 
-                                                        title: state.songs[index].name, 
-                                                        imageurl: state.songs[index].images, 
-                                                        downloadurl: state.songs[index].downloadUrl, 
-                                                        artist: state.songs[index].primaryArtists);
-                                                    
-                                                     BlocProvider.of<AudioBloc>(context).add(AudioEvent.addtonlinequeue('online',onlineSongModel));
-                                                    },
-                                                    ontap: () async {
-                                                      final data =
-                                                          state.songs[index];
-                                                      AlbumElements
-                                                          albumElements =
-                                                          AlbumElements(
-                                                              id: data.id,
-                                                              name: data.name,
-                                                              year: '',
-                                                              type: data.more_info['album'],
-                                                              language: 'null',
-                                                              Artist: data
-                                                                  .primaryArtists,
-                                                              url: data
-                                                                  .downloadUrl,
-                                                              image:
-                                                                  data.images);
-                                                      await di
-                                                          .di<addtodownloadsUsecase>()
-                                                          .call(albumElements);
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                            )
-                                          : const SizedBox(
-                                              child: Center(
-                                                  child: Text(
-                                                'Error Fetching',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )),
-                                            )),
-                                      const Spaceadjust() 
-                                             
-                                ],
                               ),
-                                                        );
-                            },
-                          ),
-                        ],
-                      ),
+                            )),
+                            SliverPadding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              sliver: SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      childCount: state.songs.length,
+                                      (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    List<Map> moreinfo = [];
+                                    moreinfo.isNotEmpty
+                                        ? moreinfo.clear()
+                                        : null;
+                                    for (var itemss in state.songs) {
+                                      moreinfo.add(itemss.more_info);
+                                    }
+                                    Recents(state.songs, index, context,
+                                        widget.name);
+                              
+                                    BlocProvider.of<AudioBloc>(context).add(
+                                        AudioEvent.onlineaudio(
+                                            state.songs[index].id,
+                                            index,
+                                            state.songs[index].downloadUrl,
+                                            state.songs[index].images,
+                                            widget.name,
+                                            state.songs[index].primaryArtists,
+                                            moreinfo,
+                                            const [],
+                                            const [],
+                                            state.songs));
+                                  },
+                                  child: Songtiles(
+                                    name: state.songs[index].name,
+                                    image: state.songs[index].images,
+                                    artist: state.songs[index].primaryArtists,
+                                    icons1: Icons.add_to_queue,
+                                    icons2: Icons.download_outlined,
+                                    visible1: true,
+                                    visible2: true,
+                                    ontapqueue: () {
+                                      OnlineSongModel onlineSongModel =
+                                          OnlineSongModel(
+                                              id: state.songs[index].id,
+                                              title: state.songs[index].name,
+                                              imageurl:
+                                                  state.songs[index].images,
+                                              downloadurl: state
+                                                  .songs[index].downloadUrl,
+                                              artist: state
+                                                  .songs[index].primaryArtists);
+                                      BlocProvider.of<AudioBloc>(context).add(
+                                          AudioEvent.addtonlinequeue(
+                                              'online', onlineSongModel));
+                                    },
+                                    ontap: () async {
+                                      final data = state.songs[index];
+                                      AlbumElements albumElements =
+                                          AlbumElements(
+                                              id: data.id,
+                                              name: data.name,
+                                              year: 'null',
+                                              type: widget.name,
+                                              language: 'null',
+                                              Artist: data.primaryArtists,
+                                              url: data.downloadUrl,
+                                              image: data.images);
+                                      await di
+                                          .di<addtodownloadsUsecase>()
+                                          .call(albumElements);
+                                    },
+                                  ),
+                                );
+                              })),
+                            )
+                          ],
+                        ),
+                      ],
                     );
                   } else {
                     return const SizedBox();
@@ -664,6 +712,246 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
   }
 }
 
+class Songslistloading extends StatelessWidget {
+  const Songslistloading({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizedBox(
+          height: size.height / 2,
+          child: Shimmer.fromColors(
+              period: const Duration(seconds: 2),
+              baseColor: const Color.fromARGB(255, 18, 41, 61),
+              highlightColor:
+                  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 67, 67, 67),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              )),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: size.height,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+              Colors.transparent,
+              Colors.black.withOpacity(0.5),
+              Colors.black,
+              Colors.black,
+              Colors.black
+            ], end: Alignment.bottomCenter, begin: Alignment.topCenter)),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            height: size.height / 1.5,
+            child: Column(
+              children: [
+                Spaces.Kheight20,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                            width: size.width / 2,
+                            child: Shimmer.fromColors(
+                                period: const Duration(seconds: 2),
+                                baseColor:
+                                    const Color.fromARGB(255, 18, 41, 61),
+                                highlightColor:
+                                    const Color.fromARGB(255, 2, 38, 68)
+                                        .withOpacity(0.5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 3, 33, 57),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                )),
+                          ),
+                          Spaces.Kheight10,
+                          SizedBox(
+                            height: 10,
+                            width: size.width / 3.4,
+                            child: Shimmer.fromColors(
+                                period: const Duration(seconds: 2),
+                                baseColor:
+                                    const Color.fromARGB(255, 18, 41, 61),
+                                highlightColor:
+                                    const Color.fromARGB(255, 2, 38, 68)
+                                        .withOpacity(0.5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 3, 33, 57),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                )),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.favorite,
+                                color: Colors.white,
+                                size: 27,
+                              )),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(50)),
+                            child: const Center(
+                              child: Icon(Icons.play_arrow),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Songtileloadingwidget(size: size);
+                    },
+                  ),
+                ),
+                const Spaceadjust()
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class Songtileloadingwidget extends StatelessWidget {
+  const Songtileloadingwidget({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: SizedBox(
+        height: 50,
+        width: 50,
+        child: Shimmer.fromColors(
+            period: const Duration(seconds: 2),
+            baseColor: const Color.fromARGB(255, 18, 41, 61),
+            highlightColor:
+                const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 3, 33, 57),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            )),
+      ),
+      title: SizedBox(
+        height: 10,
+        width: size.width / 3.4,
+        child: Shimmer.fromColors(
+            period: const Duration(seconds: 2),
+            baseColor: const Color.fromARGB(255, 18, 41, 61),
+            highlightColor:
+                const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 3, 33, 57),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            )),
+      ),
+      subtitle: SizedBox(
+        height: 8,
+        width: size.width / 3.4,
+        child: Shimmer.fromColors(
+            period: const Duration(seconds: 2),
+            baseColor: const Color.fromARGB(255, 18, 41, 61),
+            highlightColor:
+                const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 1, 1, 1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            )),
+      ),
+    );
+  }
+}
+
+class PlaylistsDetailsWidget extends StatelessWidget {
+  const PlaylistsDetailsWidget({
+    super.key,
+    required this.widget,
+    required this.size,
+  });
+
+  final SongDetailsPage widget;
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizedBox(
+          height: size.height / 2,
+          child: CachedNetworkImage(
+            imageUrl: widget.imageurl.replaceAll('150x150', '500x500'),
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.high,
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: size.height,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+              Colors.transparent,
+              Colors.black.withOpacity(0.8),
+              Colors.black,
+              Colors.black,
+              Colors.black
+            ], end: Alignment.bottomCenter, begin: Alignment.topCenter)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class Spaceadjust extends StatelessWidget {
   const Spaceadjust({
     super.key,
@@ -671,32 +959,29 @@ class Spaceadjust extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AudioBloc,AudioState>(
+    return BlocBuilder<AudioBloc, AudioState>(
       builder: (context, state) {
-       return state.maybeWhen(
-        youtubesong: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
-          return const SizedBox(
-            height: 70,
-          );
-        },
-        onlinesongs: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
-          return const SizedBox(
-            height: 70,
-          );
-        },
-        Localsongs: (isloading, isfailed, audios, valueStream, index, audioPlayer) {
-          return const SizedBox(
-            height: 70,
-          );
-        },
-        orElse: ()=>const SizedBox());
+        return state.maybeWhen(
+            onlinesongs:
+                (isloading, isfailed, audios, valueStream, index, audioPlayer) {
+              return const SizedBox(
+                height: 70,
+              );
+            },
+            Localsongs:
+                (isloading, isfailed, audios, valueStream, index, audioPlayer) {
+              return const SizedBox(
+                height: 70,
+              );
+            },
+            orElse: () => const SizedBox());
       },
     );
   }
 }
 
 class Songtiles extends StatelessWidget {
-   Songtiles({
+  const Songtiles({
     Key? key,
     required this.name,
     required this.image,
@@ -721,62 +1006,71 @@ class Songtiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        children: [
-          Container(
-          height: 55,
-          width: 55,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              image: DecorationImage(
-                  image: CachedNetworkImageProvider(image), fit: BoxFit.cover)),
-        ),
-        const SizedBox(width: 15,),
-         Expanded(
-           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Textutil(text: name, fontsize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-              Textutil(text: artist, fontsize: 10, color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.bold)
-            ],
-           ),
-         ),
-         Expanded(
-           child: SizedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-           
-                visible2 != true
-                    ? const SizedBox()
-                    : IconButton(
-                        onPressed: ontap,
-                        icon: Icon(icons2, size: 20, color: Colors.white)),
-                
-                  visible1 != true
-                    ?  const SizedBox()
-                    : PopupMenuButton(
-                       iconColor: Colors.white,
-                          itemBuilder: (BuildContext contex) {
-                             return [
-                               PopupMenuItem(
-                                    onTap: ontapqueue,
-                                   child:const Text('Add to Queue'))
-                             ];
-                             },
-                        ),
-              ],
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          children: [
+            Container(
+              height: 55,
+              width: 55,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                      image: CachedNetworkImageProvider(image),
+                      fit: BoxFit.cover)),
             ),
-              ],
+            const SizedBox(
+              width: 15,
             ),
-           ),
-         )
-        ],
-      )
-    );
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Textutil(
+                      text: name,
+                      fontsize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  Textutil(
+                      text: artist,
+                      fontsize: 10,
+                      color: Colors.white.withOpacity(0.5),
+                      fontWeight: FontWeight.bold)
+                ],
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        visible2 != true
+                            ? const SizedBox()
+                            : IconButton(
+                                onPressed: ontap,
+                                icon: Icon(icons2,
+                                    size: 20, color: Colors.white)),
+                        visible1 != true
+                            ? const SizedBox()
+                            : PopupMenuButton(
+                                iconColor: Colors.white,
+                                itemBuilder: (BuildContext contex) {
+                                  return [
+                                    PopupMenuItem(
+                                        onTap: ontapqueue,
+                                        child: const Text('Add to Queue'))
+                                  ];
+                                },
+                              ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }

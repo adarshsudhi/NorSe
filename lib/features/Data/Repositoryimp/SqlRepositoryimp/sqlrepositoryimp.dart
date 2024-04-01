@@ -20,8 +20,7 @@ class Sqlrepositoryimp extends Sqlrepository {
   Future<bool> addtodownloads(AlbumElements song ) => sqldatasourcerepository.addtodownloads(song);
 
   @override
-  Future<Either<Failures, List<Map<String, dynamic>>>>
-      QueryDownloaddata() => sqldatasourcerepository.QueryDownloaddata();
+  Future<Either<Failures, List<Map<String, dynamic>>>>QueryDownloaddata() => sqldatasourcerepository.QueryDownloaddata();
 
   @override
   Future<Either<Failures, bool>> removefromdownloads(String id) => sqldatasourcerepository.removefromdownloads(id);
@@ -109,4 +108,6 @@ class Sqlrepositoryimp extends Sqlrepository {
   
   @override
   Future<Map<String, dynamic>> getuserdetails() => sqldatasourcerepository.getuserdetails();
-}
+  
+  @override
+  Future<Either<bool, List<Map<String, dynamic>>>> getsearchsuggestions(String mode, String search) => sqldatasourcerepository.getsearchsuggestions(mode, search);}

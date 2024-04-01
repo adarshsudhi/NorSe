@@ -26,4 +26,10 @@ class PlatformRepositoryimp extends PlatformRepository {
   
   @override
   Future<Either<Failures, bool>> restoredata() => platformDataRepository.restoredata();
+  
+  @override
+  Future<void> initnotification() => platformDataRepository.initnotification();
+  
+  @override
+  void showprogress(double progress,int id,String title,String auther) => platformDataRepository.showprogress(progress, id,title,auther);
 }

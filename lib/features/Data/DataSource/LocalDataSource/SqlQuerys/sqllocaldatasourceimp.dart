@@ -65,6 +65,13 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
     ''';
 
+      const create = '''
+      CREATE TABLE usersearch (
+        key INTEGER PRIMARY KEY AUTOINCREMENT,
+        search varchar[150]
+      );
+      ''';
+
       const librarysong = '''
        CREATE TABLE librarysong (
        key INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -108,6 +115,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
           await db.execute(libraryalbum);
           await db.execute(libraryplaylist);
           await db.execute(userquery);
+          await db.execute(create);
         },
       );
     } catch (e) {
@@ -745,6 +753,43 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
         return res[0];
       }
       throw Exception('user details failed');
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  
+  @override
+  Future<Either<bool, List<Map<String,dynamic>>>> getsearchsuggestions(String mode,String search) async{
+    try {
+      Database db = await intializedatabase();
+      if (mode == 'insert') {
+       List<Map<String,dynamic>> res = await db.query('usersearch');
+
+      bool isfound = res.any((element) => element['search'] == search);
+
+
+      if (isfound) {
+        return left(false);
+      } else {
+      String insert = '''
+         INSERT INTO usersearch (search) VALUES (?);
+      ''';
+
+      await db.rawInsert(insert,[search]);
+
+      return left(true);
+      }
+    }else if(mode == 'get') {
+     List<Map<String,dynamic>> res = await db.query('usersearch');
+     if (res.isNotEmpty) {
+       return right(res);
+     } else {
+       return left(false);
+     }
+    }else{
+      await db.delete('usersearch',where: "search = ?",whereArgs: [search]);
+      return left(true);
+    }
     } catch (e) {
       throw Exception(e.toString());
     }

@@ -5,6 +5,8 @@ class YtState with _$YtState {
   const factory YtState.initial() = _Initial;
   const factory YtState.vidoeinfo(
     Video videoinfo,
+    List<VideoOnlyStreamInfo> videos,
+    AudioOnlyStreamInfo audioOnlyStreamInfo
   ) = _Videoinfo;
   const factory YtState.loader() = _Loading;
 }

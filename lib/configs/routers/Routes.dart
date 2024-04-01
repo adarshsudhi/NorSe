@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:nebula/features/Data/Models/onlinesongmodel.dart';
-import 'package:nebula/features/Presentation/CustomWidgets/onlinequeue.dart';
+import 'package:nebula/features/Presentation/Pages/subscreens/ytsearchpage/ytsearchpage.dart';
+import 'package:nebula/features/Presentation/queue/onlinequeue.dart';
 import 'package:nebula/features/Presentation/Pages/Aboutpage/aboutpage.dart';
 import 'package:nebula/features/Presentation/Pages/MainHomePage/MainHomePage.dart';
 import 'package:nebula/features/Presentation/Pages/Settings/settingspage.dart';
-import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testonlineplayerscreen.dart';
-import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testplayerscreen.dart';
-import 'package:nebula/features/Presentation/Pages/Testingplayerscreen/testytplayerscreen.dart';
+import 'package:nebula/features/Presentation/Pages/musicplayerpage/testonlineplayerscreen.dart';
+import 'package:nebula/features/Presentation/Pages/musicplayerpage/testplayerscreen.dart';
+import 'package:nebula/features/Presentation/Pages/youtubeplayer/testytplayerscreen.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/SearchResultPage/SearchResultPage.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/backupandrestore/backupandrestore.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/playlistsongscreen/youtube_playlistpage.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/youtubescreen/ytdetails.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../features/Presentation/Pages/DownloadPages/Downloadpages.dart';
 import '../../features/Presentation/Pages/Favpage/localfavsongpage.dart';
 import '../../features/Presentation/Pages/onlinefavepage.dart';
 import '../../features/Presentation/Pages/subscreens/SongDetailsPage/SongDetailsPage.dart';
 import '../../features/Presentation/Pages/subscreens/albumsongscreen/albumsongspage.dart';
 import '../../features/Presentation/Pages/subscreens/playlistsongscreen/playlistsongspage.dart';
+
 
 Route<dynamic>? onGenerate(RouteSettings settings){
     switch (settings.name) {
@@ -47,8 +46,8 @@ Route<dynamic>? onGenerate(RouteSettings settings){
           return MaterialPageRoute(builder: (_)=>const Onlinefavscreen());
 
        case Albumsongspage.albumsongspage:
-          final arg = settings.arguments as int;
-          return MaterialPageRoute(builder: (_)=> Albumsongspage(id: arg));
+          final arg = settings.arguments as Albumsongspage;
+          return MaterialPageRoute(builder: (_)=> Albumsongspage(id: arg.id,albumname: arg.albumname,));
 
        case Aboutpage.aboutpage:
           return MaterialPageRoute(builder: (_)=> const Aboutpage());
@@ -74,18 +73,16 @@ Route<dynamic>? onGenerate(RouteSettings settings){
 
 
        case Testytplayer.testytplayer:
-          return MaterialPageRoute(builder: (_)=>const Testytplayer());
-
-
-       case Ytdetailss.ytdetails:
-          final args = settings.arguments as OnlineSongModel;
-          return MaterialPageRoute(builder: (_)=>Ytdetailss(onlineSongModel: args,));
+          final args = settings.arguments as Testytplayer;
+          return MaterialPageRoute(builder: (_)=> Testytplayer(video: args.video,index: args.index,));
 
 
        case Youtubeplaylistpage.youtubeplaylistpage:
-          final args = settings.arguments as List<Video>;
-          return MaterialPageRoute(builder: (_)=>Youtubeplaylistpage(songs: args));
+          final args = settings.arguments as Youtubeplaylistpage;
+          return MaterialPageRoute(builder: (_)=>Youtubeplaylistpage(songs: args.songs,title: args.title,));
 
+       case Ytsearchpage.ytsearchpage:
+          return MaterialPageRoute(builder: (_)=> Ytsearchpage());
 
       default:
     }

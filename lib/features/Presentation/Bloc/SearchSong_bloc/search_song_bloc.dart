@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
 import 'package:nebula/features/Domain/Entity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import 'package:nebula/features/Domain/Entity/LaunchDataEntity/LaunchDataEntity.dart';
 import 'package:nebula/features/Domain/Entity/SearchSongEntity/SearchEntity.dart';
@@ -21,12 +19,17 @@ class SearchSongBloc extends Bloc<SearchSongEvent, SearchSongState> {
     this.getSearchedAlbumsUseCase,
     this.playlistUseCase,
   ) : super(SearchSongInitial()) {
+    on<Initiall>((event, emit) => emit(SearchSongInitial()));
     on<GetSearchSong>((event, emit) async{
       emit(SearchSongLoading());
       List<SearchEntity> searchentity = await useCase.call(event.Querydata);
       List<AlbumSongEntity> albums = await getSearchedAlbumsUseCase.call(event.Querydata);
       List<launchdataEntity> playlists = await playlistUseCase.call(event.Querydata);
       emit(SearchSongLoaded(Seachsong: searchentity,albums: albums,playlists: playlists));
+    });
+    on<Suggestions>((event, emit)async{
+       List<SearchEntity> searchentity = await useCase.call(event.query);
+       emit(Songsuggestion(suggestions: searchentity));
     });
   }
 }

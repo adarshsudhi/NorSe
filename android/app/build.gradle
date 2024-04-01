@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.space.nebula"
-    compileSdkVersion 33
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -65,4 +65,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}

@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 class launchdataEntity {
    final String id;
    final String image;
@@ -14,4 +14,17 @@ class launchdataEntity {
     required this.title,
     required this.type,
   });
+
+
+  factory launchdataEntity.fromMap(Map<String, dynamic> map) {
+    return launchdataEntity(
+      id: map['id'] ?? "null",
+      image: map['image'] ?? 'null',
+      albumurl: map['albumurl'] ?? 'null',
+      suntitle: map['suntitle'] ?? 'null',
+      title: map['title'] ?? 'null',
+      type: map['type'] ?? 'null',
+    );
+  }
+
 }

@@ -1,18 +1,19 @@
 import 'dart:io';
-import 'package:path/path.dart';
 import 'package:dartz/dartz.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nebula/configs/Error/Errors.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:nebula/features/Data/DataSource/LocalDataSource/Platform/PlatFormDatasource.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
 
 class PlatformDataRepositoryimp extends PlatformDataRepository {
   final OnAudioQuery onAudioQuery;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-
-  PlatformDataRepositoryimp({
+  PlatformDataRepositoryimp(this.flutterLocalNotificationsPlugin, {
     required this.onAudioQuery,
   });
 
@@ -48,11 +49,12 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
         if (permisson.isDenied && managestoragestatus.isDenied) {
           switch (version) {
             case 33 || 34:
+              PermissionStatus notificationpermission = await Permission.notification.request();
               PermissionStatus audiopermission =
                   await Permission.audio.request();
               PermissionStatus managestorage =
                   await Permission.manageExternalStorage.request();
-              return audiopermission.isGranted && managestorage.isGranted
+              return audiopermission.isGranted && managestorage.isGranted && notificationpermission.isGranted
                   ? true
                   : false;
 
@@ -97,7 +99,7 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
             sortType: SongSortType.DATE_ADDED,
             orderType: OrderType.DESC_OR_GREATER,
             uriType: UriType.EXTERNAL,
-            path: '/storage/emulated/0');
+            path: '/storage/emulated/0/Music');
 
       if (songs.isNotEmpty) {
         return right(songs);
@@ -143,11 +145,11 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
     try {
     String documentsDirectory = await getDatabasesPath();
     Database database = await openDatabase(
-      join(documentsDirectory, 'nebula.db'),
+      p.join(documentsDirectory, 'nebula.db'),
     );
     String dbpath = database.path;
       if (await databaseExists(dbpath)) {
-         String backupPath = join('/storage/emulated/0/Documents', 'backup.db');
+         String backupPath = p.join('/storage/emulated/0/Documents', 'backup.db');
          File file =await File(dbpath).copy(backupPath);
          if (await file.exists()) {
             return right(true);
@@ -165,12 +167,12 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
     try {
     String documentsDirectory = await getDatabasesPath();
     Database database = await openDatabase(
-      join(documentsDirectory, 'nebula.db'),
+    p. join(documentsDirectory, 'nebula.db'),
     );
     String dbpath = database.path;
       if (await databaseExists(dbpath)) {
          await File(dbpath).delete();
-         String backupPath = join('/storage/emulated/0/Documents', 'backup.db');
+         String backupPath = p.join('/storage/emulated/0/Documents', 'backup.db');
          File file =await File(backupPath).copy(dbpath);
          if (await file.exists()) {
             return right(true);
@@ -181,5 +183,43 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+  
+  @override
+  Future<void> initnotification() async{
+    try {
+      AndroidInitializationSettings androidInitializationSettings = const AndroidInitializationSettings('mipmap/ic_launcher');
+      
+
+      InitializationSettings initializationSettings = InitializationSettings(android: androidInitializationSettings);
+
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  
+  @override
+  void showprogress(double progress,int id,String title,String auther)async{
+      AndroidNotificationDetails androidNotificationDetails =
+      const AndroidNotificationDetails(
+      'progress channel', 'progress channel',
+      importance: Importance.max,
+      priority: Priority.max,
+      showProgress: false,
+      playSound: true,
+      enableVibration: false,
+      onlyAlertOnce: true,
+    );
+
+    NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+     await flutterLocalNotificationsPlugin.show(
+      id,
+      "$title.m4a",
+      "Download Completed",
+      notificationDetails,
+    );
   }
 }

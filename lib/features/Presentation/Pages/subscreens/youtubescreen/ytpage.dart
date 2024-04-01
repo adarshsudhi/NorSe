@@ -1,13 +1,15 @@
-
+// ignore_for_file: public_member_api_docs, sort_constructors_firs
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nebula/features/Presentation/Pages/youtubeplayer/testytplayerscreen.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/ytsearch_bloc/ytsearch_bloc.dart';
+import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 import 'package:nebula/features/Presentation/Pages/subscreens/playlistsongscreen/youtube_playlistpage.dart';
 import '../SongDetailsPage/SongDetailsPage.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Youtubepage extends StatefulWidget {
   const Youtubepage({super.key});
@@ -17,14 +19,6 @@ class Youtubepage extends StatefulWidget {
 }
 
 class _YoutubepageState extends State<Youtubepage> {
-
-  _call()async{
-    BlocProvider.of<YtsearchBloc>(context).add(const YtsearchEvent.freestate());
-    setState(() {
-      
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +32,10 @@ class _YoutubepageState extends State<Youtubepage> {
                    child: BlocBuilder<YtsearchBloc,YtsearchState>(
                             builder: (context, state) {
                               return state.maybeWhen(
-                                fres: (videos,vidoes1,videos2, isloading, isfailed) {
+                                fres: (videos,vidoes1,videos2,isloading, isfailed) {
                                   return ListView(
                                     children: [
+                                      Spaces.Kheight10,
                                       CarouselSlider(
                                          options: CarouselOptions
                                          (height: 200.0,
@@ -51,7 +46,7 @@ class _YoutubepageState extends State<Youtubepage> {
                                          items: List.generate(videos.length,
                                          (index) => GestureDetector(
                                            onTap: () {
-                                             BlocProvider.of<AudioBloc>(context).add(AudioEvent.ytaudio(videos,index,videos[index].author, videos[index].title));
+                                            Navigator.pushNamed(context,Testytplayer.testytplayer,arguments: Testytplayer(video: videos, index: index));
                                            },
                                            child: Container(
                                                      width: MediaQuery.of(context).size.width/1.1,
@@ -59,12 +54,11 @@ class _YoutubepageState extends State<Youtubepage> {
                                                      decoration:BoxDecoration(
                                                        borderRadius: BorderRadius.circular(10)
                                                      ),
-                                                     child: Image.network(
-                                                       errorBuilder: (context, error, stackTrace) {
-                                                         return const Center(child: Icon(Icons.music_note,color: Colors.white,));
-                                                       },
-                                                       videos[index].thumbnails.maxResUrl
-                                                       ,fit: BoxFit.cover,)
+                                                     child: CachedNetworkImage(
+                                                      errorWidget: (context, url, error) {
+                                                        return const Center(child: Icon(Icons.music_note,color: Colors.white,));
+                                                      },
+                                                      imageUrl: videos[index].thumbnails.maxResUrl,fit: BoxFit.cover,),
                                                    ),
                                          ),)
                                        ),
@@ -75,102 +69,27 @@ class _YoutubepageState extends State<Youtubepage> {
                                          child: ListView(
                                            padding: const EdgeInsets.only(left: 19),
                                            scrollDirection: Axis.horizontal,
-                                           children: [
-                                                                              
-                                                                              
-                                                                              
-                                             InkWell(
-                                              onTap: () {
-                                                Navigator.pushNamed(context,Youtubeplaylistpage.youtubeplaylistpage,arguments: videos2);
-                                            },
-                                               child: Column(
-                                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                                 children: [
-                                                   Padding(
-                                                     padding: const EdgeInsets.only(right: 18),
-                                                     child: Container(
-                                                       height: 200,
-                                                       width: MediaQuery.of(context).size.width/1.1,
-                                                       clipBehavior: Clip.antiAlias,
-                                                       decoration: BoxDecoration(
-                                                         borderRadius: BorderRadius.circular(10)
-                                                       ),
-                                                       child: Stack(
-                                                         children: [
-                                                           Image.network(videos2[0].thumbnails.maxResUrl,fit: BoxFit.cover,),
-                                                           Align(
-                                                             alignment: Alignment.centerRight,
-                                                             child: Container(
-                                                               width: 150,
-                                                               color: Colors.black.withOpacity(0.8),
-                                                               child: const Center(
-                                                                 child: Column(
-                                                                   mainAxisAlignment: MainAxisAlignment.center,
-                                                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                                                   children: [
-                                                                     Textutil(text: '100', fontsize: 20, color: Colors.white, fontWeight: FontWeight.normal),
-                                                                     SizedBox(height: 3,),
-                                                                     Icon(Icons.playlist_play,color: Colors.white,size: 40,)
-                                                                   ],
-                                                                 ),
-                                                               ),
-                                                             ),
-                                                           )
-                                                         ],
-                                                       ),
-                                                     ),
-                                                   ),
-                                                   const Textutil(text: 'Top 100 Party songs', fontsize: 12, color: Colors.white, fontWeight: FontWeight.bold),
-                                                   const Textutil(text: 'YouTube', fontsize: 8, color: Colors.white, fontWeight: FontWeight.normal)
-                                                 ],
-                                               ),
-                                             ),                           
-                                             InkWell(
-                                              onTap: (){
-                                                Navigator.pushNamed(context,Youtubeplaylistpage.youtubeplaylistpage,arguments: vidoes1);
+                                           children: [               
+                                             YtplaylistWidget(
+                                              ontap: () {
+                                                Navigator.pushNamed(context,Youtubeplaylistpage.youtubeplaylistpage,
+                                                arguments: Youtubeplaylistpage(songs: videos2, title: "Top 100 party songs"));
                                               },
-                                                child: Column(
-                                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                                 children: [
-                                                   Padding(
-                                                     padding: const EdgeInsets.only(right: 18),
-                                                     child: Container(
-                                                       height: 200,
-                                                       width: MediaQuery.of(context).size.width/1.1,
-                                                       clipBehavior: Clip.antiAlias,
-                                                       decoration: BoxDecoration(
-                                                         borderRadius: BorderRadius.circular(10)
-                                                       ),
-                                                       child: Stack(
-                                                         children: [
-                                                           Image.network(vidoes1[0].thumbnails.maxResUrl,fit: BoxFit.cover,),
-                                                           Align(
-                                                             alignment: Alignment.centerRight,
-                                                             child: Container(
-                                                               width: 150,
-                                                               color: Colors.black.withOpacity(0.8),
-                                                               child: const Center(
-                                                                 child: Column(
-                                                                   mainAxisAlignment: MainAxisAlignment.center,
-                                                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                                                   children: [
-                                                                     Textutil(text: '100', fontsize: 20, color: Colors.white, fontWeight: FontWeight.normal),
-                                                                     SizedBox(height: 3,),
-                                                                     Icon(Icons.playlist_play,color: Colors.white,size: 40,)
-                                                                   ],
-                                                                 ),
-                                                               ),
-                                                             ),
-                                                           )
-                                                         ],
-                                                       ),
-                                                     ),
-                                                   ),
-                                                   const Textutil(text: 'All time best bollywood songs', fontsize: 12, color: Colors.white, fontWeight: FontWeight.bold),
-                                                   const Textutil(text: 'YouTube', fontsize: 8, color: Colors.white, fontWeight: FontWeight.normal)
-                                                 ],
-                                                                                             ),
-                                              ),
+                                              video: videos2,
+                                              title: "Top 100 party songs",
+                                              subtitle: 'YOUTUBE',
+                                             ),  
+                                              YtplaylistWidget(
+                                                ontap: () {
+                                                  Navigator.pushNamed(context,Youtubeplaylistpage.youtubeplaylistpage,
+                                                  arguments: Youtubeplaylistpage(songs: vidoes1,
+                                                  title: "All time best bollywood songs"));
+                                                },
+                                              video: vidoes1,
+                                              title: "All time best bollywood songs",
+                                              subtitle: 'YOUTUBE',
+                                             ),                    
+                                            
                                            ],
                                          )
                                        
@@ -186,18 +105,18 @@ class _YoutubepageState extends State<Youtubepage> {
                                             padding: const EdgeInsets.only(bottom: 20),
                                             child: InkWell(
                                                   onTap: () {
-                                                BlocProvider.of<AudioBloc>(context).add(AudioEvent.ytaudio(videos, index,videos[index].author, videos[index].title));
+                                                    Navigator.pushNamed(context,Testytplayer.testytplayer,arguments: Testytplayer(video: videos, index: index));
                                                   },
                                                   child: Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 17),
                                                     child: Row(
                                                       children: [
                                                         Container(
-                                                          height: 50,
-                                                          width: 60,
+                                                          height: 90,
+                                                          width: 150,
                                                           clipBehavior: Clip.antiAlias,
                                                           decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(14)
+                                                            borderRadius: BorderRadius.circular(6)
                                                           ),
                                                           child: CachedNetworkImage(
                                                             errorWidget: (context, url, error) {
@@ -228,7 +147,182 @@ class _YoutubepageState extends State<Youtubepage> {
                                     
                                   );
                                 },
-                                searchedvideo: (videos, isloading, isfailed) {
+                                  loader: () =>const Ytloading(),
+                                  
+                                orElse: ()=> const SizedBox(
+                                  width: double.infinity,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: 40,
+                                              width: 40,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Spaces.Kheight20,
+                                            Textutil(text: 'Synchronizing audio stream', fontsize: 16, color: Colors.white, fontWeight: FontWeight.normal,),
+                                            Spaces.Kheight10,
+                                            Textutil(text: 'please wait ...', fontsize: 16, color: Colors.white, fontWeight: FontWeight.normal,)
+                                          
+                                            ],
+                                            
+                                        ),
+                                      ),);
+                            },
+                          ),
+                   ),
+                 ),
+               const Spaceadjust()
+        ],
+      ),
+    );
+  }
+}
+
+class Ytloading extends StatelessWidget {
+  const Ytloading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 40,
+            width: 40,
+            child: CircularProgressIndicator(color: Colors.white,),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class YtplaylistWidget extends StatelessWidget {
+  final List<Video> video;
+  final String title;
+  final VoidCallback ontap;
+  final String subtitle;
+  const YtplaylistWidget({
+    Key? key,
+    required this.video,
+    required this.title,
+    required this.ontap,
+    required this.subtitle,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+     onTap: ontap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 18),
+            child: Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width/1.1,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CachedNetworkImage(
+                    errorListener: (value) async{
+                      
+                    },
+                    errorWidget: (context, url, error) {
+                      return Thumbnailfuturebuilder(video: video[0].thumbnails);
+                    },
+                    imageUrl: video[0].thumbnails.maxResUrl,fit: BoxFit.cover,),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      width: 150,
+                      color: Colors.black.withOpacity(0.8),
+                      child:  Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Textutil(text: "${video.length}", fontsize: 20, color: Colors.white, fontWeight: FontWeight.normal),
+                            const SizedBox(height: 3,),
+                            const Icon(Icons.playlist_play,color: Colors.white,size: 40,)
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+         Textutil(text: title, fontsize: 12, color: Colors.white, fontWeight: FontWeight.bold),
+         Textutil(text: subtitle, fontsize: 8, color: Colors.white, fontWeight: FontWeight.normal)
+        ],
+      ),
+    );
+  }
+}
+
+class Thumbnailfuturebuilder extends StatelessWidget {
+  const Thumbnailfuturebuilder({
+    super.key,
+    required this.video,
+  });
+
+  final ThumbnailSet video;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(future: gethumbnail(video),
+    builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+              return Shimmer.fromColors(
+                                      period: const Duration(seconds: 2),
+                                      baseColor:
+                                          const Color.fromARGB(255, 18, 41, 61),
+                                      highlightColor:
+                                          const Color.fromARGB(255, 2, 38, 68)
+                                              .withOpacity(0.5),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 3, 33, 57),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                        ),
+                                      ));
+             } else if (snapshot.hasError) {
+              return Text('Error fetching thumbnail: ${snapshot.error}');
+            } else {
+              return CachedNetworkImage(imageUrl: snapshot.data as String);
+            }
+    },);
+  }
+}
+
+
+
+gethumbnail(ThumbnailSet thumbnailSet)async{
+   String url = await Spaces().Gethumbnail(thumbnailSet);
+   return url;
+}
+
+
+/* searchedvideo: (videos, isloading, isfailed) {
                                   return isloading != true?
                                     ListView.builder(
                                     padding: EdgeInsets.zero,
@@ -238,7 +332,7 @@ class _YoutubepageState extends State<Youtubepage> {
                                         padding: const EdgeInsets.only(bottom: 20),
                                         child: InkWell(
                                           onTap: () {
-                                        BlocProvider.of<AudioBloc>(context).add(AudioEvent.ytaudio(videos, index,videos[index].author, videos[index].title));
+                                           Navigator.pushNamed(context,Testytplayer.testytplayer,arguments: Testytplayer(video: videos, index: index));
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -285,53 +379,4 @@ class _YoutubepageState extends State<Youtubepage> {
                                       )
                                     ],
                                   );
-                                  },
-                                  loader: () =>const SizedBox(
-                                    height: double.infinity,
-                                    width: double.infinity,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 40,
-                                          width: 40,
-                                          child: CircularProgressIndicator(color: Colors.white,),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  
-                                orElse: ()=> const SizedBox(
-                                  width: double.infinity,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: 40,
-                                              width: 40,
-                                              child: CircularProgressIndicator(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            Spaces.Kheight20,
-                                            Textutil(text: 'Synchronizing audio stream', fontsize: 16, color: Colors.white, fontWeight: FontWeight.normal,),
-                                            Spaces.Kheight10,
-                                            Textutil(text: 'please wait ...', fontsize: 16, color: Colors.white, fontWeight: FontWeight.normal,)
-                                          
-                                            ],
-                                            
-                                        ),
-                                      ),);
-                            },
-                          ),
-                   ),
-                 ),
-               const Spaceadjust()
-        ],
-      ),
-    );
-  }
-}
-
+                                  }, */

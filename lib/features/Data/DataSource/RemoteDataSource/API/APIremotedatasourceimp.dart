@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:dart_des/dart_des.dart';
 import 'package:dartz/dartz.dart';
@@ -56,7 +55,6 @@ class APIremotedatasourceimp implements APIremoteDatasource {
         encoded.replaceAll('Querydata', Querydata).replaceAll('6', '20');
     final decoded = jsonDecode(uurl);
     Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
-    log(uri.toString());
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final res = jsonDecode(response.body);
@@ -67,10 +65,11 @@ class APIremotedatasourceimp implements APIremoteDatasource {
           SearchEntity searchEntity = SearchEntity(
               moreinfo: items['more_info'],
               id: items['id'],
-              name: items['title'],
+              name: items['title'].toString().replaceAll('&quot;','').replaceAll('&amp;', ''),
               year: items['id'],
               image: items['image'].toString().replaceAll('150x150', '500x500'),
-              primaryArtists: items['more_info']['music'],
+              primaryArtists: (items['more_info']['artistMap']['primary_artists'] as List).isEmpty? items['more_info']['music']:
+              items['more_info']['artistMap']['primary_artists'][0]['name'],
               downloadUrl: links[4]['link'].toString());
           results.add(searchEntity);
         }
@@ -156,15 +155,21 @@ class APIremotedatasourceimp implements APIremoteDatasource {
 
   @override
   Future<List<launchdataEntity>> trendingnow(String type) async {
+    
     List<launchdataEntity> launchdata = [];
+
     try {
       String encoded = jsonEncode(ApiEndpoints().url);
+
       String uurl =
           encoded.replaceAll('search.getResults', 'webapi.getLaunchData');
+
       Map<String, dynamic> decoded = jsonDecode(uurl);
+
       Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
+      
       http.Response response =
-          await http.get(uri, headers: {'cookie': 'L=$type', 'Accept': '*/*'});
+      await http.get(uri, headers: {'cookie': 'L=$type', 'Accept': '*/*'});
       if (response.statusCode == 200) {
         final ress =
             response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
@@ -176,8 +181,8 @@ class APIremotedatasourceimp implements APIremoteDatasource {
           }
         }
         return launchdata;
-      } else {
-        throw Exception('trending now Failed');
+      }else{
+        throw Exception('trending song failed');
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -465,16 +470,36 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   }
   
   @override
-  Future<Either<Failures,dynamic>> getplaylist(String id,String mode) async{
+  Future<dynamic> getplaylist(String id,String mode) async{
     try {
       if (mode == 'playlist') {
          List<Video> playlist = await yt.playlists.getVideos(id).toList();
-         return right(playlist);
+         return playlist;
       } else {
         throw Exception('not a mode');
       }
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+  
+  @override
+  Future<List<VideoOnlyStreamInfo>> getManifest(String id) async{
+     List<VideoOnlyStreamInfo> videos = [];
+      StreamManifest streamManifest = await yt.videos.streamsClient.getManifest(id);
+            final List<VideoOnlyStreamInfo> sortedStreamInfo = streamManifest.videoOnly
+        .toList()
+      ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
+
+      for (var video in sortedStreamInfo) {
+        if (video.codec.subtype == 'mp4') {
+           videos.add(video);
+        }
+      }
+      if (videos.isNotEmpty) {
+        return videos;
+      }else{
+        throw Exception('not video');
+      }
   }
 }

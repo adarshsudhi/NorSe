@@ -10,7 +10,6 @@ import 'package:metadata_god/metadata_god.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-
 import '../../../../../configs/Error/Errors.dart';
 import '../../../../Domain/UseCases/yt_usecase/getaudiostream_usecase.dart';
 
@@ -31,15 +30,15 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
           log('Failed');
         }, (r) async{
 
-  final temp = await getTemporaryDirectory();
+  Directory temp = await getTemporaryDirectory();
 
   String tempDirectory = temp.path;
 
-  final audio = r;
+  AudioOnlyStreamInfo audio = r;
 
-  final audioStream = YoutubeExplode().videos.streamsClient.get(r);
+  Stream<List<int>> audioStream = YoutubeExplode().videos.streamsClient.get(r);
 
-  final fileName = '${event.info.title}.${audio.container.name}'
+  String fileName = '${event.info.title}.${audio.container.name}'
       .replaceAll('.webm','')
       .replaceAll(':', '')
       .replaceAll('.mp4','')
@@ -62,8 +61,7 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
 
    File img = File(artworkpath);
 
-   Uint8List artworkbytes = await img.readAsBytes();
-
+   Uint8List artworkbytes = img.readAsBytesSync();
    if (file.existsSync()) {
       Spaces.showtoast('already exists');
       emit(const YtdownloadState.initial());
@@ -85,16 +83,16 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
 
     emit(YtdownloadState.downloading(progresscontroller.stream));
 
-     output.add(data);
+    output.add(data);
   }
+
+    await output.close();
     
-  await MetadataGod.writeMetadata(
+    await MetadataGod.writeMetadata(
     file: path,
     metadata: Metadata(
       title: fileName.replaceAll('.m4a',''),
       artist: event.info.author,
-      album: event.info.author,
-      albumArtist: event.info.author,
       year: event.info.publishDate!.year,
       fileSize: file.lengthSync(),
       picture: Picture(mimeType: 'image/jpeg',
@@ -102,9 +100,6 @@ class YtdownloadBloc extends Bloc<YtdownloadEvent, YtdownloadState> {
     )).then((value) => emit(const YtdownloadState.initial()));
 
     Spaces.showtoast('Downloaded');
-
-    await output.close();
-     
    }
 
     });

@@ -21,6 +21,7 @@ import 'package:nebula/features/Domain/UseCases/API_UseCase/SearchSong_UseCase.d
 import 'package:nebula/features/Domain/UseCases/API_UseCase/getlyrices_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/API_UseCase/getnewlyreleased_Usecase.dart';
 import 'package:nebula/features/Domain/UseCases/API_UseCase/getplaylists_Usecase.dart';
+import 'package:nebula/features/Domain/UseCases/API_UseCase/getsearchsongs_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/API_UseCase/gettopCharts_UseCase.dart';
 import 'package:nebula/features/Domain/UseCases/API_UseCase/gettopalbums_Usecase.dart';
 import 'package:nebula/features/Domain/UseCases/API_UseCase/gettopsearches_UseCase.dart';
@@ -30,7 +31,9 @@ import 'package:nebula/features/Domain/UseCases/Platform_UseCase/backupdata_usec
 import 'package:nebula/features/Domain/UseCases/Platform_UseCase/getalbuma_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/Platform_UseCase/getalbumsongs_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/Platform_UseCase/getallsongs_UseCase.dart';
+import 'package:nebula/features/Domain/UseCases/Platform_UseCase/initializenotification_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/Platform_UseCase/restoredata_usecase.dart';
+import 'package:nebula/features/Domain/UseCases/Platform_UseCase/shownotification_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/Getallrecents.dart';
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/addtodownloads_Usecase.dart';
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/addtofav_UseCase.dart';
@@ -59,8 +62,10 @@ import 'package:nebula/features/Domain/UseCases/Sql_UseCase/removesongfromplayli
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/updateplaylist_UseCase.dart';
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/updateuserplaylists_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/userdetails_usecase.dart';
+import 'package:nebula/features/Domain/UseCases/Sql_UseCase/usersearch_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getaudiostream_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getsearchvideo_usecase.dart';
+import 'package:nebula/features/Domain/UseCases/yt_usecase/getstreamManifest_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getvideoinfo_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getytplaylist_usecase.dart';
 import 'package:nebula/features/Presentation/Bloc/Albumsongs/albums_songs_bloc.dart';
@@ -82,15 +87,18 @@ import 'package:nebula/features/Presentation/Bloc/favorite_bloc/favoriteplaylist
 import 'package:nebula/features/Presentation/Bloc/playlist_Bloc/playlist_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/playlistsongs_bloc/playlistsongs_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/recents_bloc/recents_bloc.dart';
+import 'package:nebula/features/Presentation/Bloc/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
+import 'package:nebula/features/Presentation/Bloc/youtubeBloc/videoinfo_bloc/videoinfo_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/youtubeBloc/yt_bloc/yt_bloc.dart';
 import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytdownload_bloc/ytdownload_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/ytsearch_bloc/ytsearch_bloc.dart';
+import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'features/Domain/UseCases/Sql_UseCase/addtorecents_UseCase.dart';
 import 'features/Domain/UseCases/Sql_UseCase/getallfav_Usecase.dart';
 import 'features/Presentation/Bloc/Library/song/library_bloc/library_bloc.dart';
 import 'features/Presentation/Bloc/favsong_bloc/favsongs_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 GetIt di = GetIt.instance;
@@ -104,7 +112,7 @@ Future<void>init()async{
     di.registerFactory(() => AlbumsSongsBloc(di.call(),di.call()));
     di.registerFactory(() => TrendingSongBloc(di.call(),di.call(),di.call(),di.call(),di.call()));
     di.registerFactory(() => SearchSongBloc(di.call(),di.call(),di.call()));
-    di.registerFactory(() => DownloadSongBloc(di.call(),di.call()));
+    di.registerFactory(() => DownloadSongBloc(di.call(),di.call(),di.call()));
     di.registerFactory(() => LocaldataBloc(di.call(),di.call(),di.call()));
     di.registerFactory(() => LocalsongBloc(di.call(),di.call()));
     di.registerFactory(() => PlaylistBloc());
@@ -125,6 +133,8 @@ Future<void>init()async{
     di.registerFactory(() => YtsearchBloc());
     di.registerFactory(() => AudioBloc());
     di.registerFactory(() => BackupAndRestoreBloc());
+    di.registerFactory(() => VideoinfoBloc());
+    di.registerFactory(() => SearchytBlocBloc());
 
 
 
@@ -184,15 +194,18 @@ Future<void>init()async{
     di.registerLazySingleton(() => Backupdatausecase(repository: di.call()));
     di.registerLazySingleton(() => Restoredatausecase(repository: di.call()));
     di.registerLazySingleton(() => Getplaylistusecase(repository: di.call()));
-
-
+    di.registerLazySingleton(() => Usersearchusecase(repo: di.call()));
+    di.registerLazySingleton(() => GetstreamManifestusecase(repository: di.call()));
+    di.registerLazySingleton(() => Getsearchsongsusecase(repository: di.call()));
+    di.registerLazySingleton(() => InitializeNotificationusecase(repository: di.call()));
+    di.registerLazySingleton(() => Shownotificationusecase(repository: di.call()));
 
 
     //Repository
     di.registerLazySingleton<APIRepository>(() => APIRepositoryimp(apIremoteDatasource: di.call()));
     di.registerLazySingleton<APIremoteDatasource>(() => APIremotedatasourceimp(yt: di.call()));
     di.registerLazySingleton<PlatformRepository>(() => PlatformRepositoryimp(platformDataRepository: di.call()));
-    di.registerLazySingleton<PlatformDataRepository>(() => PlatformDataRepositoryimp(onAudioQuery: di.call()));
+    di.registerLazySingleton<PlatformDataRepository>(() => PlatformDataRepositoryimp(onAudioQuery: di.call(),di.call()));
     di.registerLazySingleton<Sqlrepository>(() => Sqlrepositoryimp(sqldatasourcerepository: di.call()));
     di.registerLazySingleton<Sqldatasourcerepository>(() => Sqldatasourcerepositoryimp());
 
@@ -201,9 +214,10 @@ Future<void>init()async{
 
     final OnAudioQuery onAudioQuery = OnAudioQuery();
     final YoutubeExplode yt = YoutubeExplode();
-
-
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    
     
     di.registerLazySingleton<YoutubeExplode>(() => yt);
     di.registerLazySingleton<OnAudioQuery>(() => onAudioQuery);
+    di.registerLazySingleton(() => flutterLocalNotificationsPlugin);
 }

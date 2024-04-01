@@ -88,7 +88,16 @@ class _AboutpageState extends State<Aboutpage> {
                                children: [
                                 const Textutil(text: 'Nebula music player', fontsize: 24, color: Colors.white, fontWeight: FontWeight.bold),
                                 const Textutil(text: 'v 1.0.1', fontsize: 10, color: Colors.white, fontWeight: FontWeight.bold),
-                                Text('Made by Adarsh N S ',style: Spaces.Getstyle(10,Colors.white,FontWeight.normal),),
+                                      Spaces.Kheight10,    
+                                           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+              Text("Build with ",style: Spaces.Getstyle(10,Colors.white,FontWeight.normal),),
+              const Icon(Icons.favorite,color: Colors.red,size: 12,),
+              
+               Text(' by Adarsh N S ',style: Spaces.Getstyle(10,Colors.white,FontWeight.normal),),
+             ],
+           ),
                                 ]
                               ),
                         

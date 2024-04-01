@@ -9,4 +9,6 @@ abstract class PlatformRepository {
    Future<Either<Failures,List<SongModel>>>getalbumsongs(int id);
    Future<Either<Failures,bool>>backupdata();
    Future<Either<Failures,bool>>restoredata();
+   Future<void>initnotification();
+   void showprogress(double progress,int id,String title,String auther);
   }

@@ -8,7 +8,7 @@ import 'package:nebula/features/Presentation/CustomWidgets/shimmer.dart';
 import '../../../../configs/constants/Spaces.dart';
 import '../../Data/Models/onlinesongmodel.dart';
 import '../Bloc/SearchSong_bloc/search_song_bloc.dart';
-import 'Testingplayerscreen/testonlineplayerscreen.dart';
+import 'musicplayerpage/testonlineplayerscreen.dart';
 import 'subscreens/SongDetailsPage/SongDetailsPage.dart';
 
 

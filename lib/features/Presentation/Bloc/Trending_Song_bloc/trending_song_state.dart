@@ -20,8 +20,10 @@ class Songstate extends TrendingSongState {
   final List<launchdataEntity>hindi;
   final List<launchdataEntity> newlyreleased;
   final List<launchdataEntity> topalbums;
+  final List<SearchEntity> picks;
 
-  Songstate({required this.Tamil, required this.Malayalam, required this.English, required this.trendingnow, required this.hindi, required this.newlyreleased, required this.topalbums});
+  Songstate({required this.Tamil, required this.Malayalam, required this.English, required this.trendingnow, required this.hindi, required this.newlyreleased, 
+  required this.topalbums,required this.picks});
 
 
 }

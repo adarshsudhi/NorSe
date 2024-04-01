@@ -11,6 +11,12 @@ final class SearchSongInitial extends SearchSongState {}
 
 final class SearchSongLoading extends SearchSongState {}
 
+final class Songsuggestion extends SearchSongState {
+  final List<SearchEntity> suggestions;
+
+  Songsuggestion({required this.suggestions});
+}
+
 final class SearchSongLoaded extends SearchSongState {
   final List<SearchEntity> Seachsong;
   final List<AlbumSongEntity> albums;

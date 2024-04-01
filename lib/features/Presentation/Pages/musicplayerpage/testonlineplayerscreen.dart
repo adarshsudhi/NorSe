@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nebula/features/Data/Models/onlinesongmodel.dart';
 import 'package:nebula/features/Presentation/Bloc/Lyrics_bloc/lyrics_bloc.dart';
-import 'package:nebula/features/Presentation/CustomWidgets/onlinequeue.dart';
+import 'package:nebula/features/Presentation/queue/onlinequeue.dart';
 import '../../../../configs/constants/Spaces.dart';
 import 'package:nebula/injection_container.dart' as di;
 import '../../../Domain/Entity/AlbumDetailsEntity/AlbumDetailEntity.dart';
@@ -121,7 +121,7 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                    ),
                                    FlipCard(
                                     front: SizedBox(
-                                  height: MediaQuery.sizeOf(context).height/2.50,
+                                  height: MediaQuery.sizeOf(context).height/2.65,
                                   width: MediaQuery.sizeOf(context).width,
                                   child: PageView.builder(
                                   physics:const NeverScrollableScrollPhysics(),
@@ -132,7 +132,7 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                     String img = audios[index].imageurl;
                                    _controller.hasClients && songindex != index? _controller.animateToPage(songindex, duration: const Duration(milliseconds: 300), curve:Curves.easeInOut):null;
                                     return Padding(
-                                      padding: const EdgeInsets.only(left: 25,right: 25,bottom: 10),
+                                      padding: const EdgeInsets.only(left: 30,right: 30,bottom: 10),
                                       child: Material(
                                         elevation: 6,
                                         surfaceTintColor: Colors.transparent,
@@ -216,7 +216,21 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                   
                                Column(
                                 children: [
-                                Padding(
+                              audios[songindex].title.length <= 20? 
+                              Padding(
+                               padding: const EdgeInsets.only(right: 35,left: 35),
+                               child: SizedBox(
+                                height: 50,
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Textutil(text: audios[songindex].title, fontsize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                                  ],
+                                ),
+                               )
+                              )
+                              :Padding(
                                padding: const EdgeInsets.only(right: 35,left: 35),
                                child: SizedBox(
                                 height: 50,

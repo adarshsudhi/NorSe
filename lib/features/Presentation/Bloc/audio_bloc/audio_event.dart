@@ -28,19 +28,6 @@ class AudioEvent with _$AudioEvent {
 
   ) = _Localaudio;
 
-  const factory AudioEvent.ytaudio(
-    List<Video> audios,
-    int index,
-    String author,
-    String audiotitle,
-  )=_Ytaudio;
-
-  const factory AudioEvent.parseytaudio(
-    List<Video> videos,
-    bool neweventdispached,
-    Video currentvideo,
-   ) = _Parseytaudio;
-
   const factory AudioEvent.pause() = _Pause;
   const factory AudioEvent.resume() = _Resume; 
   const factory AudioEvent.loopon(
@@ -73,4 +60,8 @@ class AudioEvent with _$AudioEvent {
     String mode,
     int currentplaying,
   ) = _Clearqueueexceptplaying;
+  const factory AudioEvent.parselocalaudio(
+    SongModel currentsong,
+    List<SongModel> allsongs
+  ) = _Parselocalaudio;
 }

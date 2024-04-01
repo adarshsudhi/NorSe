@@ -20,24 +20,6 @@ class AudioState with _$AudioState {
   int index
   ) = _Localstreams;
 
-  const factory AudioState.youtubesong(
-    bool isloading,
-    bool isfailed,
-    List<OnlineSongModel> audios,
-    ValueStream<AudioState>valueStream,
-    int index,
-    AudioPlayer audioPlayer
-  ) = _YTsongs;
-
-  const factory AudioState.youtubestreams(
-  Duration pos,
-  Duration dur,
-  PlayerState playerState,
-  Duration buffer,
-  int index
-  ) = _Ytstreams;
-
-
     const factory AudioState.onlinesongs(
     bool isloading,
     bool isfailed,

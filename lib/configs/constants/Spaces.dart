@@ -1,8 +1,10 @@
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:http/http.dart';
 import 'package:marquee/marquee.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class Spaces {
   static const kheigth5 = SizedBox(height: 5,);
@@ -10,11 +12,14 @@ class Spaces {
   static const Kheight20 = SizedBox(height: 20,);
 
   static showtoast(String Content){
-    return Fluttertoast.showToast(msg: Content,textColor: Colors.black,backgroundColor: Colors.white,gravity: ToastGravity.SNACKBAR);
+    return Fluttertoast.showToast(
+      timeInSecForIosWeb: 03,
+      msg: Content,textColor: Colors.black,backgroundColor: Colors.white,gravity: ToastGravity.SNACKBAR);
   }
 
   static songtitle(String title,double size,Color color,FontWeight weight,BuildContext context) {
   return Marquee(
+  startAfter: const Duration(seconds: 3),
   text: title,
   style: Getstyle(size, color, weight),
   scrollAxis: Axis.horizontal,
@@ -33,15 +38,13 @@ class Spaces {
 static  LinearGradient musicgradient() {
     return const LinearGradient(
                       colors: [
-                               Color.fromARGB(255, 48, 48, 48),
-                               Color.fromARGB(255, 33, 33, 33),
-                               Color.fromARGB(255, 25, 25, 25),
+                               Color.fromARGB(255, 27, 27, 27),
                                Color.fromARGB(255, 0, 0, 0)
                     ]);
   }
  
  static TextStyle Getstyle(double fontSize,Color color,FontWeight fontWeight){
-     return GoogleFonts.ubuntu(
+     return GoogleFonts.openSans(
       color: color,
       fontSize: fontSize,
       fontWeight: fontWeight,
@@ -49,9 +52,25 @@ static  LinearGradient musicgradient() {
      );
   }
 
-  static loading(Color color){
-    return LoadingAnimationWidget.fourRotatingDots(color: color, size: 50);
+  Future<String> Gethumbnail(ThumbnailSet thumbnailSet)async{
+      Response response = await http.get(Uri.parse(thumbnailSet.maxResUrl));
+      if (response.statusCode == 200) {
+        return thumbnailSet.maxResUrl;
+      } else {
+        Response response = await http.get(Uri.parse(thumbnailSet.highResUrl));
+        if (response.statusCode == 200) {
+          return thumbnailSet.highResUrl;
+        }else{
+           Response response = await http.get(Uri.parse(thumbnailSet.mediumResUrl));
+           if (response.statusCode == 200) {
+             return thumbnailSet.mediumResUrl;
+           }else{
+              return 'https://cdn.pixabay.com/photo/2016/11/19/03/08/youtube-1837872_1280.png';
+           }
+        }
+      }
   }
+
 }
 
 class Textutil extends StatelessWidget {

@@ -327,21 +327,27 @@ mixin _$YtState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo) vidoeinfo,
+    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)
+        vidoeinfo,
     required TResult Function() loader,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo)? vidoeinfo,
+    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult? Function()? loader,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo)? vidoeinfo,
+    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult Function()? loader,
     required TResult orElse(),
   }) =>
@@ -432,7 +438,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo) vidoeinfo,
+    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)
+        vidoeinfo,
     required TResult Function() loader,
   }) {
     return initial();
@@ -442,7 +450,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo)? vidoeinfo,
+    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult? Function()? loader,
   }) {
     return initial?.call();
@@ -452,7 +462,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo)? vidoeinfo,
+    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult Function()? loader,
     required TResult orElse(),
   }) {
@@ -507,7 +519,10 @@ abstract class _$$VideoinfoImplCopyWith<$Res> {
           _$VideoinfoImpl value, $Res Function(_$VideoinfoImpl) then) =
       __$$VideoinfoImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Video videoinfo});
+  $Res call(
+      {Video videoinfo,
+      List<VideoOnlyStreamInfo> videos,
+      AudioOnlyStreamInfo audioOnlyStreamInfo});
 
   $VideoCopyWith<$Res> get videoinfo;
 }
@@ -524,12 +539,22 @@ class __$$VideoinfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? videoinfo = null,
+    Object? videos = null,
+    Object? audioOnlyStreamInfo = null,
   }) {
     return _then(_$VideoinfoImpl(
       null == videoinfo
           ? _value.videoinfo
           : videoinfo // ignore: cast_nullable_to_non_nullable
               as Video,
+      null == videos
+          ? _value._videos
+          : videos // ignore: cast_nullable_to_non_nullable
+              as List<VideoOnlyStreamInfo>,
+      null == audioOnlyStreamInfo
+          ? _value.audioOnlyStreamInfo
+          : audioOnlyStreamInfo // ignore: cast_nullable_to_non_nullable
+              as AudioOnlyStreamInfo,
     ));
   }
 
@@ -545,14 +570,26 @@ class __$$VideoinfoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
-  const _$VideoinfoImpl(this.videoinfo);
+  const _$VideoinfoImpl(this.videoinfo, final List<VideoOnlyStreamInfo> videos,
+      this.audioOnlyStreamInfo)
+      : _videos = videos;
 
   @override
   final Video videoinfo;
+  final List<VideoOnlyStreamInfo> _videos;
+  @override
+  List<VideoOnlyStreamInfo> get videos {
+    if (_videos is EqualUnmodifiableListView) return _videos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_videos);
+  }
+
+  @override
+  final AudioOnlyStreamInfo audioOnlyStreamInfo;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'YtState.vidoeinfo(videoinfo: $videoinfo)';
+    return 'YtState.vidoeinfo(videoinfo: $videoinfo, videos: $videos, audioOnlyStreamInfo: $audioOnlyStreamInfo)';
   }
 
   @override
@@ -560,7 +597,9 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'YtState.vidoeinfo'))
-      ..add(DiagnosticsProperty('videoinfo', videoinfo));
+      ..add(DiagnosticsProperty('videoinfo', videoinfo))
+      ..add(DiagnosticsProperty('videos', videos))
+      ..add(DiagnosticsProperty('audioOnlyStreamInfo', audioOnlyStreamInfo));
   }
 
   @override
@@ -569,11 +608,15 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
         (other.runtimeType == runtimeType &&
             other is _$VideoinfoImpl &&
             (identical(other.videoinfo, videoinfo) ||
-                other.videoinfo == videoinfo));
+                other.videoinfo == videoinfo) &&
+            const DeepCollectionEquality().equals(other._videos, _videos) &&
+            (identical(other.audioOnlyStreamInfo, audioOnlyStreamInfo) ||
+                other.audioOnlyStreamInfo == audioOnlyStreamInfo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, videoinfo);
+  int get hashCode => Object.hash(runtimeType, videoinfo,
+      const DeepCollectionEquality().hash(_videos), audioOnlyStreamInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -585,32 +628,38 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo) vidoeinfo,
+    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)
+        vidoeinfo,
     required TResult Function() loader,
   }) {
-    return vidoeinfo(videoinfo);
+    return vidoeinfo(videoinfo, videos, audioOnlyStreamInfo);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo)? vidoeinfo,
+    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult? Function()? loader,
   }) {
-    return vidoeinfo?.call(videoinfo);
+    return vidoeinfo?.call(videoinfo, videos, audioOnlyStreamInfo);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo)? vidoeinfo,
+    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult Function()? loader,
     required TResult orElse(),
   }) {
     if (vidoeinfo != null) {
-      return vidoeinfo(videoinfo);
+      return vidoeinfo(videoinfo, videos, audioOnlyStreamInfo);
     }
     return orElse();
   }
@@ -651,9 +700,14 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
 }
 
 abstract class _Videoinfo implements YtState {
-  const factory _Videoinfo(final Video videoinfo) = _$VideoinfoImpl;
+  const factory _Videoinfo(
+      final Video videoinfo,
+      final List<VideoOnlyStreamInfo> videos,
+      final AudioOnlyStreamInfo audioOnlyStreamInfo) = _$VideoinfoImpl;
 
   Video get videoinfo;
+  List<VideoOnlyStreamInfo> get videos;
+  AudioOnlyStreamInfo get audioOnlyStreamInfo;
   @JsonKey(ignore: true)
   _$$VideoinfoImplCopyWith<_$VideoinfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -704,7 +758,9 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo) vidoeinfo,
+    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)
+        vidoeinfo,
     required TResult Function() loader,
   }) {
     return loader();
@@ -714,7 +770,9 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo)? vidoeinfo,
+    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult? Function()? loader,
   }) {
     return loader?.call();
@@ -724,7 +782,9 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo)? vidoeinfo,
+    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+            AudioOnlyStreamInfo audioOnlyStreamInfo)?
+        vidoeinfo,
     TResult Function()? loader,
     required TResult orElse(),
   }) {

@@ -35,4 +35,5 @@ abstract class Sqldatasourcerepository{
   Future<bool> checkifplaylistpresent(String id);
   Future<bool> userdetails(String mode,Usermodel user);
   Future<Map<String,dynamic>> getuserdetails();
+  Future<Either<bool, List<Map<String,dynamic>>>>getsearchsuggestions(String mode,String search);
 }
