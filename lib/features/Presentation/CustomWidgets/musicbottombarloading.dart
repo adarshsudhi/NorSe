@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../configs/constants/Spaces.dart';
-import '../Bloc/audio_bloc/audio_bloc.dart';
-import '../Pages/MainHomePage/MainHomePage.dart';
+import '../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
+import '../pages/MainHomePage/MainHomePage.dart';
 
 class MusicBottomBarloading extends StatelessWidget {
   const MusicBottomBarloading({

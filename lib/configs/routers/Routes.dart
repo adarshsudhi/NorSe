@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/ytsearchpage/ytsearchpage.dart';
-import 'package:nebula/features/Presentation/queue/onlinequeue.dart';
-import 'package:nebula/features/Presentation/Pages/Aboutpage/aboutpage.dart';
-import 'package:nebula/features/Presentation/Pages/MainHomePage/MainHomePage.dart';
-import 'package:nebula/features/Presentation/Pages/Settings/settingspage.dart';
-import 'package:nebula/features/Presentation/Pages/musicplayerpage/testonlineplayerscreen.dart';
-import 'package:nebula/features/Presentation/Pages/musicplayerpage/testplayerscreen.dart';
-import 'package:nebula/features/Presentation/Pages/youtubeplayer/testytplayerscreen.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/SearchResultPage/SearchResultPage.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/backupandrestore/backupandrestore.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/playlistsongscreen/youtube_playlistpage.dart';
-import '../../features/Presentation/Pages/DownloadPages/Downloadpages.dart';
-import '../../features/Presentation/Pages/Favpage/localfavsongpage.dart';
-import '../../features/Presentation/Pages/onlinefavepage.dart';
-import '../../features/Presentation/Pages/subscreens/SongDetailsPage/SongDetailsPage.dart';
-import '../../features/Presentation/Pages/subscreens/albumsongscreen/albumsongspage.dart';
-import '../../features/Presentation/Pages/subscreens/playlistsongscreen/playlistsongspage.dart';
-
+import '../../features/Presentation/Pages/MainHomePage/MainHomePage.dart';
+import '../../features/Presentation/queue/onlinequeue.dart';
+import '../../features/Presentation/pages/saavn/Aboutpage/aboutpage.dart';
+import '../../features/Presentation/pages/saavn/DownloadPages/Downloadpages.dart';
+import '../../features/Presentation/pages/saavn/Favpage/localfavsongpage.dart';
+import '../../features/Presentation/pages/saavn/Settings/settingspage.dart';
+import '../../features/Presentation/pages/saavn/musicplayerpage/testonlineplayerscreen.dart';
+import '../../features/Presentation/pages/saavn/musicplayerpage/testplayerscreen.dart';
+import '../../features/Presentation/pages/saavn/onlinefavepage.dart';
+import '../../features/Presentation/pages/saavn/subscreens/SearchResultPage/SearchResultPage.dart';
+import '../../features/Presentation/pages/saavn/subscreens/SongDetailsPage/SongDetailsPage.dart';
+import '../../features/Presentation/pages/saavn/subscreens/albumsongscreen/albumsongspage.dart';
+import '../../features/Presentation/pages/saavn/subscreens/backupandrestore/backupandrestore.dart';
+import '../../features/Presentation/pages/saavn/subscreens/playlistsongscreen/playlistsongspage.dart';
+import '../../features/Presentation/pages/saavn/subscreens/playlistsongscreen/youtube_playlistpage.dart';
+import '../../features/Presentation/pages/saavn/subscreens/ytsearchpage/ytsearchpage.dart';
+import '../../features/Presentation/pages/saavn/youtubeplayer/testytplayerscreen.dart';
 
 Route<dynamic>? onGenerate(RouteSettings settings){
     switch (settings.name) {
 
-      case MainHomePage.MainHomePAge:
+      case MainHomePage.mainHomePAge:
          return MaterialPageRoute(settings: settings,builder: (_)=>const MainHomePage());
 
       case SongDetailsPage.SongDetials:
@@ -63,19 +62,15 @@ Route<dynamic>? onGenerate(RouteSettings settings){
           final args = settings.arguments as Onlinequeue;
           return MaterialPageRoute(builder: (_)=> Onlinequeue(audios: args.audios,audioPlayer: args.audioPlayer,));
           
-
        case Settingpage.settingpage:
           return MaterialPageRoute(builder: (_)=> const Settingpage());
-
 
        case Backupandrestore.backupandrestore:
           return MaterialPageRoute(builder: (_)=> const Backupandrestore());
 
-
        case Testytplayer.testytplayer:
           final args = settings.arguments as Testytplayer;
           return MaterialPageRoute(builder: (_)=> Testytplayer(video: args.video,index: args.index,));
-
 
        case Youtubeplaylistpage.youtubeplaylistpage:
           final args = settings.arguments as Youtubeplaylistpage;

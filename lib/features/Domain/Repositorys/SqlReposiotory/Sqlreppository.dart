@@ -1,7 +1,7 @@
 import 'package:nebula/configs/Error/Errors.dart';
-import 'package:nebula/features/Data/Models/usermodel.dart';
+import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
 import 'package:sqflite/sqflite.dart';
-import '../../Entity/SongsDetailsEntity/SongsEntity.dart';
+import '../../Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class Sqlrepository{

@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nebula/features/Data/DataSource/RemoteDataSource/API/APIremotedatasource.dart';
-import 'package:nebula/features/Domain/Entity/LaunchDataEntity/LaunchDataEntity.dart';
-import 'package:nebula/features/Domain/Entity/PlaylistEntity/PlaylistEntity.dart';
-import 'package:nebula/features/Domain/Entity/TopChartsEntity/topchartentity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
 import 'package:nebula/features/Domain/Repositorys/APIRepository/APIrepository.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../configs/Error/Errors.dart';
-import '../../../Domain/Entity/AlbumDetailsEntity/AlbumDetailEntity.dart';
-import '../../../Domain/Entity/SearchSongEntity/SearchEntity.dart';
+import '../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
+import '../../../Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
 
 class APIRepositoryimp implements APIRepository {
   final APIremoteDatasource apIremoteDatasource;
@@ -17,7 +17,7 @@ class APIRepositoryimp implements APIRepository {
   });
 
   @override
-  Future<List<AlbumSongEntity>> GetAlbumSongs(String albumurl) => apIremoteDatasource.GetAlbumSongs(albumurl);
+  Future<List<AlbumSongEntity>> getAlbumSongs(String albumurl) => apIremoteDatasource.getAlbumSongs(albumurl);
 
   @override
   Future<List<SearchEntity>> SearchSong(String Querydata) => apIremoteDatasource.SearchSong(Querydata);
@@ -67,7 +67,7 @@ class APIRepositoryimp implements APIRepository {
   Future<Either<Failures, AudioOnlyStreamInfo>> getstream(String id) => apIremoteDatasource.getstream(id);
   
   @override
-  Future<Either<Failures, String>> getlyrices(String id) => apIremoteDatasource.getlyrices(id);
+  Future<Either<Failures, Map<String, dynamic>>> getlyrices(String id) => apIremoteDatasource.getlyrices(id);
   
   @override
   Future<Either<Failures, VideoSearchList>> getsearchvideo(String query)=>apIremoteDatasource.getsearchvideo(query);

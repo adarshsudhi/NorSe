@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:nebula/features/Domain/Entity/PlaylistEntity/PlaylistEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../../configs/Error/Errors.dart';
-import '../../../../Domain/Entity/AlbumDetailsEntity/AlbumDetailEntity.dart';
-import '../../../../Domain/Entity/LaunchDataEntity/LaunchDataEntity.dart';
-import '../../../../Domain/Entity/SearchSongEntity/SearchEntity.dart';
-import '../../../../Domain/Entity/TopChartsEntity/topchartentity.dart';
+import '../../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
 
 abstract class APIremoteDatasource {
-  Future<List<AlbumSongEntity>> GetAlbumSongs(String albumurl);
+  Future<List<AlbumSongEntity>> getAlbumSongs(String albumurl);
   Future<List<SearchEntity>> SearchSong(String Querydata);
   Future<SearchEntity> GetSong(String Songurl);
   Future<List<AlbumSongEntity>> GetSearchedAlbums(String Query);
@@ -27,7 +27,7 @@ abstract class APIremoteDatasource {
   Future<Either<Failures, List<launchdataEntity>>> gettopalbums();
   Future<Either<Failures,Video>> getvideoinfo(String id);
   Future<Either<Failures,AudioOnlyStreamInfo>> getstream(String id);
-  Future<Either<Failures,String>>getlyrices(String id);
+  Future<Either<Failures,Map<String, dynamic>>>getlyrices(String id);
   Future<Either<Failures,VideoSearchList>>getsearchvideo(String query);
   Future<dynamic>getplaylist(String id,String mode);
   Future<List<VideoOnlyStreamInfo>> getManifest(String id);

@@ -5,38 +5,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/musicbottombarloading.dart';
-import 'package:nebula/features/Presentation/Pages/musicplayerpage/testonlineplayerscreen.dart';
-import 'package:nebula/features/Presentation/Pages/subscreens/ytsearchpage/ytsearchpage.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/playlist_Bloc/playlist_bloc.dart';
-import 'package:nebula/features/Presentation/Pages/Aboutpage/aboutpage.dart';
-import 'package:nebula/features/Presentation/Pages/Settings/settingspage.dart';
-import 'package:nebula/features/Presentation/Pages/musicplayerpage/testplayerscreen.dart';
 import 'package:nebula/injection_container.dart' as dii;
 import '../../../../configs/constants/Spaces.dart';
 import '../../../Domain/UseCases/Platform_UseCase/GetPermissions_UseCase.dart';
 import '../../../Domain/UseCases/Sql_UseCase/initializedatabase_Usecase.dart';
-import '../../Bloc/LocalSongs_bloc/localsong_bloc.dart';
-import '../../Bloc/Trending_Song_bloc/trending_song_bloc.dart';
-import '../../Bloc/favorite_bloc/favoriteplaylist_bloc.dart';
-import '../../Bloc/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
+import '../../Blocs/Musicbloc/LocalSongs_bloc/localsong_bloc.dart';
+import '../../Blocs/Musicbloc/Trending_Song_bloc/trending_song_bloc.dart';
+import '../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
+import '../../Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
+import '../../Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
+import '../../Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 import '../../CustomWidgets/backgroundGradient.dart';
 import '../../CustomWidgets/muscibottombarwidget.dart';
-import '../DownloadPages/Downloadpages.dart';
-import '../HomePage.dart';
-import '../MySongPage.dart';
-import '../SearchPage.dart';
-import '../onlinefavepage.dart';
-import '../subscreens/youtubescreen/ytpage.dart';
+import '../saavn/Aboutpage/aboutpage.dart';
+import '../saavn/DownloadPages/Downloadpages.dart';
+import '../saavn/HomePage.dart';
+import '../saavn/MySongPage.dart';
+import '../saavn/Settings/settingspage.dart';
+import '../saavn/musicplayerpage/testonlineplayerscreen.dart';
+import '../saavn/musicplayerpage/testplayerscreen.dart';
+import '../saavn/onlinefavepage.dart';
+import '../saavn/subscreens/youtubescreen/ytpage.dart';
+import '../saavn/subscreens/ytsearchpage/ytsearchpage.dart';
 
 bool islooped = false;
 bool isSuffled = false;
 
+
 class MainHomePage extends StatefulWidget {
-  static const String MainHomePAge = '/mainhomepage';
+  static const String mainHomePAge = '/mainhomepage';
   const MainHomePage({super.key});
 
   @override
@@ -46,19 +46,20 @@ class MainHomePage extends StatefulWidget {
 class _MainHomePageState extends State<MainHomePage> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int Currentindex = 0;
+  int currentindex = 0;
 
   List<Widget> pages = [
     const HomePage(),
     const MySongPage(),
-    const SearchResultPage(Querydata: ''),
-    const Youtubepage()
+    const Youtubepage(),
+    const Onlinefavscreen()
   ];
-  void OpenDrawer() {
+
+  void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
   }
 
-  void CloseDrawer() {
+  void closeDrawer() {
     scaffoldKey.currentState!.closeDrawer();
   }
 
@@ -91,7 +92,7 @@ class _MainHomePageState extends State<MainHomePage> {
 
   _getallsongs() {
     BlocProvider.of<LocalsongBloc>(context)
-        .add(const LocalsongEvent.getallsongs());
+    .add(const LocalsongEvent.getallsongs());
   }
 
   @override
@@ -111,26 +112,19 @@ class _MainHomePageState extends State<MainHomePage> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
-        title: Currentindex == 0
+        title: currentindex == 0
             ? const Textutil(
                 text: 'Discover',
                 fontsize: 23,
                 color: Colors.white,
                 fontWeight: FontWeight.bold)
-            : Currentindex == 1
+            : currentindex == 1
                 ? const Textutil(
                     text: 'My Music',
                     fontsize: 23,
                     color: Colors.white,
                     fontWeight: FontWeight.bold)
-                : Currentindex == 2
-                    ? const Textutil(
-                        text: 'Search',
-                        fontsize: 23,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      )
-                    : Currentindex == 3
+                : currentindex == 2
                         ? InkWell(
                           onTap: () {
                             Navigator.pushNamed(context,Ytsearchpage.ytsearchpage);
@@ -142,7 +136,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                     height: 50,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius: BorderRadius.circular(10)),
                                     child: Row(
                                       children: [
                                         const SizedBox(width: 10,),
@@ -161,7 +155,7 @@ class _MainHomePageState extends State<MainHomePage> {
                         )
                         : null,
         leading: InkWell(
-            onTap: () => OpenDrawer(),
+            onTap: () => openDrawer(),
             child: Image.asset(
               'assets/list.png',
               color: Colors.white,
@@ -173,10 +167,10 @@ class _MainHomePageState extends State<MainHomePage> {
       bottomNavigationBar: SalomonBottomBar(
           onTap: (p0) {
             setState(() {
-              Currentindex = p0;
+              currentindex = p0;
             });
           },
-          currentIndex: Currentindex,
+          currentIndex: currentindex,
           selectedItemColor: const Color.fromARGB(255, 255, 255, 255),
           backgroundColor: Colors.black,
           selectedColorOpacity: 0.1,
@@ -195,16 +189,10 @@ class _MainHomePageState extends State<MainHomePage> {
                   'Device',
                   style: Spaces.Getstyle(11, Colors.white, FontWeight.normal),
                 )),
-            SalomonBottomBarItem(
-                icon: const Icon(Icons.search),
-                title: Text(
-                  'Search',
-                  style: Spaces.Getstyle(11, Colors.white, FontWeight.normal),
-                )),
-            SalomonBottomBarItem(
+             SalomonBottomBarItem(
                 icon: SizedBox(
-                  width: 35,
-                  height: 35,
+                  width: 26,
+                  height: 26,
                   child: Center(
                     child: Image.asset(
                       'assets/yt.png',
@@ -214,14 +202,21 @@ class _MainHomePageState extends State<MainHomePage> {
                   ),
                 ),
                 title: Text(
-                  'YouTube',
+                  'Youtube',
                   style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
                 )),
+                 SalomonBottomBarItem(
+                icon: const Icon(Icons.my_library_music),
+                title: Text(
+                  'Library',
+                  style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
+                )),
+                
           ]),
       body: Stack(
         children: [
           const backgroundgradient(),
-          pages[Currentindex],
+          pages[currentindex],
           const Align(
               alignment: Alignment.bottomCenter, child: BottomMusicBar()),
         ],
@@ -280,16 +275,17 @@ class _MainHomePageState extends State<MainHomePage> {
                     children: [
                       Draweritems(
                           ontap: () {
-                            Currentindex = 0;
+                            currentindex = 0;
                             setState(() {});
-                            CloseDrawer();
+                            closeDrawer();
                           },
                           title: "Home",
                           iconsdata: Icons.home),
                       Draweritems(
                           ontap: () {
-                            Navigator.pushNamed(
-                                context, Onlinefavscreen.onlinefavscreen);
+                            currentindex = 3;
+                            setState(() {});
+                            closeDrawer();
                           },
                           title: "My Library",
                           iconsdata: Icons.library_music_outlined),

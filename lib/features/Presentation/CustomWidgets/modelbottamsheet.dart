@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Domain/Entity/SongsDetailsEntity/SongsEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/CustomTextFormField.dart';
-import '../../Data/Models/songmodel.dart';
-import '../Bloc/playlist_Bloc/playlist_bloc.dart';
+import '../../Data/Models/MusicModels/songmodel.dart';
+import '../Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
 
 class Custombottomsheet extends StatelessWidget {
   final Songmodel songModel;

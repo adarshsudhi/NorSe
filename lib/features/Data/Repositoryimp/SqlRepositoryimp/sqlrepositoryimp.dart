@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/features/Data/Models/usermodel.dart';
+import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:nebula/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
-import 'package:nebula/features/Domain/Entity/SongsDetailsEntity/SongsEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:nebula/features/Domain/Repositorys/SqlReposiotory/Sqlreppository.dart';
 import '../../../../configs/Error/Errors.dart';
 

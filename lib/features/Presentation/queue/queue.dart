@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/backgroundGradient.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
 import '../../../configs/constants/Spaces.dart';
-import '../../Data/Models/songmodel.dart';
+import '../../Data/Models/MusicModels/songmodel.dart';
+import '../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 
 class Reorder extends StatefulWidget {
   final List<Songmodel> audios;

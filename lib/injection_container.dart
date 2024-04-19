@@ -1,4 +1,11 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:jiosaavn/jiosaavn.dart';
+import 'package:nebula/features/Presentation/Blocs/Musicbloc/LocalData/localdata_bloc.dart';
+import 'package:nebula/features/Presentation/Blocs/Musicbloc/SearchSong_bloc/search_song_bloc.dart';
+import 'package:nebula/features/Presentation/Blocs/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:nebula/features/Data/DataSource/LocalDataSource/Platform/PlatFormDatasource.dart';
 import 'package:nebula/features/Data/DataSource/LocalDataSource/Platform/PlatformDataSourceImp.dart';
 import 'package:nebula/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
@@ -68,156 +75,152 @@ import 'package:nebula/features/Domain/UseCases/yt_usecase/getsearchvideo_usecas
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getstreamManifest_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getvideoinfo_usecase.dart';
 import 'package:nebula/features/Domain/UseCases/yt_usecase/getytplaylist_usecase.dart';
-import 'package:nebula/features/Presentation/Bloc/Albumsongs/albums_songs_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Download_Bloc/download_song_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/album/libraryalbumlike/libraryalbumlike_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/playlist/libraryplaylist/libraryplaylist_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/playlist/libraryplaylistlike/libraryplaylistlike_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/song/songlike_bloc/songlike_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/LocalData/localdata_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/LocalSongs_bloc/localsong_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Lyrics_bloc/lyrics_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/SearchSong_bloc/search_song_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Trending_Song_bloc/trending_song_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/User_bloc/user_bloc_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/backupandrestorebloc/bloc/backup_and_restore_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/favorite_bloc/favoriteplaylist_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/playlist_Bloc/playlist_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/playlistsongs_bloc/playlistsongs_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/recents_bloc/recents_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/videoinfo_bloc/videoinfo_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/yt_bloc/yt_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytdownload_bloc/ytdownload_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
-import 'package:on_audio_query/on_audio_query.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'features/Domain/UseCases/Sql_UseCase/addtorecents_UseCase.dart';
 import 'features/Domain/UseCases/Sql_UseCase/getallfav_Usecase.dart';
-import 'features/Presentation/Bloc/Library/song/library_bloc/library_bloc.dart';
-import 'features/Presentation/Bloc/favsong_bloc/favsongs_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'features/Presentation/Blocs/Musicbloc/Albumsongs/albums_songs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Download_Bloc/download_song_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/album/libraryalbumlike/libraryalbumlike_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/playlist/libraryplaylist/libraryplaylist_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/playlist/libraryplaylistlike/libraryplaylistlike_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/song/library_bloc/library_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/song/songlike_bloc/songlike_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/LocalSongs_bloc/localsong_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Lyrics_bloc/lyrics_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Trending_Song_bloc/trending_song_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/User_bloc/user_bloc_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/backupandrestorebloc/bloc/backup_and_restore_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/favsong_bloc/favsongs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/playlistsongs_bloc/playlistsongs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/recents_bloc/recents_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/videoinfo_bloc/videoinfo_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/yt_bloc/yt_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/ytdownload_bloc/ytdownload_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 
 GetIt di = GetIt.instance;
 
-Future<void>init()async{
+Future<void> init() async {
+  //bloc
+  di.registerFactory(() => AlbumsSongsBloc(di.call(), di.call()));
+  di.registerFactory(() =>
+      TrendingSongBloc(di.call(), di.call(), di.call(), di.call(), di.call()));
+  di.registerFactory(() => SearchSongBloc(di.call(), di.call(), di.call()));
+  di.registerFactory(() => DownloadSongBloc(di.call(), di.call(), di.call()));
+  di.registerFactory(() => LocaldataBloc(di.call(), di.call(), di.call()));
+  di.registerFactory(() => LocalsongBloc(di.call(), di.call()));
+  di.registerFactory(() => PlaylistBloc());
+  di.registerFactory(() => FavsongsBloc());
+  di.registerFactory(() => FavoriteplaylistBloc());
+  di.registerFactory(() => PlaylistsongsBloc(di.call()));
+  di.registerFactory(() => LibraryBloc());
+  di.registerFactory(() => SonglikeBloc());
+  di.registerFactory(() => LibraryalbumBloc());
+  di.registerFactory(() => LibraryalbumlikeBloc());
+  di.registerFactory(() => LibraryplaylistBloc());
+  di.registerFactory(() => LibraryplaylistlikeBloc());
+  di.registerFactory(() => YtBloc(di.call()));
+  di.registerFactory(() => YtdownloadBloc(di.call()));
+  di.registerFactory(() => UserBlocBloc());
+  di.registerFactory(() => RecentsBloc(di.call()));
+  di.registerFactory(() => LyricsBloc());
+  di.registerFactory(() => YtsearchBloc());
+  di.registerFactory(() => AudioBloc());
+  di.registerFactory(() => BackupAndRestoreBloc());
+  di.registerFactory(() => VideoinfoBloc());
+  di.registerFactory(() => SearchytBlocBloc());
+
+  //UseCase
+  di.registerLazySingleton(() => GetAlbumSongsUseCase(repository: di.call()));
+  di.registerLazySingleton(() => SearchSongUseCase(repository: di.call()));
+  di.registerLazySingleton(() => GetSongsUseCase(repository: di.call()));
+  di.registerLazySingleton(
+      () => GetSearchedAlbumsUseCase(repository: di.call()));
+  di.registerLazySingleton(() => DownloadSongUseCase(repository: di.call()));
+  di.registerLazySingleton(() => DownloadArworkUseCase(repository: di.call()));
+  di.registerLazySingleton(() => GetpermissionUseCase(repository: di.call()));
+  di.registerLazySingleton(() => trendingnowUseCase(repository: di.call()));
+  di.registerLazySingleton(
+      () => getplaylistdetailsUSeCase(repository: di.call()));
+  di.registerLazySingleton(() => SearchPlaylistUseCase(repository: di.call()));
+  di.registerLazySingleton(() => initializedbusecase(repository: di.call()));
+  di.registerLazySingleton(() => addtodownloadsUsecase(Repository: di.call()));
+  di.registerLazySingleton(() => getquerydataUsecase(repository: di.call()));
+  di.registerLazySingleton(
+      () => RemovefromdownloadsUseCase(repository: di.call()));
+  di.registerLazySingleton(() => GettopserachesUseCase(repo: di.call()));
+  di.registerLazySingleton(() => GettopChatsUseCase(repo: di.call()));
+  di.registerLazySingleton(() => addtorecentUseCase(repo: di.call()));
+  di.registerLazySingleton(() => getallrecentUseCase(repository: di.call()));
+  di.registerLazySingleton(
+      () => RemovefromrecentsUsecase(repository: di.call()));
+  di.registerLazySingleton(() => getallsongsUsecase(repository: di.call()));
+  di.registerLazySingleton(() => AddtofaveUsecase(repo: di.call()));
+  di.registerLazySingleton(() => GetallfaveUsecase(repository: di.call()));
+  di.registerLazySingleton(() => removefromfavusecase(repository: di.call()));
+  di.registerLazySingleton(() => updateplaylistusecase(repository: di.call()));
+  di.registerLazySingleton(() => newlyreleasedUsecase(repository: di.call()));
+  di.registerLazySingleton(() => gettopalbumsUseCase(repository: di.call()));
+  di.registerLazySingleton(() => Createplaylistusecase(repository: di.call()));
+  di.registerLazySingleton(() => Getallplaylistusecase(repository: di.call()));
+  di.registerLazySingleton(() => Removeplaylistusecase(repo: di.call()));
+  di.registerLazySingleton(() => Addtoplaylistusecase(repo: di.call()));
+  di.registerLazySingleton(
+      () => Getallsongsfromplaylistsusecase(Repositorys: di.call()));
+  di.registerLazySingleton(
+      () => Removesongfromplaylistusecase(repository: di.call()));
+  di.registerLazySingleton(
+      () => Uppdateuserplaylistusecase(repository: di.call()));
+  di.registerLazySingleton(() => Getfavsongstatususecase(repo: di.call()));
+  di.registerLazySingleton(() => Getallalbumsusecase(repository: di.call()));
+  di.registerLazySingleton(() => Clearallrecentsusecase(repository: di.call()));
+  di.registerLazySingleton(() => Clearalldownloadusecase(repository: di.call()));
+  di.registerLazySingleton(() => Addtolibraryusecase(repo: di.call()));
+  di.registerLazySingleton(() => Getlibraryusecase(repo: di.call()));
+  di.registerLazySingleton(() => checkforsongusecase(repo: di.call()));
+  di.registerLazySingleton(() => Getlibraryalbumsusecase(repo: di.call()));
+  di.registerLazySingleton(() => Checkforalbumpresentusecase(repo: di.call()));
+  di.registerLazySingleton(() => Getlibraryplaylistusecase(repo: di.call()));
+  di.registerLazySingleton(() => Checkifplaylistpresentusecase(repo: di.call()));
+  di.registerLazySingleton(() => Getalbumsongsusecase(repo: di.call()));
+  di.registerLazySingleton(() => Getvideoinfousecase(repository: di.call()));
+  di.registerLazySingleton(() => Getaudiostreamusecase(repository: di.call()));
+  di.registerLazySingleton(() => Userdetailsusecase(repository: di.call()));
+  di.registerLazySingleton(() => Getuserdetailsusecase(repository: di.call()));
+  di.registerLazySingleton(() => Getlyricesusecase(repository: di.call()));
+  di.registerLazySingleton(() => Getsearchvideousecase(repository: di.call()));
+  di.registerLazySingleton(() => Backupdatausecase(repository: di.call()));
+  di.registerLazySingleton(() => Restoredatausecase(repository: di.call()));
+  di.registerLazySingleton(() => Getplaylistusecase(repository: di.call()));
+  di.registerLazySingleton(() => Usersearchusecase(repo: di.call()));
+  di.registerLazySingleton(() => GetstreamManifestusecase(repository: di.call()));
+  di.registerLazySingleton(() => Getsearchsongsusecase(repository: di.call()));
+  di.registerLazySingleton(() => InitializeNotificationusecase(repository: di.call()));
+  di.registerLazySingleton(() => Shownotificationusecase(repository: di.call()));
 
 
-
-    
-    //bloc
-    di.registerFactory(() => AlbumsSongsBloc(di.call(),di.call()));
-    di.registerFactory(() => TrendingSongBloc(di.call(),di.call(),di.call(),di.call(),di.call()));
-    di.registerFactory(() => SearchSongBloc(di.call(),di.call(),di.call()));
-    di.registerFactory(() => DownloadSongBloc(di.call(),di.call(),di.call()));
-    di.registerFactory(() => LocaldataBloc(di.call(),di.call(),di.call()));
-    di.registerFactory(() => LocalsongBloc(di.call(),di.call()));
-    di.registerFactory(() => PlaylistBloc());
-    di.registerFactory(() => FavsongsBloc());
-    di.registerFactory(() => FavoriteplaylistBloc());
-    di.registerFactory(() => PlaylistsongsBloc(di.call()));
-    di.registerFactory(() => LibraryBloc());
-    di.registerFactory(() => SonglikeBloc());
-    di.registerFactory(() => LibraryalbumBloc());
-    di.registerFactory(() => LibraryalbumlikeBloc());
-    di.registerFactory(() => LibraryplaylistBloc());
-    di.registerFactory(() => LibraryplaylistlikeBloc());
-    di.registerFactory(() => YtBloc(di.call()));
-    di.registerFactory(() => YtdownloadBloc(di.call()));
-    di.registerFactory(() => UserBlocBloc());
-    di.registerFactory(() => RecentsBloc(di.call()));
-    di.registerFactory(() => LyricsBloc());
-    di.registerFactory(() => YtsearchBloc());
-    di.registerFactory(() => AudioBloc());
-    di.registerFactory(() => BackupAndRestoreBloc());
-    di.registerFactory(() => VideoinfoBloc());
-    di.registerFactory(() => SearchytBlocBloc());
+  //Repository
+  di.registerLazySingleton<APIRepository>(() => APIRepositoryimp(apIremoteDatasource: di.call()));
+  di.registerLazySingleton<APIremoteDatasource>(() => APIremotedatasourceimp(yt: di.call(), jioSaavnClient: di.call()));
+  di.registerLazySingleton<PlatformRepository>(() => PlatformRepositoryimp(platformDataRepository: di.call()));
+  di.registerLazySingleton<PlatformDataRepository>(() => PlatformDataRepositoryimp(onAudioQuery: di.call(), di.call()));
+  di.registerLazySingleton<Sqlrepository>(() => Sqlrepositoryimp(sqldatasourcerepository: di.call()));
+  di.registerLazySingleton<Sqldatasourcerepository>(() => Sqldatasourcerepositoryimp());
 
 
+  final OnAudioQuery onAudioQuery = OnAudioQuery();
+  final YoutubeExplode yt = YoutubeExplode();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  final JioSaavnClient saavnClient = JioSaavnClient();
 
 
-    //UseCase
-    di.registerLazySingleton(() => GetAlbumSongsUseCase(repository: di.call()));
-    di.registerLazySingleton(() => SearchSongUseCase(repository: di.call()));
-    di.registerLazySingleton(() => GetSongsUseCase(repository: di.call()));
-    di.registerLazySingleton(() => GetSearchedAlbumsUseCase(repository: di.call()));
-    di.registerLazySingleton(() => DownloadSongUseCase(repository: di.call()));
-    di.registerLazySingleton(() => DownloadArworkUseCase(repository: di.call()));
-    di.registerLazySingleton(() => GetpermissionUseCase(repository: di.call()));
-    di.registerLazySingleton(() => trendingnowUseCase(repository: di.call()));
-    di.registerLazySingleton(() => getplaylistdetailsUSeCase(repository: di.call()));
-    di.registerLazySingleton(() => SearchPlaylistUseCase(repository: di.call()));
-    di.registerLazySingleton(() => initializedbusecase(repository: di.call()));
-    di.registerLazySingleton(() => addtodownloadsUsecase(Repository: di.call()));
-    di.registerLazySingleton(() => getquerydataUsecase(repository: di.call()));
-    di.registerLazySingleton(() => RemovefromdownloadsUseCase(repository: di.call()));
-    di.registerLazySingleton(() => GettopserachesUseCase(repo: di.call()));
-    di.registerLazySingleton(() => GettopChatsUseCase(repo: di.call()));
-    di.registerLazySingleton(() => addtorecentUseCase(repo: di.call()));
-    di.registerLazySingleton(() => getallrecentUseCase(repository: di.call()));
-    di.registerLazySingleton(() => RemovefromrecentsUsecase(repository: di.call()));
-    di.registerLazySingleton(() => getallsongsUsecase(repository: di.call()));
-    di.registerLazySingleton(() => AddtofaveUsecase(repo: di.call()));
-    di.registerLazySingleton(() => GetallfaveUsecase(repository: di.call()));
-    di.registerLazySingleton(() => removefromfavusecase(repository: di.call()));
-    di.registerLazySingleton(() => updateplaylistusecase(repository: di.call()));
-    di.registerLazySingleton(() => newlyreleasedUsecase(repository: di.call()));
-    di.registerLazySingleton(() => gettopalbumsUseCase(repository: di.call()));
-    di.registerLazySingleton(() => Createplaylistusecase(repository: di.call()));
-    di.registerLazySingleton(() => Getallplaylistusecase(repository: di.call()));
-    di.registerLazySingleton(() => Removeplaylistusecase(repo: di.call()));
-    di.registerLazySingleton(() => Addtoplaylistusecase(repo: di.call()));
-    di.registerLazySingleton(() => Getallsongsfromplaylistsusecase(Repositorys: di.call()));
-    di.registerLazySingleton(() => Removesongfromplaylistusecase(repository: di.call()));
-    di.registerLazySingleton(() => Uppdateuserplaylistusecase(repository: di.call()));
-    di.registerLazySingleton(() => Getfavsongstatususecase(repo: di.call()));
-    di.registerLazySingleton(() => Getallalbumsusecase(repository: di.call()));
-    di.registerLazySingleton(() => Clearallrecentsusecase(repository: di.call()));
-    di.registerLazySingleton(() => Clearalldownloadusecase(repository: di.call()));
-    di.registerLazySingleton(() => Addtolibraryusecase(repo: di.call()));
-    di.registerLazySingleton(() => Getlibraryusecase(repo: di.call()));
-    di.registerLazySingleton(() => checkforsongusecase(repo: di.call()));
-    di.registerLazySingleton(() => Getlibraryalbumsusecase(repo: di.call()));
-    di.registerLazySingleton(() => Checkforalbumpresentusecase(repo: di.call()));
-    di.registerLazySingleton(() => Getlibraryplaylistusecase(repo: di.call()));
-    di.registerLazySingleton(() => Checkifplaylistpresentusecase(repo: di.call()));
-    di.registerLazySingleton(() => Getalbumsongsusecase(repo: di.call()));
-    di.registerLazySingleton(() => Getvideoinfousecase(repository: di.call()));
-    di.registerLazySingleton(() => Getaudiostreamusecase(repository: di.call()));
-    di.registerLazySingleton(() => Userdetailsusecase(repository: di.call()));
-    di.registerLazySingleton(() => Getuserdetailsusecase(repository: di.call()));
-    di.registerLazySingleton(() => Getlyricesusecase(repository: di.call()));
-    di.registerLazySingleton(() => Getsearchvideousecase(repository: di.call()));
-    di.registerLazySingleton(() => Backupdatausecase(repository: di.call()));
-    di.registerLazySingleton(() => Restoredatausecase(repository: di.call()));
-    di.registerLazySingleton(() => Getplaylistusecase(repository: di.call()));
-    di.registerLazySingleton(() => Usersearchusecase(repo: di.call()));
-    di.registerLazySingleton(() => GetstreamManifestusecase(repository: di.call()));
-    di.registerLazySingleton(() => Getsearchsongsusecase(repository: di.call()));
-    di.registerLazySingleton(() => InitializeNotificationusecase(repository: di.call()));
-    di.registerLazySingleton(() => Shownotificationusecase(repository: di.call()));
-
-
-    //Repository
-    di.registerLazySingleton<APIRepository>(() => APIRepositoryimp(apIremoteDatasource: di.call()));
-    di.registerLazySingleton<APIremoteDatasource>(() => APIremotedatasourceimp(yt: di.call()));
-    di.registerLazySingleton<PlatformRepository>(() => PlatformRepositoryimp(platformDataRepository: di.call()));
-    di.registerLazySingleton<PlatformDataRepository>(() => PlatformDataRepositoryimp(onAudioQuery: di.call(),di.call()));
-    di.registerLazySingleton<Sqlrepository>(() => Sqlrepositoryimp(sqldatasourcerepository: di.call()));
-    di.registerLazySingleton<Sqldatasourcerepository>(() => Sqldatasourcerepositoryimp());
-
-
-
-
-    final OnAudioQuery onAudioQuery = OnAudioQuery();
-    final YoutubeExplode yt = YoutubeExplode();
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    
-    
-    di.registerLazySingleton<YoutubeExplode>(() => yt);
-    di.registerLazySingleton<OnAudioQuery>(() => onAudioQuery);
-    di.registerLazySingleton(() => flutterLocalNotificationsPlugin);
+  di.registerLazySingleton<YoutubeExplode>(() => yt);
+  di.registerLazySingleton<OnAudioQuery>(() => onAudioQuery);
+  di.registerLazySingleton<FlutterLocalNotificationsPlugin>(
+      () => flutterLocalNotificationsPlugin);
+  di.registerLazySingleton<JioSaavnClient>(() => saavnClient);
 }

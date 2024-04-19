@@ -8,7 +8,7 @@ class Getlyricesusecase {
   const Getlyricesusecase({
     required this.repository,
   });
-  Future<Either<Failures,String>>call(String id)async{
+  Future<Either<Failures,Map<String, dynamic>>>call(String id)async{
     return repository.getlyrices(id);
   }
 }

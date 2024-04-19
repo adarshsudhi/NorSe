@@ -6,35 +6,35 @@ import 'package:metadata_god/metadata_god.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/configs/routers/Routes.dart';
 import 'package:nebula/features/Domain/UseCases/Platform_UseCase/initializenotification_usecase.dart';
-import 'package:nebula/features/Presentation/Bloc/Albumsongs/albums_songs_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Download_Bloc/download_song_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/album/libraryalbumlike/libraryalbumlike_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/playlist/libraryplaylist/libraryplaylist_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/playlist/libraryplaylistlike/libraryplaylistlike_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/song/library_bloc/library_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Library/song/songlike_bloc/songlike_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/LocalData/localdata_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/LocalSongs_bloc/localsong_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Lyrics_bloc/lyrics_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/Trending_Song_bloc/trending_song_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/User_bloc/user_bloc_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/backupandrestorebloc/bloc/backup_and_restore_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/favorite_bloc/favoriteplaylist_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/playlist_Bloc/playlist_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/playlistsongs_bloc/playlistsongs_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/recents_bloc/recents_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/videoinfo_bloc/videoinfo_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/yt_bloc/yt_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytdownload_bloc/ytdownload_bloc.dart';
-import 'package:nebula/features/Presentation/Bloc/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
-import 'package:nebula/features/Presentation/Pages/Intialpage.dart';
-import 'package:nebula/features/Presentation/Pages/MainHomePage/MainHomePage.dart';
+import 'package:nebula/features/Presentation/pages/MainHomePage/MainHomePage.dart';
 import 'package:nebula/injection_container.dart';
-import 'features/Presentation/Bloc/SearchSong_bloc/search_song_bloc.dart';
-import 'features/Presentation/Bloc/favsong_bloc/favsongs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Albumsongs/albums_songs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Download_Bloc/download_song_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/album/libraryalbumlike/libraryalbumlike_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/playlist/libraryplaylist/libraryplaylist_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/playlist/libraryplaylistlike/libraryplaylistlike_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/song/library_bloc/library_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Library/song/songlike_bloc/songlike_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/LocalData/localdata_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/LocalSongs_bloc/localsong_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Lyrics_bloc/lyrics_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/SearchSong_bloc/search_song_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/Trending_Song_bloc/trending_song_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/User_bloc/user_bloc_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/backupandrestorebloc/bloc/backup_and_restore_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/favsong_bloc/favsongs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/playlistsongs_bloc/playlistsongs_bloc.dart';
+import 'features/Presentation/Blocs/Musicbloc/recents_bloc/recents_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/videoinfo_bloc/videoinfo_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/yt_bloc/yt_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/ytdownload_bloc/ytdownload_bloc.dart';
+import 'features/Presentation/Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
+import 'features/Presentation/pages/saavn/Intialpage.dart';
 
 
 void main() async {
@@ -93,7 +93,7 @@ class _MainState extends State<Main> {
         BlocProvider(create: (context) => di<YtsearchBloc>()),
         BlocProvider(create: (context) => di<BackupAndRestoreBloc>()),
         BlocProvider(create: (context) => di<VideoinfoBloc>()),
-        BlocProvider(create: (context) => di<SearchytBlocBloc>())
+        BlocProvider(create: (context) => di<SearchytBlocBloc>()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

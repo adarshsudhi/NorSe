@@ -1,32 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:dart_des/dart_des.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:nebula/configs/constants/APIEndpoints/API.dart';
+import 'package:jiosaavn/jiosaavn.dart';
+import 'package:nebula/configs/APIEndpoints/API.dart';
 import 'package:nebula/features/Data/DataSource/RemoteDataSource/API/APIremotedatasource.dart';
-import 'package:nebula/features/Data/Models/AlbumsModel/AlbumModel.dart';
-import 'package:nebula/features/Data/Models/LauchDataModel/LaunchDataModel.dart';
-import 'package:nebula/features/Data/Models/SearchModel/SearchModel.dart';
-import 'package:nebula/features/Data/Models/topchartsmodels/topchartsmodel.dart';
-import 'package:nebula/features/Domain/Entity/AlbumDetailsEntity/AlbumDetailEntity.dart';
-import 'package:nebula/features/Domain/Entity/LaunchDataEntity/LaunchDataEntity.dart';
-import 'package:nebula/features/Domain/Entity/PlaylistEntity/PlaylistEntity.dart';
-import 'package:nebula/features/Domain/Entity/SearchSongEntity/SearchEntity.dart';
-import 'package:nebula/features/Domain/Entity/TopChartsEntity/topchartentity.dart';
-
+import 'package:nebula/features/Data/Models/MusicModels/AlbumsModel/AlbumModel.dart';
+import 'package:nebula/features/Data/Models/MusicModels/LauchDataModel/LaunchDataModel.dart';
+import 'package:nebula/features/Data/Models/MusicModels/SearchModel/SearchModel.dart';
+import 'package:nebula/features/Data/Models/MusicModels/topchartsmodels/topchartsmodel.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../../configs/Error/Errors.dart';
 
 class APIremotedatasourceimp implements APIremoteDatasource {
   final YoutubeExplode yt;
+  final JioSaavnClient jioSaavnClient;
   const APIremotedatasourceimp({
     required this.yt,
+    required this.jioSaavnClient,
   });
   @override
-  Future<List<AlbumSongEntity>> GetAlbumSongs(String albumurl) async {
+  Future<List<AlbumSongEntity>> getAlbumSongs(String albumurl) async {
     try {
       List<AlbumSongEntity> albumsongslist = [];
       Uri url = Uri.parse("${ApiEndpoints.GetAlbumSongs}$albumurl");
@@ -194,32 +198,28 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       String id) async {
     List<playlistEntity> playlistsongs = [];
     try {
-      String encoded = jsonEncode(ApiEndpoints().url);
-      String uurl =
-          encoded.replaceAll('search.getResults', 'playlist.getDetails');
-      String uuurl = uurl
-          .replaceAll('q', 'listid')
-          .replaceAll('Querydata', id)
-          .replaceAll('6', '100');
-      Map<String, dynamic> decoded = jsonDecode(uuurl);
-      Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
+      Map<String, dynamic> response = await jioSaavnClient.songs.request(call: ApiEndpoints.endpoints.playlists.id,queryParameters: {'listid':id});
+      
+      String cleanres = jsonEncode(response);
+      
+      Map<String,dynamic> res = jsonDecode(cleanres.replaceAll('&quot;', '').replaceAll('&#039;', ''));
 
-      http.Response response = await http.get(uri);
-      final res =
-          response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
-      if (response.statusCode == 200) {
-        Map<String, dynamic> res1 = jsonDecode(res);
-        for (var songs in res1['list']) {
+      if (res.isNotEmpty) {
+        for (var songs in res['songs']) {
           List<Map<String, dynamic>> links =
-              await decrypt(songs['more_info']['encrypted_media_url']);
+              await decrypt(songs['encrypted_media_url']);
+           Map moreinfo = {
+               'more_info':{
+                 'music':songs["album"]
+               }
+           };
           playlistEntity entity = playlistEntity(
-              name: songs['title'],
+              name: songs['song'],
               id: songs['id'],
-              images:
-                  songs['image'].toString().replaceAll('150x150', '500x500'),
+              images: songs['image'].toString().replaceAll('150x150', '500x500'),
               downloadUrl: links[4]['link'].toString(),
-              primaryArtists: songs['more_info']['music'],
-              more_info: songs['more_info']
+              primaryArtists: songs["primary_artists"],
+              more_info: moreinfo
               );
           playlistsongs.add(entity);
         }
@@ -292,6 +292,7 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   Future<Either<Failures, List<topchartsEntity>>> topcharts() async {
     List<topchartsEntity> res = [];
     try {
+      log('message');
       String encoded = jsonEncode(ApiEndpoints().url);
       String uurl =
           encoded.replaceAll('search.getResults', 'webapi.getLaunchData');
@@ -437,16 +438,11 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   }
   
   @override
-  Future<Either<Failures, String>> getlyrices(String id) async{
+  Future<Either<Failures, Map<String, dynamic>>> getlyrices(String id) async{
     try {
-      String url = "${ApiEndpoints.Getlyrics}$id";
-
-      http.Response response = await http.get(Uri.parse(url));
-
-      Map<String,dynamic> res = jsonDecode(response.body);
-      
-      if (res['status'] == "SUCCESS") {
-        return right(res['data']['lyrics']);
+      Map<String, dynamic> lyr = await jioSaavnClient.songs.request(call: ApiEndpoints.endpoints.lyrics,queryParameters: {'lyrics_id':id});
+      if (lyr['status'] != 'failure') {
+        return right(lyr);
       }
       return left(const Failures.serverfailure());
 

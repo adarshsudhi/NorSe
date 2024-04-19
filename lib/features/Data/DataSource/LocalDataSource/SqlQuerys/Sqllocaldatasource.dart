@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/features/Data/Models/usermodel.dart';
-import 'package:nebula/features/Domain/Entity/SongsDetailsEntity/SongsEntity.dart';
+import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
+import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../../../configs/Error/Errors.dart';
 

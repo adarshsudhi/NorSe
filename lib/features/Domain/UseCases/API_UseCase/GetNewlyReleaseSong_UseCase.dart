@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:nebula/features/Domain/Repositorys/APIRepository/APIrepository.dart';
 
-import '../../Entity/SearchSongEntity/SearchEntity.dart';
+import '../../Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
 
 class GetSongsUseCase {
   final APIRepository repository;

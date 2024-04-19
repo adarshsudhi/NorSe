@@ -1,5 +1,5 @@
 
-import '../../Entity/SearchSongEntity/SearchEntity.dart';
+import '../../Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
 import '../../Repositorys/APIRepository/APIrepository.dart';
 
 class SearchSongUseCase {

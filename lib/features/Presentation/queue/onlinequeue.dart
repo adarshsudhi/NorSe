@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Data/Models/onlinesongmodel.dart';
-import 'package:nebula/features/Presentation/Bloc/audio_bloc/audio_bloc.dart';
+import 'package:nebula/features/Data/Models/MusicModels/onlinesongmodel.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/backgroundGradient.dart';
+import '../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 
 class Onlinequeue extends StatefulWidget {
   static const onlinequeuescreen = './onlinequeue';
