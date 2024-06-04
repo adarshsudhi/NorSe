@@ -10,20 +10,20 @@ abstract class AlbumsSongsEvent extends Equatable {
 
 class GetAlbumSongsEvent extends AlbumsSongsEvent {
   final String albumurl;
-  GetAlbumSongsEvent({
+  const GetAlbumSongsEvent({
     required this.albumurl,
   });
 }
 
 class GetPlaylistsSongsEvent extends AlbumsSongsEvent {
- final String id;
-  GetPlaylistsSongsEvent({
+  final String id;
+  const GetPlaylistsSongsEvent({
     required this.id,
   });
 }
 
-class Getsongsfromalbum extends AlbumsSongsEvent{
+class Getsongsfromalbum extends AlbumsSongsEvent {
   final int id;
 
-  Getsongsfromalbum({required this.id});
+  const Getsongsfromalbum({required this.id});
 }

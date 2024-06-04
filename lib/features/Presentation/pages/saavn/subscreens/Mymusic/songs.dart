@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -250,8 +249,8 @@ class _SongwidgetState extends State<Songwidget>
                           ),
                           Spaces.kheight10,
                           ListView.builder(
-                            padding: EdgeInsets.zero,
                             shrinkWrap: true,
+                            padding: EdgeInsets.zero,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: songlist.length,
                             itemBuilder: (context, index) {
