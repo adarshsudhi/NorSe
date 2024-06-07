@@ -9,4 +9,5 @@ class LibraryEvent with _$LibraryEvent {
     AlbumSongEntity album,
   ) = _Addtolibrary;
   const factory LibraryEvent.getlibrarysong() = _Getlibrarysong;
+  const factory LibraryEvent.removesongfromlib(String id) = _Removesong;
 }

@@ -23,6 +23,7 @@ mixin _$LibraryEvent {
             String type, AlbumElements song, AlbumSongEntity album)
         addtolibray,
     required TResult Function() getlibrarysong,
+    required TResult Function(String id) removesongfromlib,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,6 +32,7 @@ mixin _$LibraryEvent {
     TResult? Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult? Function()? getlibrarysong,
+    TResult? Function(String id)? removesongfromlib,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +41,7 @@ mixin _$LibraryEvent {
     TResult Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult Function()? getlibrarysong,
+    TResult Function(String id)? removesongfromlib,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$LibraryEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_Addtolibrary value) addtolibray,
     required TResult Function(_Getlibrarysong value) getlibrarysong,
+    required TResult Function(_Removesong value) removesongfromlib,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,6 +58,7 @@ mixin _$LibraryEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(_Addtolibrary value)? addtolibray,
     TResult? Function(_Getlibrarysong value)? getlibrarysong,
+    TResult? Function(_Removesong value)? removesongfromlib,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +66,7 @@ mixin _$LibraryEvent {
     TResult Function(_Started value)? started,
     TResult Function(_Addtolibrary value)? addtolibray,
     TResult Function(_Getlibrarysong value)? getlibrarysong,
+    TResult Function(_Removesong value)? removesongfromlib,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,6 +133,7 @@ class _$StartedImpl implements _Started {
             String type, AlbumElements song, AlbumSongEntity album)
         addtolibray,
     required TResult Function() getlibrarysong,
+    required TResult Function(String id) removesongfromlib,
   }) {
     return started();
   }
@@ -138,6 +145,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult? Function()? getlibrarysong,
+    TResult? Function(String id)? removesongfromlib,
   }) {
     return started?.call();
   }
@@ -149,6 +157,7 @@ class _$StartedImpl implements _Started {
     TResult Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult Function()? getlibrarysong,
+    TResult Function(String id)? removesongfromlib,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -163,6 +172,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_Addtolibrary value) addtolibray,
     required TResult Function(_Getlibrarysong value) getlibrarysong,
+    required TResult Function(_Removesong value) removesongfromlib,
   }) {
     return started(this);
   }
@@ -173,6 +183,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_Addtolibrary value)? addtolibray,
     TResult? Function(_Getlibrarysong value)? getlibrarysong,
+    TResult? Function(_Removesong value)? removesongfromlib,
   }) {
     return started?.call(this);
   }
@@ -183,6 +194,7 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_Addtolibrary value)? addtolibray,
     TResult Function(_Getlibrarysong value)? getlibrarysong,
+    TResult Function(_Removesong value)? removesongfromlib,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -281,6 +293,7 @@ class _$AddtolibraryImpl implements _Addtolibrary {
             String type, AlbumElements song, AlbumSongEntity album)
         addtolibray,
     required TResult Function() getlibrarysong,
+    required TResult Function(String id) removesongfromlib,
   }) {
     return addtolibray(type, song, album);
   }
@@ -292,6 +305,7 @@ class _$AddtolibraryImpl implements _Addtolibrary {
     TResult? Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult? Function()? getlibrarysong,
+    TResult? Function(String id)? removesongfromlib,
   }) {
     return addtolibray?.call(type, song, album);
   }
@@ -303,6 +317,7 @@ class _$AddtolibraryImpl implements _Addtolibrary {
     TResult Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult Function()? getlibrarysong,
+    TResult Function(String id)? removesongfromlib,
     required TResult orElse(),
   }) {
     if (addtolibray != null) {
@@ -317,6 +332,7 @@ class _$AddtolibraryImpl implements _Addtolibrary {
     required TResult Function(_Started value) started,
     required TResult Function(_Addtolibrary value) addtolibray,
     required TResult Function(_Getlibrarysong value) getlibrarysong,
+    required TResult Function(_Removesong value) removesongfromlib,
   }) {
     return addtolibray(this);
   }
@@ -327,6 +343,7 @@ class _$AddtolibraryImpl implements _Addtolibrary {
     TResult? Function(_Started value)? started,
     TResult? Function(_Addtolibrary value)? addtolibray,
     TResult? Function(_Getlibrarysong value)? getlibrarysong,
+    TResult? Function(_Removesong value)? removesongfromlib,
   }) {
     return addtolibray?.call(this);
   }
@@ -337,6 +354,7 @@ class _$AddtolibraryImpl implements _Addtolibrary {
     TResult Function(_Started value)? started,
     TResult Function(_Addtolibrary value)? addtolibray,
     TResult Function(_Getlibrarysong value)? getlibrarysong,
+    TResult Function(_Removesong value)? removesongfromlib,
     required TResult orElse(),
   }) {
     if (addtolibray != null) {
@@ -401,6 +419,7 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
             String type, AlbumElements song, AlbumSongEntity album)
         addtolibray,
     required TResult Function() getlibrarysong,
+    required TResult Function(String id) removesongfromlib,
   }) {
     return getlibrarysong();
   }
@@ -412,6 +431,7 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
     TResult? Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult? Function()? getlibrarysong,
+    TResult? Function(String id)? removesongfromlib,
   }) {
     return getlibrarysong?.call();
   }
@@ -423,6 +443,7 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
     TResult Function(String type, AlbumElements song, AlbumSongEntity album)?
         addtolibray,
     TResult Function()? getlibrarysong,
+    TResult Function(String id)? removesongfromlib,
     required TResult orElse(),
   }) {
     if (getlibrarysong != null) {
@@ -437,6 +458,7 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
     required TResult Function(_Started value) started,
     required TResult Function(_Addtolibrary value) addtolibray,
     required TResult Function(_Getlibrarysong value) getlibrarysong,
+    required TResult Function(_Removesong value) removesongfromlib,
   }) {
     return getlibrarysong(this);
   }
@@ -447,6 +469,7 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
     TResult? Function(_Started value)? started,
     TResult? Function(_Addtolibrary value)? addtolibray,
     TResult? Function(_Getlibrarysong value)? getlibrarysong,
+    TResult? Function(_Removesong value)? removesongfromlib,
   }) {
     return getlibrarysong?.call(this);
   }
@@ -457,6 +480,7 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
     TResult Function(_Started value)? started,
     TResult Function(_Addtolibrary value)? addtolibray,
     TResult Function(_Getlibrarysong value)? getlibrarysong,
+    TResult Function(_Removesong value)? removesongfromlib,
     required TResult orElse(),
   }) {
     if (getlibrarysong != null) {
@@ -468,6 +492,155 @@ class _$GetlibrarysongImpl implements _Getlibrarysong {
 
 abstract class _Getlibrarysong implements LibraryEvent {
   const factory _Getlibrarysong() = _$GetlibrarysongImpl;
+}
+
+/// @nodoc
+abstract class _$$RemovesongImplCopyWith<$Res> {
+  factory _$$RemovesongImplCopyWith(
+          _$RemovesongImpl value, $Res Function(_$RemovesongImpl) then) =
+      __$$RemovesongImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$RemovesongImplCopyWithImpl<$Res>
+    extends _$LibraryEventCopyWithImpl<$Res, _$RemovesongImpl>
+    implements _$$RemovesongImplCopyWith<$Res> {
+  __$$RemovesongImplCopyWithImpl(
+      _$RemovesongImpl _value, $Res Function(_$RemovesongImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$RemovesongImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RemovesongImpl implements _Removesong {
+  const _$RemovesongImpl(this.id);
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'LibraryEvent.removesongfromlib(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RemovesongImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RemovesongImplCopyWith<_$RemovesongImpl> get copyWith =>
+      __$$RemovesongImplCopyWithImpl<_$RemovesongImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(
+            String type, AlbumElements song, AlbumSongEntity album)
+        addtolibray,
+    required TResult Function() getlibrarysong,
+    required TResult Function(String id) removesongfromlib,
+  }) {
+    return removesongfromlib(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(String type, AlbumElements song, AlbumSongEntity album)?
+        addtolibray,
+    TResult? Function()? getlibrarysong,
+    TResult? Function(String id)? removesongfromlib,
+  }) {
+    return removesongfromlib?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String type, AlbumElements song, AlbumSongEntity album)?
+        addtolibray,
+    TResult Function()? getlibrarysong,
+    TResult Function(String id)? removesongfromlib,
+    required TResult orElse(),
+  }) {
+    if (removesongfromlib != null) {
+      return removesongfromlib(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Addtolibrary value) addtolibray,
+    required TResult Function(_Getlibrarysong value) getlibrarysong,
+    required TResult Function(_Removesong value) removesongfromlib,
+  }) {
+    return removesongfromlib(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Addtolibrary value)? addtolibray,
+    TResult? Function(_Getlibrarysong value)? getlibrarysong,
+    TResult? Function(_Removesong value)? removesongfromlib,
+  }) {
+    return removesongfromlib?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Addtolibrary value)? addtolibray,
+    TResult Function(_Getlibrarysong value)? getlibrarysong,
+    TResult Function(_Removesong value)? removesongfromlib,
+    required TResult orElse(),
+  }) {
+    if (removesongfromlib != null) {
+      return removesongfromlib(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Removesong implements LibraryEvent {
+  const factory _Removesong(final String id) = _$RemovesongImpl;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$RemovesongImplCopyWith<_$RemovesongImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

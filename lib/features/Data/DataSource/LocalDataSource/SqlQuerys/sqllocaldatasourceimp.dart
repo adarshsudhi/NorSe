@@ -3,10 +3,10 @@ import 'package:dartz/dartz.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
 import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../../../../../configs/Error/Errors.dart';
+import '../../../../Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 
 class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
   @override
@@ -45,7 +45,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
     ''';
 
-    const userquery = '''
+      const userquery = '''
       CREATE TABLE user (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         name varchar[150],
@@ -130,7 +130,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       const query = ('''
           INSERT INTO downloads (id,title,artist,imageurl,downloadurl,albumname) VALUES (?,?,?,?,?,?)
        ''');
-      const search = (''' 
+      const search = ('''
           SELECT * FROM downloads WHERE id = ?;
        ''');
       final exist = await db.rawQuery(search, [song.id]);
@@ -138,8 +138,8 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
         Spaces.showtoast('Added Already');
         return false;
       } else {
-        final id = await db.rawInsert(
-            query, [song.id, song.name, song.Artist, song.image, song.url,song.type]);
+        final id = await db.rawInsert(query,
+            [song.id, song.name, song.Artist, song.image, song.url, song.type]);
         if (id > 0) {
           Spaces.showtoast('Added to Downloads');
           return true;
@@ -277,7 +277,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       final db = await intializedatabase();
       int res = await db.delete('fav', where: 'id = ?', whereArgs: [id]);
       if (res == 0) {
-      return left(const Failures.clientfailure());
+        return left(const Failures.clientfailure());
       }
       return right(true);
     } catch (e) {
@@ -542,40 +542,44 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       String query = '''
          DELETE FROM downloads;
     ''';
-     await db.execute(query);
+      await db.execute(query);
       return right(true);
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<Failures, String>> addtolibrary(String type,AlbumElements song) async{
+  Future<Either<Failures, String>> addtolibrary(
+      String type, AlbumElements song) async {
     try {
-       Database db = await intializedatabase();
-       if (type == "song") {
-          String insert = '''
+      Database db = await intializedatabase();
+      if (type == "song") {
+        String insert = '''
             INSERT INTO librarysong (id,name,image,artist,uri) VALUES (?,?,?,?,?);
           ''';
-          String getquery = '''
+        String getquery = '''
             SELECT * FROM librarysong;
           ''';
         List<Map<String, Object?>> allsongs = await db.rawQuery(getquery);
-        bool alreadyexists = allsongs.any((element) => element['id']==song.id);
+        bool alreadyexists =
+            allsongs.any((element) => element['id'] == song.id);
         if (alreadyexists) {
-         int item = await db.delete('librarysong',where: "id = ?",whereArgs: [song.id]);
-         if (item != 0) {
-           return right('song removed');
-         }
+          int item = await db
+              .delete('librarysong', where: "id = ?", whereArgs: [song.id]);
+          if (item != 0) {
+            return right('song removed');
+          }
           return right("Removefailed");
-        }else{
-           int isnull = await db.rawInsert(insert, [song.id,song.name,song.image,song.Artist,song.url]);
-        if (isnull == 0) {
-          return right('not added');
+        } else {
+          int isnull = await db.rawInsert(
+              insert, [song.id, song.name, song.image, song.Artist, song.url]);
+          if (isnull == 0) {
+            return right('not added');
+          }
+          return right("added Succesfully");
         }
-        return right("added Succesfully");
-        }
-       }else if(type =="album"){
+      } else if (type == "album") {
         Database db = await intializedatabase();
         String insert = '''
           INSERT INTO libraryalbum (id,name,image,url) VALUES (?,?,?,?);
@@ -583,20 +587,22 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
         List<Map<String, Object?>> alldata = await db.query('libraryalbum');
         bool isexists = alldata.any((element) => element['id'] == song.id);
         if (isexists) {
-         int isdeleted = await db.delete('libraryalbum',where: "id=?",whereArgs: [song.id]);
-         if (isdeleted != 0) {
-           return right('Removed albu,');
-         } else {
-           return right("Removed failed");
-         }
-        }else{
-          int isadded = await db.rawInsert(insert,[song.id,song.name,song.image,song.url]);
-        if(isadded != 0){
-          return right('Added album');
+          int isdeleted = await db
+              .delete('libraryalbum', where: "id=?", whereArgs: [song.id]);
+          if (isdeleted != 0) {
+            return right('Removed albu,');
+          } else {
+            return right("Removed failed");
+          }
+        } else {
+          int isadded = await db
+              .rawInsert(insert, [song.id, song.name, song.image, song.url]);
+          if (isadded != 0) {
+            return right('Added album');
+          }
+          return right("Adding failed");
         }
-        return right("Adding failed");
-        }
-       }else if(type == "playlist"){
+      } else if (type == "playlist") {
         Database db = await intializedatabase();
         String insert = '''
           INSERT INTO libraryplaylist (id,name,image,url) VALUES (?,?,?,?);
@@ -604,37 +610,21 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
         List<Map<String, Object?>> alldata = await db.query('libraryplaylist');
         bool isexists = alldata.any((element) => element['id'] == song.id);
         if (isexists) {
-         int isdeleted = await db.delete('libraryplaylist',where: "id=?",whereArgs: [song.id]);
-         if (isdeleted != 0) {
-           return right('Removed playlist,');
-         } else {
-           return right("Removed failed");
-         }
-        }else{
-          int isadded = await db.rawInsert(insert,[song.id,song.name,song.image,song.url]);
-        if(isadded != 0){
-          return right('Added playlist');
+          int isdeleted = await db
+              .delete('libraryplaylist', where: "id=?", whereArgs: [song.id]);
+          if (isdeleted != 0) {
+            return right('Removed playlist,');
+          } else {
+            return right("Removed failed");
+          }
+        } else {
+          int isadded = await db
+              .rawInsert(insert, [song.id, song.name, song.image, song.url]);
+          if (isadded != 0) {
+            return right('Added playlist');
+          }
+          return right("Adding failed");
         }
-        return right("Adding failed");
-        }
-       }else{
-        return left(const Failures.clientfailure());
-       }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-  
-  @override
-  Future<Either<Failures, List<Map<String, dynamic>>>> getlibrarysongs() async{
-    try {
-      Database db = await intializedatabase();
-      String getquery = '''
-       SELECT * FROM librarysong;
-      ''';
-      List<Map<String,dynamic>> songs = await db.rawQuery(getquery);
-      if (songs.isNotEmpty) {
-         return right(songs);
       } else {
         return left(const Failures.clientfailure());
       }
@@ -642,40 +632,74 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<bool> Checkifpresent(String id) async{
+  Future<Either<Failures, List<Map<String, dynamic>>>> getlibrarysongs() async {
+    try {
+      Database db = await intializedatabase();
+      String getquery = '''
+       SELECT * FROM librarysong;
+      ''';
+      List<Map<String, dynamic>> songs = await db.rawQuery(getquery);
+      if (songs.isNotEmpty) {
+        return right(songs);
+      } else {
+        return left(const Failures.clientfailure());
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failures, bool>> removesongfromlib(String id) async {
+    try {
+      Database db = await intializedatabase();
+      int effectedrow =
+          await db.delete('librarysong', where: 'id = ?', whereArgs: [id]);
+      if (effectedrow != 0) {
+        return right(true);
+      }
+      return left(const Failures.clientfailure());
+    } catch (e) {
+      throw Exception('Library song remove Failed');
+    }
+  }
+
+  @override
+  Future<bool> Checkifpresent(String id) async {
     try {
       Database db = await intializedatabase();
       final data = await db.rawQuery('SELECT * FROM librarysong');
-      bool ispresnet = data.any((element) => element['id']==id);
+      bool ispresnet = data.any((element) => element['id'] == id);
       return ispresnet;
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<Failures, List<Map<String, dynamic>>>> getlibraryalbums() async{
-   try {
-     Database db = await intializedatabase();
-     List<Map<String,dynamic>> albums = await db.query('libraryalbum');
-     if (albums.isNotEmpty) {
-       return right(albums);
-     } else {
-       return left(const Failures.clientfailure());
-     }
-   } catch (e) {
-     throw Exception(e.toString());
-   }
+  Future<Either<Failures, List<Map<String, dynamic>>>>
+      getlibraryalbums() async {
+    try {
+      Database db = await intializedatabase();
+      List<Map<String, dynamic>> albums = await db.query('libraryalbum');
+      if (albums.isNotEmpty) {
+        return right(albums);
+      } else {
+        return left(const Failures.clientfailure());
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
-  
+
   @override
-  Future<bool> checkforalbumpresent(String id) async{
+  Future<bool> checkforalbumpresent(String id) async {
     try {
       Database db = await intializedatabase();
       final allalbums = await db.query('libraryalbum');
-      bool ispresent = allalbums.any((element) => element['id']==id);
+      bool ispresent = allalbums.any((element) => element['id'] == id);
       if (ispresent) {
         return ispresent;
       }
@@ -684,12 +708,13 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<Failures, List<Map<String, dynamic>>>> getlibraryplaylist() async{
+  Future<Either<Failures, List<Map<String, dynamic>>>>
+      getlibraryplaylist() async {
     try {
       Database db = await intializedatabase();
-      List<Map<String,dynamic>> playlists = await db.query('libraryplaylist');
+      List<Map<String, dynamic>> playlists = await db.query('libraryplaylist');
       if (playlists.isNotEmpty) {
         return right(playlists);
       }
@@ -698,54 +723,51 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<bool> checkifplaylistpresent(String id) async{
+  Future<bool> checkifplaylistpresent(String id) async {
     try {
       Database db = await intializedatabase();
       final data = await db.rawQuery('SELECT * FROM libraryplaylist');
-      bool ispresnet = data.any((element) => element['id']==id);
+      bool ispresnet = data.any((element) => element['id'] == id);
       return ispresnet;
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<bool> userdetails(String mode,Usermodel user) async{
+  Future<bool> userdetails(String mode, Usermodel user) async {
     try {
       Database db = await intializedatabase();
       if (mode == 'initial') {
+        int data =
+            await db.insert('user', {'name': user.name, 'date': user.date});
 
-       int data = await db.insert('user',
-       {
-       'name':user.name,
-       'date':user.date
-       });
-
-        if (data!=0) {
-           return true;
+        if (data != 0) {
+          return true;
         }
         throw Exception('User insertion Failed');
-      }else if(mode == 'update'){
+      } else if (mode == 'update') {
+        List<Map<String, dynamic>> res = await db.query('user');
 
-       List<Map<String,dynamic>> res = await db.query('user');
+        int isupdated = await db.update(
+            'user', {'name': user.name, 'date': user.date},
+            where: "key = ?", whereArgs: [res[0]['key']]);
 
-       int isupdated = await db.update('user',{'name':user.name,'date':user.date},where: "key = ?",whereArgs: [res[0]['key']]);
-
-       if (isupdated!=0) {
-         return true;
-       }
-       throw Exception('user update failed');
+        if (isupdated != 0) {
+          return true;
+        }
+        throw Exception('user update failed');
       }
       throw Exception('Invalid mode');
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Map<String,dynamic>> getuserdetails() async{
+  Future<Map<String, dynamic>> getuserdetails() async {
     try {
       Database db = await intializedatabase();
       List<Map<String, Object?>> res = await db.query('user');
@@ -757,39 +779,39 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<bool, List<Map<String,dynamic>>>> getsearchsuggestions(String mode,String search) async{
+  Future<Either<bool, List<Map<String, dynamic>>>> getsearchsuggestions(
+      String mode, String search) async {
     try {
       Database db = await intializedatabase();
       if (mode == 'insert') {
-       List<Map<String,dynamic>> res = await db.query('usersearch');
+        List<Map<String, dynamic>> res = await db.query('usersearch');
 
-      bool isfound = res.any((element) => element['search'] == search);
+        bool isfound = res.any((element) => element['search'] == search);
 
-
-      if (isfound) {
-        return left(false);
-      } else {
-      String insert = '''
+        if (isfound) {
+          return left(false);
+        } else {
+          String insert = '''
          INSERT INTO usersearch (search) VALUES (?);
       ''';
 
-      await db.rawInsert(insert,[search]);
+          await db.rawInsert(insert, [search]);
 
-      return left(true);
+          return left(true);
+        }
+      } else if (mode == 'get') {
+        List<Map<String, dynamic>> res = await db.query('usersearch');
+        if (res.isNotEmpty) {
+          return right(res);
+        } else {
+          return left(false);
+        }
+      } else {
+        await db.delete('usersearch', where: "search = ?", whereArgs: [search]);
+        return left(true);
       }
-    }else if(mode == 'get') {
-     List<Map<String,dynamic>> res = await db.query('usersearch');
-     if (res.isNotEmpty) {
-       return right(res);
-     } else {
-       return left(false);
-     }
-    }else{
-      await db.delete('usersearch',where: "search = ?",whereArgs: [search]);
-      return left(true);
-    }
     } catch (e) {
       throw Exception(e.toString());
     }

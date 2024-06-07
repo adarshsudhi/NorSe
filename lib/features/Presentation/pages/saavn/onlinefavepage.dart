@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
+import 'package:nebula/features/Presentation/Blocs/Musicbloc/Library/song/songlike_bloc/songlike_bloc.dart';
+import 'package:nebula/features/Presentation/Blocs/Musicbloc/favsong_bloc/favsongs_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/recents_bloc/recents_bloc.dart';
 import '../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import '../../Blocs/Musicbloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
@@ -176,11 +180,12 @@ class OnlinePlaylist extends StatelessWidget {
                                             id: playlist[index]['id']));
                                   },
                                   child: OnlineFevSongTiles(
+                                      remove: () {},
                                       title: playlist[index]['name'],
                                       uri: 'null',
                                       image: playlist[index]['image'],
                                       artist: 'null',
-                                      ontap: () {
+                                      play: () {
                                         Navigator.pushNamed(context,
                                             SongDetailsPage.SongDetials,
                                             arguments: SongDetailsPage(
@@ -238,11 +243,12 @@ class OnlineAlbum extends StatelessWidget {
                                           id: albums[index]['id']));
                                 },
                                 child: OnlineFevSongTiles(
+                                    remove: () {},
                                     title: albums[index]['name'],
                                     uri: 'null',
                                     image: albums[index]['image'],
                                     artist: 'null',
-                                    ontap: () {
+                                    play: () {
                                       Navigator.pushNamed(
                                           context, SongDetailsPage.SongDetials,
                                           arguments: SongDetailsPage(
@@ -282,10 +288,6 @@ class Nullstate extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/folder.png',
-            scale: 3,
-          ),
           Text(
             'Nothing Liked Yet',
             style: GoogleFonts.aldrich(
@@ -352,12 +354,18 @@ class OnlineSongs extends StatelessWidget {
                                               const []));
                                     },
                                     child: OnlineFevSongTiles(
+                                        remove: () {
+                                          BlocProvider.of<LibraryBloc>(context)
+                                              .add(LibraryEvent
+                                                  .removesongfromlib(
+                                                      data['id']));
+                                        },
                                         show: true,
                                         title: data['name'],
                                         uri: data['uri'],
                                         image: data['image'],
                                         artist: data['artist'],
-                                        ontap: () {
+                                        play: () {
                                           List<AlbumSongEntity> songs = [];
 
                                           for (var song in librarysong) {
@@ -448,12 +456,17 @@ class RecentlyPlayed extends StatelessWidget {
                                     const []));
                           },
                           child: OnlineFevSongTiles(
+                            remove: () {
+                              log('caaa');
+                              BlocProvider.of<RecentsBloc>(context)
+                                  .add(RecentsEvent.removesong(data['id']));
+                            },
                             show: true,
                             title: data['title'],
                             image: data['imageurl'],
                             artist: data['artist'],
                             uri: data['downloadurl'],
-                            ontap: () {
+                            play: () {
                               List<AlbumSongEntity> songs = [];
                               songs.clear();
                               for (var song in recents) {
@@ -503,16 +516,18 @@ class OnlineFevSongTiles extends StatelessWidget {
     required this.uri,
     required this.image,
     required this.artist,
-    required this.ontap,
+    required this.play,
     required this.show,
+    required this.remove,
   });
 
   final String title;
   final String uri;
   final String image;
   final String artist;
-  final VoidCallback ontap;
+  final VoidCallback play;
   final bool show;
+  final VoidCallback remove;
 
   @override
   Widget build(BuildContext context) {
@@ -537,7 +552,11 @@ class OnlineFevSongTiles extends StatelessWidget {
           ? PopupMenuButton(
               itemBuilder: (BuildContext contex) {
                 return [
-                  PopupMenuItem(onTap: ontap, child: const Text('Play')),
+                  PopupMenuItem(onTap: play, child: const Text('play')),
+                  PopupMenuItem(
+                    onTap: remove,
+                    child: const Text('remove'),
+                  )
                 ];
               },
             )

@@ -154,9 +154,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   )),
-                              const SizedBox(
-                                width: 5,
-                              ),
+                              Spaces.kheigth5,
                               Spaces.kheight10,
                               const TitleText(titleTextt: 'Trending now'),
                               BlocBuilder<TrendingSongBloc, TrendingSongState>(

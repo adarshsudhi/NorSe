@@ -21,6 +21,7 @@ mixin _$RecentsEvent {
     required TResult Function() started,
     required TResult Function() getallrecent,
     required TResult Function() clearecents,
+    required TResult Function(String id) removesong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$RecentsEvent {
     TResult? Function()? started,
     TResult? Function()? getallrecent,
     TResult? Function()? clearecents,
+    TResult? Function(String id)? removesong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$RecentsEvent {
     TResult Function()? started,
     TResult Function()? getallrecent,
     TResult Function()? clearecents,
+    TResult Function(String id)? removesong,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$RecentsEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_Getallrecents value) getallrecent,
     required TResult Function(_Clearrecent value) clearecents,
+    required TResult Function(_Removesong value) removesong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$RecentsEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(_Getallrecents value)? getallrecent,
     TResult? Function(_Clearrecent value)? clearecents,
+    TResult? Function(_Removesong value)? removesong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$RecentsEvent {
     TResult Function(_Started value)? started,
     TResult Function(_Getallrecents value)? getallrecent,
     TResult Function(_Clearrecent value)? clearecents,
+    TResult Function(_Removesong value)? removesong,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +127,7 @@ class _$StartedImpl implements _Started {
     required TResult Function() started,
     required TResult Function() getallrecent,
     required TResult Function() clearecents,
+    required TResult Function(String id) removesong,
   }) {
     return started();
   }
@@ -131,6 +138,7 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function()? getallrecent,
     TResult? Function()? clearecents,
+    TResult? Function(String id)? removesong,
   }) {
     return started?.call();
   }
@@ -141,6 +149,7 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function()? getallrecent,
     TResult Function()? clearecents,
+    TResult Function(String id)? removesong,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -155,6 +164,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_Getallrecents value) getallrecent,
     required TResult Function(_Clearrecent value) clearecents,
+    required TResult Function(_Removesong value) removesong,
   }) {
     return started(this);
   }
@@ -165,6 +175,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_Getallrecents value)? getallrecent,
     TResult? Function(_Clearrecent value)? clearecents,
+    TResult? Function(_Removesong value)? removesong,
   }) {
     return started?.call(this);
   }
@@ -175,6 +186,7 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_Getallrecents value)? getallrecent,
     TResult Function(_Clearrecent value)? clearecents,
+    TResult Function(_Removesong value)? removesong,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -229,6 +241,7 @@ class _$GetallrecentsImpl implements _Getallrecents {
     required TResult Function() started,
     required TResult Function() getallrecent,
     required TResult Function() clearecents,
+    required TResult Function(String id) removesong,
   }) {
     return getallrecent();
   }
@@ -239,6 +252,7 @@ class _$GetallrecentsImpl implements _Getallrecents {
     TResult? Function()? started,
     TResult? Function()? getallrecent,
     TResult? Function()? clearecents,
+    TResult? Function(String id)? removesong,
   }) {
     return getallrecent?.call();
   }
@@ -249,6 +263,7 @@ class _$GetallrecentsImpl implements _Getallrecents {
     TResult Function()? started,
     TResult Function()? getallrecent,
     TResult Function()? clearecents,
+    TResult Function(String id)? removesong,
     required TResult orElse(),
   }) {
     if (getallrecent != null) {
@@ -263,6 +278,7 @@ class _$GetallrecentsImpl implements _Getallrecents {
     required TResult Function(_Started value) started,
     required TResult Function(_Getallrecents value) getallrecent,
     required TResult Function(_Clearrecent value) clearecents,
+    required TResult Function(_Removesong value) removesong,
   }) {
     return getallrecent(this);
   }
@@ -273,6 +289,7 @@ class _$GetallrecentsImpl implements _Getallrecents {
     TResult? Function(_Started value)? started,
     TResult? Function(_Getallrecents value)? getallrecent,
     TResult? Function(_Clearrecent value)? clearecents,
+    TResult? Function(_Removesong value)? removesong,
   }) {
     return getallrecent?.call(this);
   }
@@ -283,6 +300,7 @@ class _$GetallrecentsImpl implements _Getallrecents {
     TResult Function(_Started value)? started,
     TResult Function(_Getallrecents value)? getallrecent,
     TResult Function(_Clearrecent value)? clearecents,
+    TResult Function(_Removesong value)? removesong,
     required TResult orElse(),
   }) {
     if (getallrecent != null) {
@@ -337,6 +355,7 @@ class _$ClearrecentImpl implements _Clearrecent {
     required TResult Function() started,
     required TResult Function() getallrecent,
     required TResult Function() clearecents,
+    required TResult Function(String id) removesong,
   }) {
     return clearecents();
   }
@@ -347,6 +366,7 @@ class _$ClearrecentImpl implements _Clearrecent {
     TResult? Function()? started,
     TResult? Function()? getallrecent,
     TResult? Function()? clearecents,
+    TResult? Function(String id)? removesong,
   }) {
     return clearecents?.call();
   }
@@ -357,6 +377,7 @@ class _$ClearrecentImpl implements _Clearrecent {
     TResult Function()? started,
     TResult Function()? getallrecent,
     TResult Function()? clearecents,
+    TResult Function(String id)? removesong,
     required TResult orElse(),
   }) {
     if (clearecents != null) {
@@ -371,6 +392,7 @@ class _$ClearrecentImpl implements _Clearrecent {
     required TResult Function(_Started value) started,
     required TResult Function(_Getallrecents value) getallrecent,
     required TResult Function(_Clearrecent value) clearecents,
+    required TResult Function(_Removesong value) removesong,
   }) {
     return clearecents(this);
   }
@@ -381,6 +403,7 @@ class _$ClearrecentImpl implements _Clearrecent {
     TResult? Function(_Started value)? started,
     TResult? Function(_Getallrecents value)? getallrecent,
     TResult? Function(_Clearrecent value)? clearecents,
+    TResult? Function(_Removesong value)? removesong,
   }) {
     return clearecents?.call(this);
   }
@@ -391,6 +414,7 @@ class _$ClearrecentImpl implements _Clearrecent {
     TResult Function(_Started value)? started,
     TResult Function(_Getallrecents value)? getallrecent,
     TResult Function(_Clearrecent value)? clearecents,
+    TResult Function(_Removesong value)? removesong,
     required TResult orElse(),
   }) {
     if (clearecents != null) {
@@ -402,6 +426,151 @@ class _$ClearrecentImpl implements _Clearrecent {
 
 abstract class _Clearrecent implements RecentsEvent {
   const factory _Clearrecent() = _$ClearrecentImpl;
+}
+
+/// @nodoc
+abstract class _$$RemovesongImplCopyWith<$Res> {
+  factory _$$RemovesongImplCopyWith(
+          _$RemovesongImpl value, $Res Function(_$RemovesongImpl) then) =
+      __$$RemovesongImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$RemovesongImplCopyWithImpl<$Res>
+    extends _$RecentsEventCopyWithImpl<$Res, _$RemovesongImpl>
+    implements _$$RemovesongImplCopyWith<$Res> {
+  __$$RemovesongImplCopyWithImpl(
+      _$RemovesongImpl _value, $Res Function(_$RemovesongImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$RemovesongImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RemovesongImpl implements _Removesong {
+  const _$RemovesongImpl(this.id);
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'RecentsEvent.removesong(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RemovesongImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RemovesongImplCopyWith<_$RemovesongImpl> get copyWith =>
+      __$$RemovesongImplCopyWithImpl<_$RemovesongImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() getallrecent,
+    required TResult Function() clearecents,
+    required TResult Function(String id) removesong,
+  }) {
+    return removesong(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? getallrecent,
+    TResult? Function()? clearecents,
+    TResult? Function(String id)? removesong,
+  }) {
+    return removesong?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? getallrecent,
+    TResult Function()? clearecents,
+    TResult Function(String id)? removesong,
+    required TResult orElse(),
+  }) {
+    if (removesong != null) {
+      return removesong(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Getallrecents value) getallrecent,
+    required TResult Function(_Clearrecent value) clearecents,
+    required TResult Function(_Removesong value) removesong,
+  }) {
+    return removesong(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Getallrecents value)? getallrecent,
+    TResult? Function(_Clearrecent value)? clearecents,
+    TResult? Function(_Removesong value)? removesong,
+  }) {
+    return removesong?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Getallrecents value)? getallrecent,
+    TResult Function(_Clearrecent value)? clearecents,
+    TResult Function(_Removesong value)? removesong,
+    required TResult orElse(),
+  }) {
+    if (removesong != null) {
+      return removesong(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Removesong implements RecentsEvent {
+  const factory _Removesong(final String id) = _$RemovesongImpl;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$RemovesongImplCopyWith<_$RemovesongImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

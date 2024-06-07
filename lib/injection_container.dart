@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jiosaavn/jiosaavn.dart';
+import 'package:nebula/features/Domain/UseCases/Sql_UseCase/removesongfromlib.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/LocalData/localdata_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/SearchSong_bloc/search_song_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
@@ -177,14 +178,16 @@ Future<void> init() async {
   di.registerLazySingleton(() => Getfavsongstatususecase(repo: di.call()));
   di.registerLazySingleton(() => Getallalbumsusecase(repository: di.call()));
   di.registerLazySingleton(() => Clearallrecentsusecase(repository: di.call()));
-  di.registerLazySingleton(() => Clearalldownloadusecase(repository: di.call()));
+  di.registerLazySingleton(
+      () => Clearalldownloadusecase(repository: di.call()));
   di.registerLazySingleton(() => Addtolibraryusecase(repo: di.call()));
   di.registerLazySingleton(() => Getlibraryusecase(repo: di.call()));
   di.registerLazySingleton(() => checkforsongusecase(repo: di.call()));
   di.registerLazySingleton(() => Getlibraryalbumsusecase(repo: di.call()));
   di.registerLazySingleton(() => Checkforalbumpresentusecase(repo: di.call()));
   di.registerLazySingleton(() => Getlibraryplaylistusecase(repo: di.call()));
-  di.registerLazySingleton(() => Checkifplaylistpresentusecase(repo: di.call()));
+  di.registerLazySingleton(
+      () => Checkifplaylistpresentusecase(repo: di.call()));
   di.registerLazySingleton(() => Getalbumsongsusecase(repo: di.call()));
   di.registerLazySingleton(() => Getvideoinfousecase(repository: di.call()));
   di.registerLazySingleton(() => Getaudiostreamusecase(repository: di.call()));
@@ -196,27 +199,34 @@ Future<void> init() async {
   di.registerLazySingleton(() => Restoredatausecase(repository: di.call()));
   di.registerLazySingleton(() => Getplaylistusecase(repository: di.call()));
   di.registerLazySingleton(() => Usersearchusecase(repo: di.call()));
-  di.registerLazySingleton(() => GetstreamManifestusecase(repository: di.call()));
+  di.registerLazySingleton(
+      () => GetstreamManifestusecase(repository: di.call()));
   di.registerLazySingleton(() => Getsearchsongsusecase(repository: di.call()));
-  di.registerLazySingleton(() => InitializeNotificationusecase(repository: di.call()));
-  di.registerLazySingleton(() => Shownotificationusecase(repository: di.call()));
-
+  di.registerLazySingleton(
+      () => InitializeNotificationusecase(repository: di.call()));
+  di.registerLazySingleton(
+      () => Shownotificationusecase(repository: di.call()));
+  di.registerLazySingleton(() => Removesongfromlibusecase(repo: di.call()));
 
   //Repository
-  di.registerLazySingleton<APIRepository>(() => APIRepositoryimp(apIremoteDatasource: di.call()));
-  di.registerLazySingleton<APIremoteDatasource>(() => APIremotedatasourceimp(yt: di.call(), jioSaavnClient: di.call()));
-  di.registerLazySingleton<PlatformRepository>(() => PlatformRepositoryimp(platformDataRepository: di.call()));
-  di.registerLazySingleton<PlatformDataRepository>(() => PlatformDataRepositoryimp(onAudioQuery: di.call(), di.call()));
-  di.registerLazySingleton<Sqlrepository>(() => Sqlrepositoryimp(sqldatasourcerepository: di.call()));
-  di.registerLazySingleton<Sqldatasourcerepository>(() => Sqldatasourcerepositoryimp());
-
+  di.registerLazySingleton<APIRepository>(
+      () => APIRepositoryimp(apIremoteDatasource: di.call()));
+  di.registerLazySingleton<APIremoteDatasource>(
+      () => APIremotedatasourceimp(yt: di.call(), jioSaavnClient: di.call()));
+  di.registerLazySingleton<PlatformRepository>(
+      () => PlatformRepositoryimp(platformDataRepository: di.call()));
+  di.registerLazySingleton<PlatformDataRepository>(
+      () => PlatformDataRepositoryimp(onAudioQuery: di.call(), di.call()));
+  di.registerLazySingleton<Sqlrepository>(
+      () => Sqlrepositoryimp(sqldatasourcerepository: di.call()));
+  di.registerLazySingleton<Sqldatasourcerepository>(
+      () => Sqldatasourcerepositoryimp());
 
   final OnAudioQuery onAudioQuery = OnAudioQuery();
   final YoutubeExplode yt = YoutubeExplode();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final JioSaavnClient saavnClient = JioSaavnClient();
-
 
   di.registerLazySingleton<YoutubeExplode>(() => yt);
   di.registerLazySingleton<OnAudioQuery>(() => onAudioQuery);

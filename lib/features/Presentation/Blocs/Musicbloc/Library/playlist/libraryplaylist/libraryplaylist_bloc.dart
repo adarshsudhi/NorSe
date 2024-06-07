@@ -10,16 +10,18 @@ part 'libraryplaylist_event.dart';
 part 'libraryplaylist_state.dart';
 part 'libraryplaylist_bloc.freezed.dart';
 
-class LibraryplaylistBloc extends Bloc<LibraryplaylistEvent, LibraryplaylistState> {
-  LibraryplaylistBloc() : super(_Initial()) {
-    on<_Getlibraryplaylist>((event, emit) async{
-       Either<Failures,List<Map<String,dynamic>>> res = await di.di<Getlibraryplaylistusecase>().call();
-       res.fold((l) {
+class LibraryplaylistBloc
+    extends Bloc<LibraryplaylistEvent, LibraryplaylistState> {
+  LibraryplaylistBloc() : super(const _Initial()) {
+    on<_Getlibraryplaylist>((event, emit) async {
+      Either<Failures, List<Map<String, dynamic>>> res =
+          await di.di<Getlibraryplaylistusecase>().call();
+      res.fold((l) {
         log('library playlist failed');
         emit(const LibraryplaylistState.playlists([]));
-       }, (r) {
-         emit(LibraryplaylistState.playlists(r));
-       });
-    }); 
+      }, (r) {
+        emit(LibraryplaylistState.playlists(r));
+      });
+    });
   }
 }

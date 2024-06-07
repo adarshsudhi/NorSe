@@ -115,8 +115,9 @@ class _SearchResultPageState extends State<SearchResultscreen> {
                             child: Hero(
                                 tag: "search",
                                 child: CustomSearchTextFormfield(
+                                  enableFocusNode: true,
                                   search: false,
-                                  SearchController: _searchController,
+                                  searchController: _searchController,
                                   ontap: () {
                                     if (_searchController.text.isNotEmpty) {
                                       BlocProvider.of<SearchSongBloc>(context)
