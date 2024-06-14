@@ -16,11 +16,6 @@ class MySongPage extends StatefulWidget {
 class _MySongPageState extends State<MySongPage> {
   final TextEditingController _controller = TextEditingController();
 
-  _getallsongs(BuildContext context) {
-    BlocProvider.of<LocalsongBloc>(context)
-        .add(const LocalsongEvent.getallsongs());
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -54,26 +49,23 @@ class _MySongPageState extends State<MySongPage> {
                       ]),
                   Expanded(
                     child: TabBarView(children: [
-                      RefreshIndicator(
-                        onRefresh: () async => await _getallsongs(context),
-                        child: BlocBuilder<LocalsongBloc, LocalsongState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                                songs: (songlist, albums, isloading, failed) {
-                              return Songwidget(count: songlist.length);
-                            }, orElse: () {
-                              return const SizedBox(
-                                child: Center(
-                                  child: Textutil(
-                                      text: 'No Songs Found',
-                                      fontsize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              );
-                            });
-                          },
-                        ),
+                      BlocBuilder<LocalsongBloc, LocalsongState>(
+                        builder: (context, state) {
+                          return state.maybeWhen(
+                              songs: (songlist, albums, isloading, failed) {
+                            return Songwidget(count: songlist.length);
+                          }, orElse: () {
+                            return const SizedBox(
+                              child: Center(
+                                child: Textutil(
+                                    text: 'No Songs Found',
+                                    fontsize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            );
+                          });
+                        },
                       ),
                       BlocBuilder<LocalsongBloc, LocalsongState>(
                         builder: (context, state) {

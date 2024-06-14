@@ -200,7 +200,12 @@ class _AboutpageState extends State<Aboutpage> {
                                 height: 50,
                                 width: 130,
                                 child: InkWell(
-                                  onTap: () async {},
+                                  onTap: () async {
+                                    String url =
+                                        'https://www.buymeacoffee.com/adarshadarz';
+
+                                    await launchUrl(Uri.parse(url));
+                                  },
                                   child: Image.asset('assets/bmc.png'),
                                 ),
                               ),

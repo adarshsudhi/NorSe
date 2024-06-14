@@ -1,12 +1,9 @@
 import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Presentation/Blocs/Musicbloc/Library/song/songlike_bloc/songlike_bloc.dart';
-import 'package:nebula/features/Presentation/Blocs/Musicbloc/favsong_bloc/favsongs_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/recents_bloc/recents_bloc.dart';
 import '../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import '../../Blocs/Musicbloc/Library/album/libraryalbum/libraryalbum_bloc.dart';
@@ -419,89 +416,93 @@ class RecentlyPlayed extends StatelessWidget {
       builder: (context, state) {
         return state.maybeWhen(
             recents: (recents) {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: recents.length,
-                      itemBuilder: (context, index) {
-                        final data = recents[index];
-                        return InkWell(
-                          onTap: () {
-                            List<AlbumSongEntity> songs = [];
-                            songs.clear();
-                            for (var song in recents) {
-                              AlbumSongEntity songEntity = AlbumSongEntity(
-                                  id: song['id'],
-                                  name: song['title'],
-                                  year: 'null',
-                                  primaryArtists: song['artist'],
-                                  image: song['imageurl'],
-                                  songs: song['downloadurl'],
-                                  albumurl: song['downloadurl']);
-                              songs.add(songEntity);
-                            }
+              return recents.isEmpty
+                  ? const Nullstate()
+                  : Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: recents.length,
+                            itemBuilder: (context, index) {
+                              final data = recents[index];
+                              return InkWell(
+                                onTap: () {
+                                  List<AlbumSongEntity> songs = [];
+                                  songs.clear();
+                                  for (var song in recents) {
+                                    AlbumSongEntity songEntity =
+                                        AlbumSongEntity(
+                                            id: song['id'],
+                                            name: song['title'],
+                                            year: 'null',
+                                            primaryArtists: song['artist'],
+                                            image: song['imageurl'],
+                                            songs: song['downloadurl'],
+                                            albumurl: song['downloadurl']);
+                                    songs.add(songEntity);
+                                  }
 
-                            BlocProvider.of<AudioBloc>(context).add(
-                                AudioEvent.onlineaudio(
-                                    songs[index].id,
-                                    index,
-                                    songs[index].songs,
-                                    songs[index].image,
-                                    songs[index].name,
-                                    songs[index].primaryArtists,
-                                    const [],
-                                    songs,
-                                    const [],
-                                    const []));
-                          },
-                          child: OnlineFevSongTiles(
-                            remove: () {
-                              log('caaa');
-                              BlocProvider.of<RecentsBloc>(context)
-                                  .add(RecentsEvent.removesong(data['id']));
-                            },
-                            show: true,
-                            title: data['title'],
-                            image: data['imageurl'],
-                            artist: data['artist'],
-                            uri: data['downloadurl'],
-                            play: () {
-                              List<AlbumSongEntity> songs = [];
-                              songs.clear();
-                              for (var song in recents) {
-                                AlbumSongEntity songEntity = AlbumSongEntity(
-                                    id: song['id'],
-                                    name: song['title'],
-                                    year: 'null',
-                                    primaryArtists: song['artist'],
-                                    image: song['imageurl'],
-                                    songs: song['downloadurl'],
-                                    albumurl: song['downloadurl']);
-                                songs.add(songEntity);
-                              }
+                                  BlocProvider.of<AudioBloc>(context).add(
+                                      AudioEvent.onlineaudio(
+                                          songs[index].id,
+                                          index,
+                                          songs[index].songs,
+                                          songs[index].image,
+                                          songs[index].name,
+                                          songs[index].primaryArtists,
+                                          const [],
+                                          songs,
+                                          const [],
+                                          const []));
+                                },
+                                child: OnlineFevSongTiles(
+                                  remove: () {
+                                    log('caaa');
+                                    BlocProvider.of<RecentsBloc>(context).add(
+                                        RecentsEvent.removesong(data['id']));
+                                  },
+                                  show: true,
+                                  title: data['title'],
+                                  image: data['imageurl'],
+                                  artist: data['artist'],
+                                  uri: data['downloadurl'],
+                                  play: () {
+                                    List<AlbumSongEntity> songs = [];
+                                    songs.clear();
+                                    for (var song in recents) {
+                                      AlbumSongEntity songEntity =
+                                          AlbumSongEntity(
+                                              id: song['id'],
+                                              name: song['title'],
+                                              year: 'null',
+                                              primaryArtists: song['artist'],
+                                              image: song['imageurl'],
+                                              songs: song['downloadurl'],
+                                              albumurl: song['downloadurl']);
+                                      songs.add(songEntity);
+                                    }
 
-                              BlocProvider.of<AudioBloc>(context).add(
-                                  AudioEvent.onlineaudio(
-                                      songs[index].id,
-                                      index,
-                                      songs[index].songs,
-                                      songs[index].image,
-                                      songs[index].name,
-                                      songs[index].primaryArtists,
-                                      const [],
-                                      songs,
-                                      const [],
-                                      const []));
+                                    BlocProvider.of<AudioBloc>(context).add(
+                                        AudioEvent.onlineaudio(
+                                            songs[index].id,
+                                            index,
+                                            songs[index].songs,
+                                            songs[index].image,
+                                            songs[index].name,
+                                            songs[index].primaryArtists,
+                                            const [],
+                                            songs,
+                                            const [],
+                                            const []));
+                                  },
+                                ),
+                              );
                             },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  const Spaceadjust()
-                ],
-              );
+                        ),
+                        const Spaceadjust()
+                      ],
+                    );
             },
             orElse: () => const Nullstate());
       },

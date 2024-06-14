@@ -44,6 +44,11 @@ class _SongwidgetState extends State<Songwidget>
     slidercontroller.forward();
   }
 
+  getallsongs(BuildContext context) {
+    BlocProvider.of<LocalsongBloc>(context)
+        .add(const LocalsongEvent.getallsongs());
+  }
+
   @override
   void dispose() {
     slidercontroller.dispose();
@@ -69,181 +74,34 @@ class _SongwidgetState extends State<Songwidget>
                   } else {
                     return SingleChildScrollView(
                       padding: EdgeInsets.zero,
-                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          /* Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: BlocBuilder<FavoriteplaylistBloc,
-                                FavoriteplaylistState>(
-                              builder: (context, state) {
-                                return state.maybeWhen(
-                                    favsongs: (songs) {
-                                      return songs.isNotEmpty
-                                          ? SizedBox(
-                                              height: 290,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Textutil(
-                                                      text:
-                                                          'Favorite(${songs.length})',
-                                                      fontsize: 15,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  Spaces.kheight10,
-                                                  Expanded(
-                                                      child: PageView.builder(
-                                                    controller: PageController(
-                                                      viewportFraction: 1,
-                                                    ),
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount:
-                                                        (songs.length / 3)
-                                                            .ceil(),
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return SizedBox(
-                                                        width: size.width,
-                                                        child: Column(
-                                                          children:
-                                                              List.generate(
-                                                            3,
-                                                            (innerIndex) {
-                                                              final itemIndex =
-                                                                  index * 3 +
-                                                                      innerIndex;
-                                                              if (itemIndex <
-                                                                  songs
-                                                                      .length) {
-                                                                return Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(
-                                                                          3),
-                                                                  child: Card(
-                                                                    elevation:
-                                                                        10,
-                                                                    shadowColor: Colors
-                                                                        .grey
-                                                                        .withOpacity(
-                                                                            0.3),
-                                                                    color: Colors
-                                                                        .transparent,
-                                                                    surfaceTintColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    shape: RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(40)),
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          70,
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              40),
-                                                                          color: Colors
-                                                                              .grey
-                                                                              .withOpacity(0.2)),
-                                                                      child:
-                                                                          Center(
-                                                                        child:
-                                                                            GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            BlocProvider.of<AudioBloc>(context).add(AudioEvent.localaudio([],
-                                                                                songs,
-                                                                                itemIndex));
-                                                                          },
-                                                                          child:
-                                                                              ListTile(
-                                                                            leading:
-                                                                                SizedBox(
-                                                                              height: 60,
-                                                                              width: 60,
-                                                                              child: Stack(
-                                                                                alignment: Alignment.center,
-                                                                                children: [
-                                                                                  Container(
-                                                                                    height: 46,
-                                                                                    width: 46,
-                                                                                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(60)),
-                                                                                  ),
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsets.all(8.0),
-                                                                                    child: QueryArtworkWidget(
-                                                                                      id: int.parse(songs[itemIndex]['id']),
-                                                                                      type: ArtworkType.AUDIO,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                            title: Textutil(
-                                                                                text: songs[itemIndex]['title'],
-                                                                                fontsize: 13,
-                                                                                color: Colors.white,
-                                                                                fontWeight: FontWeight.bold),
-                                                                            subtitle: Textutil(
-                                                                                text: songs[itemIndex]['artist'],
-                                                                                fontsize: 10,
-                                                                                color: Colors.white,
-                                                                                fontWeight: FontWeight.bold),
-                                                                            trailing:
-                                                                                Container(
-                                                                              height: 40,
-                                                                              width: 40,
-                                                                              decoration: BoxDecoration(color: Colors.white.withOpacity(0.3), borderRadius: BorderRadius.circular(60)),
-                                                                              child: const Center(
-                                                                                child: Icon(
-                                                                                  CupertinoIcons.play_arrow,
-                                                                                  color: Colors.white,
-                                                                                  size: 15,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              } else {
-                                                                return Container();
-                                                              }
-                                                            },
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  )),
-                                                ],
-                                              ),
-                                            )
-                                          : const SizedBox();
-                                    },
-                                    orElse: () => const SizedBox());
-                              },
-                            ),
-                          ), */
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Textutil(
                                     text: 'songs(${songlist.length})',
                                     fontsize: 15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
+                                TextButton.icon(
+                                    style: const ButtonStyle(
+                                        splashFactory: NoSplash.splashFactory),
+                                    onPressed: () async =>
+                                        await getallsongs(context),
+                                    icon: const Icon(
+                                      Icons.refresh,
+                                      color: Colors.red,
+                                      size: 16,
+                                    ),
+                                    label: const Textutil(
+                                        text: 'Refresh',
+                                        fontsize: 14,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.normal))
                               ],
                             ),
                           ),
