@@ -340,7 +340,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                'v 1.0.1',
+                                'v 2.0.0',
                                 style: Spaces.Getstyle(
                                     10,
                                     Colors.white.withOpacity(0.7),
