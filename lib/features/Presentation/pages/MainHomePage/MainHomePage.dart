@@ -1,9 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:nebula/features/Presentation/Blocs/Connectivity_bloc/connnectivity_bloc.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/musicbottombarloading.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -219,13 +222,89 @@ class _MainHomePageState extends State<MainHomePage> {
                   style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
                 )),
           ]),
-      body: Stack(
-        children: [
-          const backgroundgradient(),
-          pages[currentindex],
-          const Align(
-              alignment: Alignment.bottomCenter, child: BottomMusicBar()),
-        ],
+      body: BlocBuilder<ConnnectivityBloc, ConnnectivityState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            networkstate: (isavailable) {
+              Size size = MediaQuery.sizeOf(context);
+              return Stack(
+                children: [
+                  const backgroundgradient(),
+                  pages[currentindex],
+                  currentindex != 1
+                      ? Align(
+                          alignment: Alignment.center,
+                          child: Visibility(
+                              visible: !isavailable,
+                              child: Container(
+                                height: MediaQuery.sizeOf(context).height,
+                                width: MediaQuery.sizeOf(context).width,
+                                color: Colors.black.withOpacity(0.85),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      height: size.height / 2.5,
+                                      width: size.width,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 200,
+                                            width: double.infinity,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/no-wifi.png',
+                                                  scale: 5,
+                                                ),
+                                                const Textutil(
+                                                    text: 'Whoops',
+                                                    fontsize: 20,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ],
+                                            ),
+                                          ),
+                                          Textutil(
+                                              text:
+                                                  'No internet connection found',
+                                              fontsize: 16,
+                                              color:
+                                                  Colors.white.withOpacity(0.7),
+                                              fontWeight: FontWeight.normal),
+                                          Textutil(
+                                              text:
+                                                  'Check your Connection and try again later',
+                                              fontsize: 16,
+                                              color:
+                                                  Colors.white.withOpacity(0.7),
+                                              fontWeight: FontWeight.normal),
+                                          Spaces.kheight20
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        )
+                      : const SizedBox(),
+                  const Align(
+                      alignment: Alignment.bottomCenter,
+                      child: BottomMusicBar()),
+                ],
+              );
+            },
+            orElse: () => const SizedBox(),
+          );
+        },
       ),
       drawer: Drawer(
         backgroundColor: Colors.black.withOpacity(0.9),

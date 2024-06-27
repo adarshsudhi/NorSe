@@ -35,7 +35,8 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       List<AlbumSongEntity> albumsongslist = [];
       Uri url = Uri.parse("${ApiEndpoints.GetAlbumSongs}$albumurl");
       http.Response response = await http.get(url);
-      final res = response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
+      final res =
+          response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
       if (response.statusCode == 200) {
         final res1 = jsonDecode(res);
         for (Map<String, dynamic> element in res1['data']['songs']) {
@@ -49,7 +50,6 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       throw Exception('Album Songs Failed');
     }
   }
-
 
   @override
   Future<List<SearchEntity>> SearchSong(String Querydata) async {
@@ -69,11 +69,18 @@ class APIremotedatasourceimp implements APIremoteDatasource {
           SearchEntity searchEntity = SearchEntity(
               moreinfo: items['more_info'],
               id: items['id'],
-              name: items['title'].toString().replaceAll('&quot;','').replaceAll('&amp;', ''),
+              name: items['title']
+                  .toString()
+                  .replaceAll('&quot;', '')
+                  .replaceAll('&amp;', ''),
               year: items['id'],
               image: items['image'].toString().replaceAll('150x150', '500x500'),
-              primaryArtists: (items['more_info']['artistMap']['primary_artists'] as List).isEmpty? items['more_info']['music']:
-              items['more_info']['artistMap']['primary_artists'][0]['name'],
+              primaryArtists:
+                  (items['more_info']['artistMap']['primary_artists'] as List)
+                          .isEmpty
+                      ? items['more_info']['music']
+                      : items['more_info']['artistMap']['primary_artists'][0]
+                          ['name'],
               downloadUrl: links[4]['link'].toString());
           results.add(searchEntity);
         }
@@ -81,8 +88,7 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       return results;
     }
     throw Exception("Fetch error");
-    
-    }
+  }
 
   @override
   Future<SearchEntity> GetSong(String Songurl) async {
@@ -108,7 +114,8 @@ class APIremotedatasourceimp implements APIremoteDatasource {
     try {
       final String encoded = jsonEncode(ApiEndpoints().url);
       final uurl = encoded.replaceAll('Querydata', Query);
-      final finalporc = uurl.replaceAll('search.getResults', 'search.getAlbumResults');
+      final finalporc =
+          uurl.replaceAll('search.getResults', 'search.getAlbumResults');
       Map<String, dynamic> decoded = jsonDecode(finalporc);
       Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
       http.Response response = await http.get(uri);
@@ -159,7 +166,6 @@ class APIremotedatasourceimp implements APIremoteDatasource {
 
   @override
   Future<List<launchdataEntity>> trendingnow(String type) async {
-    
     List<launchdataEntity> launchdata = [];
 
     try {
@@ -171,9 +177,9 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       Map<String, dynamic> decoded = jsonDecode(uurl);
 
       Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
-      
+
       http.Response response =
-      await http.get(uri, headers: {'cookie': 'L=$type', 'Accept': '*/*'});
+          await http.get(uri, headers: {'cookie': 'L=$type', 'Accept': '*/*'});
       if (response.statusCode == 200) {
         final ress =
             response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
@@ -185,7 +191,7 @@ class APIremotedatasourceimp implements APIremoteDatasource {
           }
         }
         return launchdata;
-      }else{
+      } else {
         throw Exception('trending song failed');
       }
     } catch (e) {
@@ -198,29 +204,30 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       String id) async {
     List<playlistEntity> playlistsongs = [];
     try {
-      Map<String, dynamic> response = await jioSaavnClient.songs.request(call: ApiEndpoints.endpoints.playlists.id,queryParameters: {'listid':id});
-      
+      Map<String, dynamic> response = await jioSaavnClient.songs.request(
+          call: ApiEndpoints.endpoints.playlists.id,
+          queryParameters: {'listid': id});
+
       String cleanres = jsonEncode(response);
-      
-      Map<String,dynamic> res = jsonDecode(cleanres.replaceAll('&quot;', '').replaceAll('&#039;', ''));
+
+      Map<String, dynamic> res = jsonDecode(
+          cleanres.replaceAll('&quot;', '').replaceAll('&#039;', ''));
 
       if (res.isNotEmpty) {
         for (var songs in res['songs']) {
           List<Map<String, dynamic>> links =
               await decrypt(songs['encrypted_media_url']);
-           Map moreinfo = {
-               'more_info':{
-                 'music':songs["album"]
-               }
-           };
+          Map moreinfo = {
+            'more_info': {'music': songs["album"]}
+          };
           playlistEntity entity = playlistEntity(
               name: songs['song'],
               id: songs['id'],
-              images: songs['image'].toString().replaceAll('150x150', '500x500'),
+              images:
+                  songs['image'].toString().replaceAll('150x150', '500x500'),
               downloadUrl: links[4]['link'].toString(),
               primaryArtists: songs["primary_artists"],
-              more_info: moreinfo
-              );
+              more_info: moreinfo);
           playlistsongs.add(entity);
         }
         return right(playlistsongs);
@@ -401,10 +408,10 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   }
 
   @override
-  Future<Either<Failures, Video>> getvideoinfo(String id) async{
+  Future<Either<Failures, Video>> getvideoinfo(String id) async {
     try {
       final info = await yt.videos.get(id);
-      if(info.title != ''){
+      if (info.title != '') {
         return right(info);
       }
       return left(const Failures.serverfailure());
@@ -412,65 +419,66 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<Failures, AudioOnlyStreamInfo>> getstream(String id) async{
+  Future<Either<Failures, AudioOnlyStreamInfo>> getstream(String id) async {
     try {
+      StreamManifest streamManifest =
+          await yt.videos.streamsClient.getManifest(id);
 
-      StreamManifest streamManifest = await yt.videos.streamsClient.getManifest(id);
+      final List<AudioOnlyStreamInfo> sortedStreamInfo =
+          streamManifest.audioOnly.toList()
+            ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
 
-      final List<AudioOnlyStreamInfo> sortedStreamInfo = streamManifest.audioOnly
-        .toList()
-      ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
+      final audio = sortedStreamInfo
+          .where((element) => element.audioCodec.contains('mp4'));
 
-      final audio = sortedStreamInfo.where((element) => element.audioCodec.contains('mp4'));
-
-      AudioOnlyStreamInfo next = audio.reduce((value, element) => value.size.totalBytes > element.size.totalBytes ? value:element);
+      AudioOnlyStreamInfo next = audio.reduce((value, element) =>
+          value.size.totalBytes > element.size.totalBytes ? value : element);
 
       if (sortedStreamInfo.isEmpty) {
         return left(const Failures.serverfailure());
       }
       return right(next);
-
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<Failures, Map<String, dynamic>>> getlyrices(String id) async{
+  Future<Either<Failures, Map<String, dynamic>>> getlyrices(String id) async {
     try {
-      Map<String, dynamic> lyr = await jioSaavnClient.songs.request(call: ApiEndpoints.endpoints.lyrics,queryParameters: {'lyrics_id':id});
+      Map<String, dynamic> lyr = await jioSaavnClient.songs.request(
+          call: ApiEndpoints.endpoints.lyrics,
+          queryParameters: {'lyrics_id': id});
       if (lyr['status'] != 'failure') {
         return right(lyr);
       }
       return left(const Failures.serverfailure());
-
-
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<Either<Failures, VideoSearchList>> getsearchvideo(String query) async{
+  Future<Either<Failures, VideoSearchList>> getsearchvideo(String query) async {
     try {
-         VideoSearchList list = await yt.search.search(query);
-        if (list.isNotEmpty) {
-          return right(list);
-         }
-        return left(const Failures.serverfailure());     
+      VideoSearchList list = await yt.search.search(query);
+      if (list.isNotEmpty) {
+        return right(list);
+      }
+      return left(const Failures.serverfailure());
     } catch (e) {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<dynamic> getplaylist(String id,String mode) async{
+  Future<dynamic> getplaylist(String id, String mode) async {
     try {
       if (mode == 'playlist') {
-         List<Video> playlist = await yt.playlists.getVideos(id).toList();
-         return playlist;
+        List<Video> playlist = await yt.playlists.getVideos(id).toList();
+        return playlist;
       } else {
         throw Exception('not a mode');
       }
@@ -478,24 +486,25 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       throw Exception(e.toString());
     }
   }
-  
+
   @override
-  Future<List<VideoOnlyStreamInfo>> getManifest(String id) async{
-     List<VideoOnlyStreamInfo> videos = [];
-      StreamManifest streamManifest = await yt.videos.streamsClient.getManifest(id);
-            final List<VideoOnlyStreamInfo> sortedStreamInfo = streamManifest.videoOnly
+  Future<List<VideoOnlyStreamInfo>> getManifest(String id) async {
+    List<VideoOnlyStreamInfo> videos = [];
+    StreamManifest streamManifest =
+        await yt.videos.streamsClient.getManifest(id);
+    final List<VideoOnlyStreamInfo> sortedStreamInfo = streamManifest.videoOnly
         .toList()
       ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
 
-      for (var video in sortedStreamInfo) {
-        if (video.codec.subtype == 'mp4') {
-           videos.add(video);
-        }
+    for (var video in sortedStreamInfo) {
+      if (video.codec.subtype == 'mp4') {
+        videos.add(video);
       }
-      if (videos.isNotEmpty) {
-        return videos;
-      }else{
-        throw Exception('not video');
-      }
+    }
+    if (videos.isNotEmpty) {
+      return videos;
+    } else {
+      throw Exception('not video');
+    }
   }
 }

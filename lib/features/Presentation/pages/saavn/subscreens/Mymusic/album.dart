@@ -86,22 +86,25 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                       child: Row(
                                         children: [
                                           Container(
-                                            height: 55,
-                                            width: 60,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(0)),
-                                            child: QueryArtworkWidget(
-                                              id: albums[index].id,
-                                              type: ArtworkType.ALBUM,
-                                              keepOldArtwork: true,
-                                              artworkHeight: 54,
-                                              artworkWidth: 50,
-                                              artworkBorder:
-                                                  BorderRadius.circular(0),
-                                            ),
-                                          ),
+                                              height: 55,
+                                              width: 60,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(0)),
+                                              child: QueryArtworkWidget(
+                                                nullArtworkWidget: const Icon(
+                                                  Icons.music_note,
+                                                  color: Colors.white,
+                                                ),
+                                                id: albums[index].id,
+                                                type: ArtworkType.ALBUM,
+                                                keepOldArtwork: true,
+                                                artworkHeight: 54,
+                                                artworkWidth: 50,
+                                                artworkBorder:
+                                                    BorderRadius.circular(0),
+                                              )),
                                           const SizedBox(
                                             width: 10,
                                           ),

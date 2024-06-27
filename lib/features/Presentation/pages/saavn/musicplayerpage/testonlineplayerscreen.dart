@@ -277,7 +277,7 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                                                             Text(
                                                                               orginalLyrices[index],
                                                                               style: Spaces.Getstyle(15, Colors.white, FontWeight.w600),
-                                                                              textAlign: TextAlign.start,
+                                                                              textAlign: TextAlign.center,
                                                                             ))),
                                                             Align(
                                                               alignment: Alignment
@@ -302,19 +302,26 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                                                   children: [
                                                                     Container(
                                                                       height:
-                                                                          50,
-                                                                      width: 50,
+                                                                          40,
+                                                                      width: 40,
                                                                       clipBehavior:
                                                                           Clip.antiAlias,
                                                                       decoration: BoxDecoration(
                                                                           color: Colors.white.withOpacity(
                                                                               0.4),
                                                                           borderRadius:
-                                                                              BorderRadius.circular(10)),
+                                                                              BorderRadius.circular(4)),
                                                                       child:
                                                                           const Center(
-                                                                        child: Icon(
-                                                                            Icons.copy),
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .copy,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          size:
+                                                                              16,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ],

@@ -2,6 +2,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jiosaavn/jiosaavn.dart';
 import 'package:nebula/features/Domain/UseCases/Sql_UseCase/removesongfromlib.dart';
+import 'package:nebula/features/Presentation/Blocs/Connectivity_bloc/connnectivity_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/LocalData/localdata_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/SearchSong_bloc/search_song_bloc.dart';
 import 'package:nebula/features/Presentation/Blocs/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
@@ -133,6 +134,7 @@ Future<void> init() async {
   di.registerFactory(() => BackupAndRestoreBloc());
   di.registerFactory(() => VideoinfoBloc());
   di.registerFactory(() => SearchytBlocBloc());
+  di.registerFactory(() => ConnnectivityBloc());
 
   //UseCase
   di.registerLazySingleton(() => GetAlbumSongsUseCase(repository: di.call()));

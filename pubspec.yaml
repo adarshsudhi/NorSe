@@ -55,6 +55,7 @@ dependencies:
   intl: ^0.17.0
   flutter_rating_bar: ^4.0.1
   spotify: ^0.13.5
+  connectivity_plus: ^6.0.3
 
 dev_dependencies:
   flutter_test:

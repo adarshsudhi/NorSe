@@ -156,14 +156,14 @@ class MetaDataSection extends StatelessWidget {
                                 borderRadius: BorderRadius.zero,
                                 color: Colors.indigo.withOpacity(0.4),
                               ))
-                          : SizedBox(
-                              height: 25,
-                              child: Spaces.songtitle(value.metaData.title, 18,
-                                  Colors.white, FontWeight.w700, context),
-                            ),
+                          : Textutil(
+                              text: value.metaData.title,
+                              fontsize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                       Textutil(
                           text: value.metaData.author,
-                          fontsize: 14,
+                          fontsize: 13,
                           color: Colors.white,
                           fontWeight: FontWeight.normal),
                       const SizedBox(

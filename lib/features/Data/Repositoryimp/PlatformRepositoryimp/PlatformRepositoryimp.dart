@@ -11,25 +11,31 @@ class PlatformRepositoryimp extends PlatformRepository {
   });
   @override
   Future<bool> getpermissions() => platformDataRepository.getpermissions();
-  
+
   @override
-  Future<Either<Failures,List<SongModel>>>getallsongs() => platformDataRepository.getallsongs();
-  
+  Future<Either<Failures, List<SongModel>>> getallsongs() =>
+      platformDataRepository.getallsongs();
+
   @override
-  Future<Either<Failures, List<AlbumModel>>> getalbums() => platformDataRepository.getalbums();
-  
+  Future<Either<Failures, List<AlbumModel>>> getalbums() =>
+      platformDataRepository.getalbums();
+
   @override
-  Future<Either<Failures, List<SongModel>>> getalbumsongs(int id) => platformDataRepository.getalbumsongs(id);
-  
+  Future<Either<Failures, List<SongModel>>> getalbumsongs(int id) =>
+      platformDataRepository.getalbumsongs(id);
+
   @override
-  Future<Either<Failures, bool>> backupdata() => platformDataRepository.backupdata();
-  
+  Future<Either<Failures, bool>> backupdata() =>
+      platformDataRepository.backupdata();
+
   @override
-  Future<Either<Failures, bool>> restoredata() => platformDataRepository.restoredata();
-  
+  Future<Either<Failures, bool>> restoredata() =>
+      platformDataRepository.restoredata();
+
   @override
   Future<void> initnotification() => platformDataRepository.initnotification();
-  
+
   @override
-  void showprogress(double progress,int id,String title,String auther) => platformDataRepository.showprogress(progress, id,title,auther);
+  void showprogress(double progress, int id, String title, String auther) =>
+      platformDataRepository.showprogress(progress, id, title, auther);
 }

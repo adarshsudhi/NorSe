@@ -6,6 +6,7 @@ import 'package:metadata_god/metadata_god.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/configs/routers/Routes.dart';
 import 'package:nebula/features/Domain/UseCases/Platform_UseCase/initializenotification_usecase.dart';
+import 'package:nebula/features/Presentation/Blocs/Connectivity_bloc/connnectivity_bloc.dart';
 import 'package:nebula/features/Presentation/pages/MainHomePage/MainHomePage.dart';
 import 'package:nebula/injection_container.dart';
 import 'features/Presentation/Blocs/Musicbloc/Albumsongs/albums_songs_bloc.dart';
@@ -36,7 +37,6 @@ import 'features/Presentation/Blocs/youtubeBloc/ytdownload_bloc/ytdownload_bloc.
 import 'features/Presentation/Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 import 'features/Presentation/pages/saavn/Intialpage.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MetadataGod.initialize();
@@ -57,8 +57,7 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-
-   @override
+  @override
   void initState() {
     super.initState();
     di<InitializeNotificationusecase>().call();
@@ -68,6 +67,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => di<ConnnectivityBloc>()),
         BlocProvider(create: (context) => di<AlbumsSongsBloc>()),
         BlocProvider(create: (context) => di<TrendingSongBloc>()),
         BlocProvider(create: (context) => di<SearchSongBloc>()),
@@ -131,22 +131,27 @@ class Determine extends StatefulWidget {
 class _DetermineState extends State<Determine> {
   @override
   void initState() {
-    BlocProvider.of<UserBlocBloc>(context).add(const UserBlocEvent.getuserdetails());
+    BlocProvider.of<ConnnectivityBloc>(context)
+        .add(const ConnnectivityEvent.startSevice());
+    BlocProvider.of<UserBlocBloc>(context)
+        .add(const UserBlocEvent.getuserdetails());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBlocBloc,UserBlocState>(
+    return BlocBuilder<UserBlocBloc, UserBlocState>(
       builder: (context, state) {
         return state.maybeWhen(
-          initial: () => const Initial(),
-          userdetails: (user) => const MainHomePage(),
-          orElse: ()=>
-        const Center(
-          child: SizedBox(
-            height: 50,
-            width: 50,
-            child: CircularProgressIndicator(color: Colors.white,))));
+            initial: () => const Initial(),
+            userdetails: (user) => const MainHomePage(),
+            orElse: () => const Center(
+                child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ))));
       },
     );
   }

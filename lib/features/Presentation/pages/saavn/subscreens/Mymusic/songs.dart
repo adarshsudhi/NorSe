@@ -136,14 +136,9 @@ class _SongwidgetState extends State<Songwidget>
                                               QueryArtworkWidget(
                                                   artworkHeight: 55,
                                                   artworkWidth: 60,
-                                                  nullArtworkWidget: SizedBox(
-                                                    height: 55,
-                                                    width: 60,
-                                                    child: Image.asset(
-                                                      'assets/musical-note.png',
-                                                      color: Colors.white
-                                                          .withOpacity(0.5),
-                                                    ),
+                                                  nullArtworkWidget: const Icon(
+                                                    Icons.music_note,
+                                                    color: Colors.white,
                                                   ),
                                                   artworkBorder:
                                                       BorderRadius.circular(10),
