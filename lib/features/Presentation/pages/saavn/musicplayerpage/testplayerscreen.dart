@@ -10,7 +10,7 @@ import '../../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 import '../../../Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
 import '../../../Blocs/Musicbloc/favsong_bloc/favsongs_bloc.dart';
 import '../../../CustomWidgets/modelbottamsheet.dart';
-import '../../../queue/queue.dart';
+import '../queue/queue.dart';
 import '../../MainHomePage/MainHomePage.dart';
 import 'testonlineplayerscreen.dart';
 
@@ -121,28 +121,27 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                     type: ArtworkType.AUDIO,
                                     artworkHeight: size.height,
                                     artworkWidth: size.width,
-                                    size: 2,
+                                    size: 1,
                                     artworkFit: BoxFit.fitHeight,
                                     artworkQuality: FilterQuality.low,
                                   )),
-                                                             Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: MediaQuery.sizeOf(context).height,
-                                width: MediaQuery.sizeOf(context).width,
-                                decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                                colors: [
-                                Colors.black,
-                                Colors.black.withOpacity(0.8),
-                                Colors.black.withOpacity(0.6),
-                                Colors.transparent
-                                ])
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  height: MediaQuery.sizeOf(context).height,
+                                  width: MediaQuery.sizeOf(context).width,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                          colors: [
+                                        Colors.black,
+                                        Colors.black.withOpacity(0.8),
+                                        Colors.black.withOpacity(0.6),
+                                        Colors.transparent
+                                      ])),
                                 ),
-                               ),
-                             ),
+                              ),
                               SafeArea(
                                 child: Column(
                                   mainAxisAlignment:
@@ -207,8 +206,6 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                             );
                                           },
                                         )),
-                              
-
                                     Column(
                                       children: [
                                         audios[songindex].title.length <= 20
@@ -263,7 +260,6 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                         ),
                                       ],
                                     ),
-
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

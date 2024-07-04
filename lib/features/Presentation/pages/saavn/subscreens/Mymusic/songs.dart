@@ -9,50 +9,17 @@ import '../SongDetailsPage/SongDetailsPage.dart';
 
 class Songwidget extends StatefulWidget {
   final int count;
+
   const Songwidget({super.key, required this.count});
 
   @override
   State<Songwidget> createState() => _SongwidgetState();
 }
 
-class _SongwidgetState extends State<Songwidget>
-    with SingleTickerProviderStateMixin {
-  late List<Animation<Offset>> animations;
-
-  late Animation<double> fadetransitionsanimations;
-
-  late AnimationController slidercontroller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    slidercontroller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-
-    animations = List.generate(
-        widget.count,
-        (index) => Tween(begin: const Offset(0, 1), end: Offset.zero).animate(
-            CurvedAnimation(
-                parent: slidercontroller,
-                curve: Interval(index * (1 / widget.count), 1,
-                    curve: Curves.easeIn))));
-
-    fadetransitionsanimations =
-        Tween<double>(begin: 0, end: 1).animate(slidercontroller);
-
-    slidercontroller.forward();
-  }
-
+class _SongwidgetState extends State<Songwidget> {
   getallsongs(BuildContext context) {
     BlocProvider.of<LocalsongBloc>(context)
         .add(const LocalsongEvent.getallsongs());
-  }
-
-  @override
-  void dispose() {
-    slidercontroller.dispose();
-    super.dispose();
   }
 
   @override
@@ -65,7 +32,7 @@ class _SongwidgetState extends State<Songwidget>
             builder: (context, state) {
               return state.maybeWhen(
                 orElse: () => const SizedBox(),
-                songs: (songlist, albums, isloading, failed) {
+                songs: (localaudios, albums, isloading, failed) {
                   if (isloading) {
                     return const Center(
                         child: CircularProgressIndicator(
@@ -83,15 +50,16 @@ class _SongwidgetState extends State<Songwidget>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Textutil(
-                                    text: 'songs(${songlist.length})',
+                                    text: 'songs(${localaudios.length})',
                                     fontsize: 15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                                 TextButton.icon(
                                     style: const ButtonStyle(
                                         splashFactory: NoSplash.splashFactory),
-                                    onPressed: () async =>
-                                        await getallsongs(context),
+                                    onPressed: () async {
+                                      await getallsongs(context);
+                                    },
                                     icon: const Icon(
                                       Icons.refresh,
                                       color: Colors.red,
@@ -110,107 +78,98 @@ class _SongwidgetState extends State<Songwidget>
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: songlist.length,
+                            itemCount: localaudios.length,
                             itemBuilder: (context, index) {
-                              return SlideTransition(
-                                position: animations[index],
-                                child: FadeTransition(
-                                  opacity: fadetransitionsanimations,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 5),
-                                    child: InkWell(
-                                      onTap: () {
-                                        BlocProvider.of<AudioBloc>(context).add(
-                                            AudioEvent.localaudio(
-                                                songlist, [], index));
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              QueryArtworkWidget(
-                                                  artworkHeight: 55,
-                                                  artworkWidth: 60,
-                                                  nullArtworkWidget: const Icon(
-                                                    Icons.music_note,
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: InkWell(
+                                  onTap: () {
+                                    BlocProvider.of<AudioBloc>(context).add(
+                                        AudioEvent.localaudio(
+                                            localaudios, [], index));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          QueryArtworkWidget(
+                                              artworkHeight: 55,
+                                              artworkWidth: 60,
+                                              nullArtworkWidget: const Icon(
+                                                Icons.music_note,
+                                                color: Colors.white,
+                                              ),
+                                              artworkBorder:
+                                                  BorderRadius.circular(10),
+                                              id: localaudios[index].id,
+                                              type: ArtworkType.AUDIO),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Textutil(
+                                                    text: localaudios[index]
+                                                        .displayNameWOExt,
+                                                    fontsize: 15,
                                                     color: Colors.white,
-                                                  ),
-                                                  artworkBorder:
-                                                      BorderRadius.circular(10),
-                                                  id: songlist[index].id,
-                                                  type: ArtworkType.AUDIO),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Textutil(
-                                                        text: songlist[index]
-                                                            .displayNameWOExt,
-                                                        fontsize: 15,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    Textutil(
-                                                        text: songlist[index]
-                                                                    .artist !=
-                                                                null
-                                                            ? songlist[index]
-                                                                .artist!
-                                                            : "unknown",
-                                                        fontsize: 10,
-                                                        color: Colors.white
-                                                            .withOpacity(0.7),
-                                                        fontWeight:
-                                                            FontWeight.bold)
-                                                  ],
-                                                ),
-                                              ),
-                                              PopupMenuButton(
-                                                iconColor: Colors.white,
-                                                itemBuilder:
-                                                    (BuildContext contex) {
-                                                  return [
-                                                    PopupMenuItem(
-                                                        onTap: () {
-                                                          Songmodel songmodel = Songmodel(
-                                                              id: songlist[
-                                                                      index]
-                                                                  .id,
-                                                              title: songlist[
-                                                                      index]
-                                                                  .displayNameWOExt,
-                                                              subtitle: songlist[
-                                                                          index]
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                Textutil(
+                                                    text: localaudios[index]
+                                                                .artist !=
+                                                            null
+                                                        ? localaudios[index]
+                                                            .artist!
+                                                        : "unknown",
+                                                    fontsize: 10,
+                                                    color: Colors.white
+                                                        .withOpacity(0.7),
+                                                    fontWeight: FontWeight.bold)
+                                              ],
+                                            ),
+                                          ),
+                                          PopupMenuButton(
+                                            iconColor: Colors.white,
+                                            itemBuilder: (BuildContext contex) {
+                                              return [
+                                                PopupMenuItem(
+                                                    onTap: () {
+                                                      Songmodel songmodel = Songmodel(
+                                                          id: localaudios[index]
+                                                              .id,
+                                                          title: localaudios[
+                                                                  index]
+                                                              .displayNameWOExt,
+                                                          subtitle:
+                                                              localaudios[index]
                                                                       .artist ??
                                                                   "unkown",
-                                                              uri: songlist[
-                                                                      index]
+                                                          uri:
+                                                              localaudios[index]
                                                                   .uri!);
-                                                          BlocProvider.of<
-                                                                      AudioBloc>(
-                                                                  context)
-                                                              .add(AudioEvent
-                                                                  .addsongtoqueue(
-                                                                      'local',
-                                                                      songmodel));
-                                                        },
-                                                        child: const Text(
-                                                            'Add to Queue')),
-                                                  ];
-                                                },
-                                              ),
-                                            ],
+                                                      BlocProvider.of<
+                                                                  AudioBloc>(
+                                                              context)
+                                                          .add(AudioEvent
+                                                              .addsongtoqueue(
+                                                                  'local',
+                                                                  songmodel));
+                                                    },
+                                                    child: const Text(
+                                                        'Add to Queue')),
+                                              ];
+                                            },
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
                                   ),

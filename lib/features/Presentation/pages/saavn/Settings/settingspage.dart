@@ -32,10 +32,6 @@ class Settingpage extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            const backgroundgradient(),
-            Container(
-              color: Colors.black.withOpacity(0.8),
-            ),
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),

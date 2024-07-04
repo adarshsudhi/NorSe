@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../configs/constants/Spaces.dart';
 import '../../../../Blocs/Musicbloc/backupandrestorebloc/bloc/backup_and_restore_bloc.dart';
-import '../../../../CustomWidgets/backgroundGradient.dart';
 
 class Backupandrestore extends StatelessWidget {
   static const String backupandrestore = './backuprestore';
@@ -32,10 +31,6 @@ class Backupandrestore extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            const backgroundgradient(),
-            Container(
-              color: Colors.black.withOpacity(0.8),
-            ),
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),

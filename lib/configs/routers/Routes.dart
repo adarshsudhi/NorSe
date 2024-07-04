@@ -4,7 +4,7 @@ import '../../features/Presentation/pages/MainHomePage/MainHomePage.dart';
 import '../../features/Presentation/pages/Youtube/youtube_playlistpage.dart';
 import '../../features/Presentation/pages/Youtube/ytsearchpage/ytsearchpage.dart';
 import '../../features/Presentation/pages/saavn/musicplayerpage/testplayerscreen.dart';
-import '../../features/Presentation/queue/onlinequeue.dart';
+import '../../features/Presentation/pages/saavn/queue/onlinequeue.dart';
 import '../../features/Presentation/pages/saavn/Aboutpage/aboutpage.dart';
 import '../../features/Presentation/pages/saavn/DownloadPages/Downloadpages.dart';
 import '../../features/Presentation/pages/saavn/Favpage/localfavsongpage.dart';

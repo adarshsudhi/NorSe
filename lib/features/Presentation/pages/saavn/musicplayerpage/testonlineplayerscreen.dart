@@ -8,9 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nebula/features/Data/Models/MusicModels/onlinesongmodel.dart';
-import 'package:nebula/features/Presentation/queue/onlinequeue.dart';
+import 'package:nebula/features/Presentation/pages/saavn/queue/onlinequeue.dart';
 import 'package:nebula/injection_container.dart' as di;
-
 import '../../../../../configs/constants/Spaces.dart';
 import '../../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import '../../../../Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';

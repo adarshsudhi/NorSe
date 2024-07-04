@@ -1,13 +1,15 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/injection_container.dart' as di;
+import 'package:on_audio_query/on_audio_query.dart';
 import '../../../../Domain/UseCases/Sql_UseCase/initializedatabase_Usecase.dart';
 import '../../../Blocs/Musicbloc/Download_Bloc/download_song_bloc.dart';
 import '../../../Blocs/Musicbloc/LocalData/localdata_bloc.dart';
-
+import '../../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 
 class Downloadpage extends StatefulWidget {
   static const String Downloadscreen = "/downloadscreen";
@@ -57,86 +59,153 @@ class DownlaodQueue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-              Color.fromARGB(255, 2, 1, 19),
-              Color.fromARGB(255, 0, 0, 0)
-            ])),
-        height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width,
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 80,
-                width: double.infinity,
-                child: Downloadswidget(
-                  ontap: () {
-                    BlocProvider.of<LocaldataBloc>(context)
-                        .add(const LocaldataEvent.clearalldownloads());
-                  },
-                  iconData: Icons.clear_all_outlined,
-                  title: "Clear Downloads",
-                ),
-              ),
-              Expanded(child: BlocBuilder<LocaldataBloc, LocaldataState>(
-                  builder: (context, state) {
-                return state.maybeWhen(
-                  orElse: () {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            height: 150,
-                            child: Image.asset('assets/folder.png')),
-                        Text(
-                          'Nothing here',
-                          style: Spaces.Getstyle(
-                              15, Colors.white, FontWeight.bold),
-                        )
-                      ],
-                    );
-                  },
-                  querys: (isloading, fail, downloads) {
-                    if (downloads.isNotEmpty) {
-                      return ListView.builder(
-                        itemCount: downloads.length,
-                        itemBuilder: (context, index) {
-                          final data = downloads[index];
-                          return Tilesitems(
-                            data: data,
-                            index: index,
-                            songs: downloads,
-                          );
-                        },
-                      );
-                    } else {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              height: 150,
-                              child: Image.asset('assets/folder.png')),
-                          Textutil(
-                              text: 'No files in the downloads queue',
-                              fontsize: 18,
-                              color: Colors.white.withOpacity(0.3),
-                              fontWeight: FontWeight.normal)
-                        ],
-                      );
-                    }
-                  },
-                );
-              })),
-            ],
+      color: Colors.black,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          BlocBuilder<AudioBloc, AudioState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => const SizedBox(),
+                onlinesongs: (isloading, isfailed, audios, valueStream, index,
+                    audioPlayer) {
+                  return StreamBuilder(
+                    stream: valueStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData && snapshot.data != null) {
+                        final songindex = snapshot.data!.maybeMap(
+                          orElse: () => 0,
+                          onlinestreams: (value) => value.index,
+                        );
+
+                        return ImageFiltered(
+                          imageFilter:
+                              ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                          child: CachedNetworkImage(
+                            imageUrl: audios[songindex].imageurl,
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                          ),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  );
+                },
+                Localsongs: (isloading, isfailed, audios, valueStream, index,
+                    audioPlayer) {
+                  return StreamBuilder(
+                    stream: valueStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData && snapshot.data != null) {
+                        final songindex = snapshot.data!.mapOrNull(
+                          LocalStreams: (value) => value.index,
+                        );
+                        return QueryArtworkWidget(
+                            keepOldArtwork: true,
+                            size: 1,
+                            id: audios[songindex!].id,
+                            type: ArtworkType.AUDIO);
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  );
+                },
+              );
+            },
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: MediaQuery.sizeOf(context).height,
+              width: MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                    Colors.black,
+                    Colors.black.withOpacity(0.9),
+                    Colors.transparent.withOpacity(0.6)
+                  ])),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height,
+            width: MediaQuery.sizeOf(context).width,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 80,
+                    width: double.infinity,
+                    child: Downloadswidget(
+                      ontap: () {
+                        BlocProvider.of<LocaldataBloc>(context)
+                            .add(const LocaldataEvent.clearalldownloads());
+                      },
+                      iconData: Icons.clear_all_outlined,
+                      title: "Clear Downloads",
+                    ),
+                  ),
+                  Expanded(child: BlocBuilder<LocaldataBloc, LocaldataState>(
+                      builder: (context, state) {
+                    return state.maybeWhen(
+                      orElse: () {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                height: 150,
+                                child: Image.asset('assets/folder.png')),
+                            Text(
+                              'Nothing here',
+                              style: Spaces.Getstyle(
+                                  15, Colors.white, FontWeight.bold),
+                            )
+                          ],
+                        );
+                      },
+                      querys: (isloading, fail, downloads) {
+                        if (downloads.isNotEmpty) {
+                          return ListView.builder(
+                            itemCount: downloads.length,
+                            itemBuilder: (context, index) {
+                              final data = downloads[index];
+                              return Tilesitems(
+                                data: data,
+                                index: index,
+                                songs: downloads,
+                              );
+                            },
+                          );
+                        } else {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: 150,
+                                  child: Image.asset('assets/folder.png')),
+                              Textutil(
+                                  text: 'No files in the downloads queue',
+                                  fontsize: 18,
+                                  color: Colors.white.withOpacity(0.3),
+                                  fontWeight: FontWeight.normal)
+                            ],
+                          );
+                        }
+                      },
+                    );
+                  })),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

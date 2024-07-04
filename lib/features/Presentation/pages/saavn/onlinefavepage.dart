@@ -10,7 +10,6 @@ import '../../Blocs/Musicbloc/Library/album/libraryalbum/libraryalbum_bloc.dart'
 import '../../Blocs/Musicbloc/Library/playlist/libraryplaylist/libraryplaylist_bloc.dart';
 import '../../Blocs/Musicbloc/Library/song/library_bloc/library_bloc.dart';
 import '../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
-import '../../CustomWidgets/backgroundGradient.dart';
 import '../MainHomePage/MainHomePage.dart';
 import 'subscreens/SongDetailsPage/SongDetailsPage.dart';
 
@@ -65,10 +64,6 @@ class _OnlinefavscreenState extends State<Onlinefavscreen> {
             width: MediaQuery.sizeOf(context).width,
             child: Stack(
               children: [
-                const backgroundgradient(),
-                Container(
-                  color: Colors.black.withOpacity(0.8),
-                ),
                 SafeArea(
                   child: Column(
                     children: [
@@ -83,6 +78,7 @@ class _OnlinefavscreenState extends State<Onlinefavscreen> {
                               return Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: InkWell(
+                                  splashColor: Colors.transparent,
                                   onTap: () {
                                     controller.jumpToPage(index);
                                   },
@@ -176,25 +172,11 @@ class OnlinePlaylist extends StatelessWidget {
                                             name: playlist[index]['name'],
                                             id: playlist[index]['id']));
                                   },
-                                  child: OnlineFevSongTiles(
-                                      remove: () {},
-                                      title: playlist[index]['name'],
-                                      uri: 'null',
-                                      image: playlist[index]['image'],
-                                      artist: 'null',
-                                      play: () {
-                                        Navigator.pushNamed(context,
-                                            SongDetailsPage.SongDetials,
-                                            arguments: SongDetailsPage(
-                                                type: 'playlist',
-                                                imageurl: playlist[index]
-                                                    ['image'],
-                                                albumurl: playlist[index]
-                                                    ['url'],
-                                                name: playlist[index]['name'],
-                                                id: playlist[index]['id']));
-                                      },
-                                      show: false));
+                                  child: PlaylistandAlbumtiles(
+                                    name: playlist[index]['name'],
+                                    imageurl: playlist[index]['image'],
+                                    type: 'Playlist',
+                                  ));
                             },
                           ),
                         ),
@@ -239,23 +221,11 @@ class OnlineAlbum extends StatelessWidget {
                                           name: albums[index]['name'],
                                           id: albums[index]['id']));
                                 },
-                                child: OnlineFevSongTiles(
-                                    remove: () {},
-                                    title: albums[index]['name'],
-                                    uri: 'null',
-                                    image: albums[index]['image'],
-                                    artist: 'null',
-                                    play: () {
-                                      Navigator.pushNamed(
-                                          context, SongDetailsPage.SongDetials,
-                                          arguments: SongDetailsPage(
-                                              type: 'album',
-                                              imageurl: albums[index]['image'],
-                                              albumurl: albums[index]['url'],
-                                              name: albums[index]['name'],
-                                              id: albums[index]['id']));
-                                    },
-                                    show: false));
+                                child: PlaylistandAlbumtiles(
+                                  name: albums[index]['name'],
+                                  imageurl: albums[index]['image'],
+                                  type: 'Album',
+                                ));
                           },
                         ),
                       ),
@@ -269,6 +239,63 @@ class OnlineAlbum extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class PlaylistandAlbumtiles extends StatelessWidget {
+  const PlaylistandAlbumtiles({
+    super.key,
+    required this.name,
+    required this.imageurl,
+    required this.type,
+  });
+  final String name;
+  final String imageurl;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 64,
+        width: double.infinity,
+        child: Row(
+          children: [
+            Container(
+              height: 64,
+              clipBehavior: Clip.antiAlias,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              child: CachedNetworkImage(
+                imageUrl: imageurl,
+                height: 64,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Textutil(
+                      text: name,
+                      fontsize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700),
+                  Textutil(
+                      text: type,
+                      fontsize: 11,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

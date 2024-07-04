@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.black.withOpacity(0.8),
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

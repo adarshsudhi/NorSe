@@ -1,7 +1,8 @@
 import 'dart:developer';
+import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,6 @@ import '../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 import '../../Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
 import '../../Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
 import '../../Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
-import '../../CustomWidgets/backgroundGradient.dart';
 import '../../CustomWidgets/muscibottombarwidget.dart';
 import '../saavn/Aboutpage/aboutpage.dart';
 import '../saavn/DownloadPages/Downloadpages.dart';
@@ -228,8 +228,77 @@ class _MainHomePageState extends State<MainHomePage> {
             networkstate: (isavailable) {
               Size size = MediaQuery.sizeOf(context);
               return Stack(
+                fit: StackFit.expand,
                 children: [
-                  const backgroundgradient(),
+                  BlocBuilder<AudioBloc, AudioState>(
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        orElse: () => const SizedBox(),
+                        onlinesongs: (isloading, isfailed, audios, valueStream,
+                            index, audioPlayer) {
+                          return StreamBuilder(
+                            stream: valueStream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data != null) {
+                                final songindex = snapshot.data!.maybeMap(
+                                  orElse: () => 0,
+                                  onlinestreams: (value) => value.index,
+                                );
+
+                                return ImageFiltered(
+                                  imageFilter: ImageFilter.blur(
+                                      sigmaX: 100, sigmaY: 100),
+                                  child: CachedNetworkImage(
+                                    imageUrl: audios[songindex].imageurl,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          );
+                        },
+                        Localsongs: (isloading, isfailed, audios, valueStream,
+                            index, audioPlayer) {
+                          return StreamBuilder(
+                            stream: valueStream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data != null) {
+                                final songindex = snapshot.data!.mapOrNull(
+                                  LocalStreams: (value) => value.index,
+                                );
+                                return QueryArtworkWidget(
+                                    keepOldArtwork: true,
+                                    size: 1,
+                                    id: audios[songindex!].id,
+                                    type: ArtworkType.AUDIO);
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: MediaQuery.sizeOf(context).height,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                            Colors.black,
+                            Colors.black.withOpacity(0.9),
+                            Colors.transparent.withOpacity(0.6)
+                          ])),
+                    ),
+                  ),
                   pages[currentindex],
                   currentindex != 1
                       ? Align(
@@ -244,52 +313,82 @@ class _MainHomePageState extends State<MainHomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.transparent,
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      height: size.height / 2.5,
-                                      width: size.width,
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 200,
-                                            width: double.infinity,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/no-wifi.png',
-                                                  scale: 5,
+                                    Stack(
+                                      children: [
+                                        Container(
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                                color: Colors.transparent,
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            height: size.height / 2.5,
+                                            width: size.width / 1.2,
+                                            child: ClipRRect(
+                                              child: BackdropFilter(
+                                                  filter: ImageFilter.blur(
+                                                      sigmaX: 20, sigmaY: 20),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: Colors
+                                                            .grey.shade600
+                                                            .withOpacity(0.2)),
+                                                    height: size.height / 2.5,
+                                                    width: size.width / 1.2,
+                                                  )),
+                                            )),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          height: size.height / 2.5,
+                                          width: size.width / 1.2,
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 200,
+                                                width: double.infinity,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/no-wifi.png',
+                                                      scale: 6,
+                                                    ),
+                                                    const Textutil(
+                                                        text: 'Whoops',
+                                                        fontsize: 18,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ],
                                                 ),
-                                                const Textutil(
-                                                    text: 'Whoops',
-                                                    fontsize: 20,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ],
-                                            ),
+                                              ),
+                                              Textutil(
+                                                  text:
+                                                      'No internet connection found',
+                                                  fontsize: 14,
+                                                  color: Colors.white
+                                                      .withOpacity(0.7),
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                              Textutil(
+                                                  text:
+                                                      'Check your Connection and try again later',
+                                                  fontsize: 13,
+                                                  color: Colors.white
+                                                      .withOpacity(0.7),
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                              Spaces.kheight20
+                                            ],
                                           ),
-                                          Textutil(
-                                              text:
-                                                  'No internet connection found',
-                                              fontsize: 16,
-                                              color:
-                                                  Colors.white.withOpacity(0.7),
-                                              fontWeight: FontWeight.normal),
-                                          Textutil(
-                                              text:
-                                                  'Check your Connection and try again later',
-                                              fontsize: 16,
-                                              color:
-                                                  Colors.white.withOpacity(0.7),
-                                              fontWeight: FontWeight.normal),
-                                          Spaces.kheight20
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

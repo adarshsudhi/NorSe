@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -64,34 +65,37 @@ class _TestytplayerState extends State<Testytplayer> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerScaffold(
-        autoFullScreen: true,
+        autoFullScreen: false,
         builder: (context, player) {
           return Scaffold(
             backgroundColor: Colors.black,
-            body: Column(
-              children: [
-                SafeArea(child: player),
-                SizedBox(
-                    height: 186,
-                    width: double.infinity,
-                    child: Column(
+            body: SafeArea(
+              child: Column(
+                children: [
+                  player,
+                  SizedBox(
+                      height: 186,
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          MetaDataSection(
+                            youtubePlayerController: controller,
+                          ),
+                          Ytsearchtextformfield(
+                              enableFocusMode: false,
+                              textEditingController: _textEditingController),
+                        ],
+                      )),
+                  Expanded(
+                    child: Stack(
                       children: [
-                        MetaDataSection(
-                          youtubePlayerController: controller,
-                        ),
-                        Ytsearchtextformfield(
-                            enableFocusMode: false,
-                            textEditingController: _textEditingController),
+                        Buildlists(
+                            controller: controller, videos: widget.video),
                       ],
-                    )),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Buildlists(controller: controller, videos: widget.video),
-                    ],
-                  ),
-                )
-              ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },
@@ -148,14 +152,28 @@ class MetaDataSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       value.metaData.title.isEmpty
-                          ? SizedBox(
-                              height: 25,
-                              width: double.infinity,
-                              child: LinearProgressIndicator(
-                                backgroundColor: Colors.black,
-                                borderRadius: BorderRadius.zero,
-                                color: Colors.indigo.withOpacity(0.4),
-                              ))
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.indigo.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  height: 15,
+                                  width: MediaQuery.sizeOf(context).width / 1.1,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.indigo.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  height: 10,
+                                  width: MediaQuery.sizeOf(context).width / 3,
+                                )
+                              ],
+                            )
                           : Textutil(
                               text: value.metaData.title,
                               fontsize: 16,
@@ -182,63 +200,34 @@ class MetaDataSection extends StatelessWidget {
                 return state.maybeWhen(
                     info: (isloading, video) {
                       return isloading
-                          ? const Metadataloading()
-                          : Column(
+                          ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Textutil(
-                                    text:
-                                        "Uploaded on ${formatdatetime(video.uploadDate!)}",
+                                    text: formatdatetime(video.uploadDate!),
                                     fontsize: 10,
                                     color: Colors.white,
                                     fontWeight: FontWeight.normal),
                                 Row(
                                   children: [
-                                    Likeicons(
+                                    const Likeicons(
                                       icon: Icons.thumb_up,
-                                      text: formatLikeCount(
-                                          video.engagement.likeCount!),
+                                      text: '0.0 likes',
                                     ),
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    Likeicons(
+                                    const Likeicons(
                                       icon: Icons.visibility,
-                                      text: formatLikeCount(
-                                          video.engagement.viewCount),
+                                      text: '0.0 views',
                                     ),
                                     const SizedBox(
                                       width: 20,
                                     ),
                                     IconButton(
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                            backgroundColor: Colors.black,
-                                            context: context,
-                                            builder: (context) {
-                                              return SingleChildScrollView(
-                                                child: Column(
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(16),
-                                                        child: Text(
-                                                          video.description,
-                                                          style:
-                                                              Spaces.Getstyle(
-                                                                  13,
-                                                                  Colors.white,
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ))
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
+                                        onPressed: () {},
                                         icon: const Icon(
+                                          size: 20,
                                           Icons.more,
                                           color: Colors.white,
                                         )),
@@ -246,7 +235,93 @@ class MetaDataSection extends StatelessWidget {
                                         playicons: Icons.download,
                                         iconscolors: const Color.fromRGBO(
                                             255, 255, 255, 1),
-                                        iconsize: 22,
+                                        iconsize: 20,
+                                        ontap: () async {}),
+                                    PlayIcons(
+                                        playicons: CupertinoIcons.stop,
+                                        iconscolors: Colors.white,
+                                        iconsize: 20,
+                                        ontap: () async {
+                                          await youtubePlayerController
+                                              .stopVideo()
+                                              .then((value) {
+                                            Navigator.pop(context);
+                                          });
+                                        }),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Textutil(
+                                    text: formatdatetime(video.uploadDate!),
+                                    fontsize: 10,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal),
+                                Row(
+                                  children: [
+                                    Likeicons(
+                                      icon: Icons.thumb_up,
+                                      text:
+                                          "${formatLikeCount(video.engagement.likeCount!)} likes",
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Likeicons(
+                                      icon: Icons.visibility,
+                                      text:
+                                          "${formatLikeCount(video.engagement.viewCount)} views",
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.zero),
+                                            backgroundColor: Colors.black,
+                                            context: context,
+                                            builder: (context) {
+                                              return SingleChildScrollView(
+                                                child: SafeArea(
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(20),
+                                                          child: Text(
+                                                            video.description,
+                                                            style:
+                                                                Spaces.Getstyle(
+                                                                    12,
+                                                                    Colors
+                                                                        .white,
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          size: 20,
+                                          Icons.more,
+                                          color: Colors.white,
+                                        )),
+                                    PlayIcons(
+                                        playicons: Icons.download,
+                                        iconscolors: const Color.fromRGBO(
+                                            255, 255, 255, 1),
+                                        iconsize: 20,
                                         ontap: () async {
                                           return showModalBottomSheet(
                                             backgroundColor: Colors.black,
@@ -311,23 +386,25 @@ class Likeicons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 30,
-      width: 80,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.white),
+      width: 110,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Icon(
             icon,
-            color: Colors.black,
+            size: 22,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            width: 3,
           ),
           Textutil(
               text: text,
               fontsize: 10,
-              color: Colors.black,
-              fontWeight: FontWeight.normal)
+              color: Colors.white,
+              fontWeight: FontWeight.bold)
         ],
       ),
     );

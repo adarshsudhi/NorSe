@@ -209,50 +209,48 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
       emit(const AudioState.initial());
     });
 
-    on<_Localaudio>(
-      (event, emit) async {
-        state.mapOrNull(
-          Localsongs: (value) => emit(value.copyWith(isloading: true)),
-        );
+    on<_Localaudio>((event, emit) async {
+      state.mapOrNull(
+        Localsongs: (value) => emit(value.copyWith(isloading: true)),
+      );
 
-        if (audiosources.isNotEmpty) {
-          song.clear();
-          song = [];
-          sourcesforchecking.clear();
-          song.clear();
-          onlineaudiosforchecking = [];
-          onlinesongs.clear();
-          sourcesforchecking = [];
-          audiosources.clear();
-          audiosources = [];
-        }
+      if (audiosources.isNotEmpty) {
+        song.clear();
+        song = [];
+        sourcesforchecking.clear();
+        song.clear();
+        onlineaudiosforchecking = [];
+        onlinesongs.clear();
+        sourcesforchecking = [];
+        audiosources.clear();
+        audiosources = [];
+      }
 
-        await parselocalsong(event.favsongs, event.songs);
+      await parselocalsong(event.favsongs, event.songs);
 
-        var streams = Rx.combineLatest4(
-            audioPlayer.playerStateStream,
-            audioPlayer.currentIndexStream,
-            audioPlayer.durationStream,
-            audioPlayer.positionStream,
-            (b, c, stat, pos) => AudioState.LocalStreams(pos, stat!, b, c!));
+      var streams = Rx.combineLatest4(
+          audioPlayer.playerStateStream,
+          audioPlayer.currentIndexStream,
+          audioPlayer.durationStream,
+          audioPlayer.positionStream,
+          (b, c, stat, pos) => AudioState.LocalStreams(pos, stat!, b, c!));
 
-        streams.listen((event) {
-          localplayercontroller.sink.add(event);
-        });
+      streams.listen((event) {
+        localplayercontroller.sink.add(event);
+      });
 
-        concatenatingAudioSource = ConcatenatingAudioSource(
-            children: audiosources, useLazyPreparation: true);
+      concatenatingAudioSource = ConcatenatingAudioSource(
+          children: audiosources, useLazyPreparation: true);
 
-        emit(AudioState.Localsongs(false, false, song,
-            localplayercontroller.stream, event.index, audioPlayer));
-        await audioPlayer.setAudioSource(
-          concatenatingAudioSource,
-          initialIndex: event.index,
-          initialPosition: Duration.zero,
-        );
-        await audioPlayer.play();
-      },
-    );
+      emit(AudioState.Localsongs(false, false, song,
+          localplayercontroller.stream, event.index, audioPlayer));
+      await audioPlayer.setAudioSource(
+        concatenatingAudioSource,
+        initialIndex: event.index,
+        initialPosition: Duration.zero,
+      );
+      await audioPlayer.play();
+    });
 
     ///Online event
     on<_Onlineaudio>((event, emit) async {

@@ -22,7 +22,7 @@ class _YoutubepageState extends State<Youtubepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.8),
+      backgroundColor: Colors.transparent,
       body: Column(
         children: [
           Spaces.kheight10,
