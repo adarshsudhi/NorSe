@@ -275,7 +275,8 @@ class _OnlineplayerscreenState extends State<Onlineplayerscreen> {
                                                                         (index) =>
                                                                             Text(
                                                                               orginalLyrices[index],
-                                                                              style: Spaces.Getstyle(15, Colors.white, FontWeight.w600),
+                                                                              style: Spaces.Getstyle(15, Colors.white, FontWeight.w300
+                                                                                                    ),
                                                                               textAlign: TextAlign.center,
                                                                             ))),
                                                             Align(
