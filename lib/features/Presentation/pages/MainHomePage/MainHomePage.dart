@@ -1,13 +1,12 @@
 import 'dart:developer';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nebula/features/Presentation/Blocs/Connectivity_bloc/connnectivity_bloc.dart';
+import 'package:nebula/features/Presentation/CustomWidgets/bgblur.dart';
 import 'package:nebula/features/Presentation/CustomWidgets/musicbottombarloading.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -65,7 +64,7 @@ class _MainHomePageState extends State<MainHomePage> {
     scaffoldKey.currentState!.closeDrawer();
   }
 
-  void call() async {
+  void call() {
     BlocProvider.of<YtsearchBloc>(context).add(const YtsearchEvent.freestate());
     BlocProvider.of<PlaylistBloc>(context)
         .add(const PlaylistEvent.getallplaylist());
@@ -230,59 +229,7 @@ class _MainHomePageState extends State<MainHomePage> {
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  BlocBuilder<AudioBloc, AudioState>(
-                    builder: (context, state) {
-                      return state.maybeWhen(
-                        orElse: () => const SizedBox(),
-                        onlinesongs: (isloading, isfailed, audios, valueStream,
-                            index, audioPlayer) {
-                          return StreamBuilder(
-                            stream: valueStream,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData && snapshot.data != null) {
-                                final songindex = snapshot.data!.maybeMap(
-                                  orElse: () => 0,
-                                  onlinestreams: (value) => value.index,
-                                );
-
-                                return ImageFiltered(
-                                  imageFilter: ImageFilter.blur(
-                                      sigmaX: 100, sigmaY: 100),
-                                  child: CachedNetworkImage(
-                                    imageUrl: audios[songindex].imageurl,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
-                                  ),
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            },
-                          );
-                        },
-                        Localsongs: (isloading, isfailed, audios, valueStream,
-                            index, audioPlayer) {
-                          return StreamBuilder(
-                            stream: valueStream,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData && snapshot.data != null) {
-                                final songindex = snapshot.data!.mapOrNull(
-                                  LocalStreams: (value) => value.index,
-                                );
-                                return QueryArtworkWidget(
-                                    keepOldArtwork: true,
-                                    size: 1,
-                                    id: audios[songindex!].id,
-                                    type: ArtworkType.AUDIO);
-                              } else {
-                                return const SizedBox();
-                              }
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  const BGblur(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
@@ -295,7 +242,7 @@ class _MainHomePageState extends State<MainHomePage> {
                               colors: [
                             Colors.black,
                             Colors.black.withOpacity(0.9),
-                            Colors.transparent.withOpacity(0.6)
+                            Colors.transparent.withOpacity(0.5)
                           ])),
                     ),
                   ),
@@ -498,23 +445,25 @@ class _MainHomePageState extends State<MainHomePage> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Build with ",
-                  style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
-                ),
-                const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                  size: 12,
-                ),
-                Text(
-                  ' by Adarsh N S ',
-                  style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
-                ),
-              ],
+            SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Build with ",
+                    style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
+                  ),
+                  const Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                    size: 12,
+                  ),
+                  Text(
+                    ' by Adarsh N S ',
+                    style: Spaces.Getstyle(10, Colors.white, FontWeight.normal),
+                  ),
+                ],
+              ),
             ),
             Spaces.kheight20,
           ],

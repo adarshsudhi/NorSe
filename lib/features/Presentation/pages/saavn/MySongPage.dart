@@ -1,12 +1,8 @@
-import 'dart:ui';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
 import 'package:nebula/features/Presentation/Blocs/Musicbloc/LocalSongs_bloc/localsong_bloc.dart';
-import 'package:nebula/features/Presentation/Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
-import 'package:on_audio_query/on_audio_query.dart';
+import '../../CustomWidgets/bgblur.dart';
 import 'subscreens/Mymusic/album.dart';
 import 'subscreens/Mymusic/playlist.dart';
 import 'subscreens/Mymusic/songs.dart';
@@ -32,65 +28,7 @@ class _MySongPageState extends State<MySongPage> {
           body: Stack(
             fit: StackFit.expand,
             children: [
-              BlocBuilder<AudioBloc, AudioState>(
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    orElse: () => const SizedBox(),
-                    onlinesongs: (isloading, isfailed, audios, valueStream,
-                        index, audioPlayer) {
-                      return StreamBuilder(
-                        stream: valueStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData && snapshot.data != null) {
-                            final songindex = snapshot.data!.maybeMap(
-                              orElse: () => 0,
-                              onlinestreams: (value) => value.index,
-                            );
-
-                            return ImageFiltered(
-                              imageFilter:
-                                  ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                              child: CachedNetworkImage(
-                                imageUrl: audios[songindex].imageurl,
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
-                              ),
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        },
-                      );
-                    },
-                    Localsongs: (isloading, isfailed, audios, valueStream,
-                        index, audioPlayer) {
-                      return StreamBuilder(
-                        stream: valueStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData && snapshot.data != null) {
-                            int songindex = snapshot.data!.maybeWhen(
-                              orElse: () => 0,
-                              LocalStreams: (pos, dur, playerState, index) =>
-                                  index,
-                            );
-                            return QueryArtworkWidget(
-                                nullArtworkWidget: const Icon(
-                                  Icons.music_note,
-                                  color: Colors.black,
-                                ),
-                                keepOldArtwork: true,
-                                size: 1,
-                                id: audios[songindex].id,
-                                type: ArtworkType.AUDIO);
-                          } else {
-                            return const SizedBox();
-                          }
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
+              const BGblur(),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(

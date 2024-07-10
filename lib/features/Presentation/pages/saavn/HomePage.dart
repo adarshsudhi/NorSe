@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
@@ -56,8 +55,6 @@ class _HomePageState extends State<HomePage> {
     await di.di<initializedbusecase>().call();
   }
 
-  final TextEditingController _controller = TextEditingController();
-
   @override
   void initState() {
     BlocProvider.of<UserBlocBloc>(context)
@@ -66,6 +63,8 @@ class _HomePageState extends State<HomePage> {
     BlocProvider.of<RecentsBloc>(context)
         .add(const RecentsEvent.getallrecent());
   }
+
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -91,72 +90,60 @@ class _HomePageState extends State<HomePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(
+                                height: 90,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Userspace(
+                                      size: size, controller: controller),
+                                ),
+                              ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: ClipRRect(
-                                  child: SizedBox(
-                                    height: 86,
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                    const EdgeInsets.symmetric(horizontal: 9),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        SearchResultscreen.searchscreen,
+                                        arguments: 'null');
+                                  },
+                                  child: Hero(
+                                    tag: "search",
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      width: double.infinity,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Icon(CupertinoIcons.search),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
                                           Expanded(
-                                              child: Userspace(
-                                                  size: size,
-                                                  controller: _controller)),
+                                              child: Text(
+                                                  "Search songs,movies,playlists...",
+                                                  style: GoogleFonts.aldrich(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                      color: Colors.black
+                                                          .withOpacity(0.4))))
                                         ],
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10, left: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context,
-                                          SearchResultscreen.searchscreen,
-                                          arguments: 'null');
-                                    },
-                                    child: Hero(
-                                      tag: "search",
-                                      child: Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: double.infinity,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            const Icon(CupertinoIcons.search),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                                    "Search songs,artists,albums",
-                                                    style: GoogleFonts.aldrich(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14,
-                                                        color: Colors.black
-                                                            .withOpacity(0.4))))
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )),
-                              Spaces.kheigth5,
                               Spaces.kheight10,
                               const TitleText(titleTextt: 'Trending now'),
                               BlocBuilder<TrendingSongBloc, TrendingSongState>(
@@ -164,6 +151,48 @@ class _HomePageState extends State<HomePage> {
                                   if (state is Songstate) {
                                     return TrendingSongsWidget(
                                         details: state.trendingnow, size: size);
+                                  } else if (state is TrendingSongLoading) {
+                                    return Songloadingwidget(size: size);
+                                  } else {
+                                    return Songloadingwidget(size: size);
+                                  }
+                                },
+                              ),
+                              const TitleText(titleTextt: 'Top playlists'),
+                              Spaces.kheight10,
+                              BlocBuilder<TrendingSongBloc, TrendingSongState>(
+                                builder: (context, state) {
+                                  if (state is Songstate) {
+                                    return SizedBox(
+                                      height:
+                                          MediaQuery.sizeOf(context).height / 4,
+                                      width: double.infinity,
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: state.newlyreleased.length,
+                                        itemBuilder: (context, index) {
+                                          final results =
+                                              state.newlyreleased[index];
+                                          return Column(
+                                            children: [
+                                              TrendingImageWidgets(
+                                                  size: size,
+                                                  results: results,
+                                                  index: index),
+                                              Text(
+                                                state.newlyreleased[index]
+                                                    .suntitle,
+                                                style: Spaces.Getstyle(
+                                                    8,
+                                                    Colors.white,
+                                                    FontWeight.normal),
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
                                   } else if (state is TrendingSongLoading) {
                                     return Songloadingwidget(size: size);
                                   } else {
@@ -236,48 +265,6 @@ class _HomePageState extends State<HomePage> {
                                             );
                                           },
                                         ),
-                                      ),
-                                    );
-                                  } else if (state is TrendingSongLoading) {
-                                    return Songloadingwidget(size: size);
-                                  } else {
-                                    return Songloadingwidget(size: size);
-                                  }
-                                },
-                              ),
-                              const TitleText(titleTextt: 'Top playlists'),
-                              Spaces.kheight10,
-                              BlocBuilder<TrendingSongBloc, TrendingSongState>(
-                                builder: (context, state) {
-                                  if (state is Songstate) {
-                                    return SizedBox(
-                                      height:
-                                          MediaQuery.sizeOf(context).height / 4,
-                                      width: double.infinity,
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: state.newlyreleased.length,
-                                        itemBuilder: (context, index) {
-                                          final results =
-                                              state.newlyreleased[index];
-                                          return Column(
-                                            children: [
-                                              TrendingImageWidgets(
-                                                  size: size,
-                                                  results: results,
-                                                  index: index),
-                                              Text(
-                                                state.newlyreleased[index]
-                                                    .suntitle,
-                                                style: Spaces.Getstyle(
-                                                    8,
-                                                    Colors.white,
-                                                    FontWeight.normal),
-                                              )
-                                            ],
-                                          );
-                                        },
                                       ),
                                     );
                                   } else if (state is TrendingSongLoading) {
@@ -503,10 +490,10 @@ class Userspace extends StatelessWidget {
                         children: [
                           Spaces.kheight10,
                           const Textutil(
-                              text: 'Hello',
+                              text: 'Hi, There',
                               fontsize: 20,
                               color: Colors.white,
-                              fontWeight: FontWeight.normal),
+                              fontWeight: FontWeight.bold),
                           Spaces.kheigth5,
                           Expanded(
                             child: Row(
@@ -648,10 +635,10 @@ class Userspace extends StatelessWidget {
                         children: [
                           Spaces.kheight10,
                           const Textutil(
-                              text: 'Hello',
+                              text: 'Hi, There',
                               fontsize: 20,
                               color: Colors.white,
-                              fontWeight: FontWeight.normal),
+                              fontWeight: FontWeight.bold),
                           Spaces.kheigth5,
                           Expanded(
                             child: Row(
@@ -774,7 +761,7 @@ class Userspace extends StatelessWidget {
                                         text: user.name,
                                         fontsize: 25,
                                         color: Colors.red,
-                                        fontWeight: FontWeight.normal)),
+                                        fontWeight: FontWeight.bold)),
                               ],
                             ),
                           ),
@@ -790,10 +777,10 @@ class Userspace extends StatelessWidget {
                     children: [
                       Spaces.kheight10,
                       const Textutil(
-                          text: 'Hello',
+                          text: 'Hi, There',
                           fontsize: 20,
                           color: Colors.white,
-                          fontWeight: FontWeight.normal),
+                          fontWeight: FontWeight.bold),
                       Spaces.kheigth5,
                       Expanded(
                         child: Row(

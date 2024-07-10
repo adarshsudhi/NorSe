@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Presentation/CustomWidgets/backgroundGradient.dart';
-
 import '../subscreens/backupandrestore/backupandrestore.dart';
 
 class Settingpage extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -74,7 +73,7 @@ class _TestytplayerState extends State<Testytplayer> {
                 children: [
                   player,
                   SizedBox(
-                      height: 186,
+                      height: 170,
                       width: double.infinity,
                       child: Column(
                         children: [
@@ -184,9 +183,6 @@ class MetaDataSection extends StatelessWidget {
                           fontsize: 13,
                           color: Colors.white,
                           fontWeight: FontWeight.normal),
-                      const SizedBox(
-                        height: 3,
-                      ),
                     ],
                   ),
                 ),
@@ -203,23 +199,18 @@ class MetaDataSection extends StatelessWidget {
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Textutil(
-                                    text: formatdatetime(video.uploadDate!),
-                                    fontsize: 10,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal),
                                 Row(
                                   children: [
                                     const Likeicons(
                                       icon: Icons.thumb_up,
-                                      text: '0.0 likes',
+                                      text: "0.0 likes",
                                     ),
                                     const SizedBox(
                                       width: 10,
                                     ),
                                     const Likeicons(
                                       icon: Icons.visibility,
-                                      text: '0.0 views',
+                                      text: "0.0 views",
                                     ),
                                     const SizedBox(
                                       width: 20,
@@ -241,13 +232,7 @@ class MetaDataSection extends StatelessWidget {
                                         playicons: CupertinoIcons.stop,
                                         iconscolors: Colors.white,
                                         iconsize: 20,
-                                        ontap: () async {
-                                          await youtubePlayerController
-                                              .stopVideo()
-                                              .then((value) {
-                                            Navigator.pop(context);
-                                          });
-                                        }),
+                                        ontap: () async {}),
                                   ],
                                 ),
                               ],
@@ -255,11 +240,6 @@ class MetaDataSection extends StatelessWidget {
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Textutil(
-                                    text: formatdatetime(video.uploadDate!),
-                                    fontsize: 10,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal),
                                 Row(
                                   children: [
                                     Likeicons(
@@ -347,30 +327,58 @@ class MetaDataSection extends StatelessWidget {
                               ],
                             );
                     },
-                    orElse: () => const Metadataloading());
+                    orElse: () => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Likeicons(
+                                  icon: Icons.thumb_up,
+                                  text: '0.0 likes',
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Likeicons(
+                                  icon: Icons.visibility,
+                                  text: '0.0 views',
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      size: 20,
+                                      Icons.more,
+                                      color: Colors.white,
+                                    )),
+                                PlayIcons(
+                                    playicons: Icons.download,
+                                    iconscolors:
+                                        const Color.fromRGBO(255, 255, 255, 1),
+                                    iconsize: 20,
+                                    ontap: () async {}),
+                                PlayIcons(
+                                    playicons: CupertinoIcons.stop,
+                                    iconscolors: Colors.white,
+                                    iconsize: 20,
+                                    ontap: () async {
+                                      await youtubePlayerController
+                                          .stopVideo()
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                      });
+                                    }),
+                              ],
+                            ),
+                          ],
+                        ));
               },
             ),
           ],
         );
       },
-    );
-  }
-}
-
-class Metadataloading extends StatelessWidget {
-  const Metadataloading({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 70,
-      child: Center(
-        child: CircularProgressIndicator(
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }
@@ -386,16 +394,18 @@ class Likeicons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(5)),
+      height: 25,
       width: 110,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             icon,
             size: 22,
-            color: Colors.white,
+            color: Colors.black,
           ),
           const SizedBox(
             width: 3,
@@ -403,7 +413,7 @@ class Likeicons extends StatelessWidget {
           Textutil(
               text: text,
               fontsize: 10,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold)
         ],
       ),

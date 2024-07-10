@@ -121,7 +121,7 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                     type: ArtworkType.AUDIO,
                                     artworkHeight: size.height,
                                     artworkWidth: size.width,
-                                    size: 1,
+                                    size: 5,
                                     artworkFit: BoxFit.fitHeight,
                                     artworkQuality: FilterQuality.low,
                                   )),
@@ -182,7 +182,7 @@ class _TestplayerscreenState extends State<Testplayerscreen> {
                                                         artworkBorder:
                                                             BorderRadius
                                                                 .circular(20),
-                                                        size: 550,
+                                                        size: 600,
                                                         format:
                                                             ArtworkFormat.JPEG,
                                                         artworkFit:

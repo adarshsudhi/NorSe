@@ -189,10 +189,11 @@ class _YtsearchtextformfieldState extends State<Ytsearchtextformfield> {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+          color: Colors.white, borderRadius: BorderRadius.circular(5)),
       child: TextFormField(
         focusNode: focusNode,
         controller: widget._textEditingController,
+        cursorColor: Colors.black,
         style: Spaces.Getstyle(15, Colors.black, FontWeight.normal),
         onFieldSubmitted: (value) {
           BlocProvider.of<SearchytBlocBloc>(context)
@@ -201,10 +202,10 @@ class _YtsearchtextformfieldState extends State<Ytsearchtextformfield> {
         decoration: InputDecoration(
             prefixIcon: Image.asset(
               'assets/yt.png',
-              scale: 19,
+              scale: 12,
             ),
             border: InputBorder.none,
-            hintText: 'Search on Youtube',
+            hintText: 'YouTube',
             hintStyle: Spaces.Getstyle(15, Colors.grey, FontWeight.normal)),
       ),
     );

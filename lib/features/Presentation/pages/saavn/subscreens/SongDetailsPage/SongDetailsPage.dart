@@ -705,7 +705,7 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
               ),
               const Align(
                 alignment: Alignment.bottomCenter,
-                child: BottomMusicBar(),
+                child: SafeArea(child: BottomMusicBar()),
               )
             ],
           ),

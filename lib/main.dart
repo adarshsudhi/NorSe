@@ -40,6 +40,7 @@ import 'features/Presentation/pages/saavn/Intialpage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MetadataGod.initialize();
+
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',

@@ -607,7 +607,7 @@ class _SearchResultPageState extends State<SearchResultscreen> {
                   ),
                   const Align(
                       alignment: Alignment.bottomCenter,
-                      child: BottomMusicBar())
+                      child: SafeArea(child: BottomMusicBar()))
                 ],
               ),
             ),

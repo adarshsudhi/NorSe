@@ -53,10 +53,10 @@ packages:
     dependency: transitive
     description:
       name: audio_service
-      sha256: a4d989f1225ea9621898d60f23236dcbfc04876fa316086c23c5c4af075dbac4
+      sha256: "9304c811ea702e9f989b394bafdf8332fc219d2ea9bfbf8f7446e978b0a3b781"
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.12"
+    version: "0.18.14"
   audio_service_platform_interface:
     dependency: transitive
     description:
@@ -69,18 +69,18 @@ packages:
     dependency: transitive
     description:
       name: audio_service_web
-      sha256: "523e64ddc914c714d53eec2da85bba1074f08cf26c786d4efb322de510815ea7"
+      sha256: "4cdc2127cd4562b957fb49227dc58e3303fafb09bde2573bc8241b938cf759d9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.3"
   audio_session:
     dependency: transitive
     description:
       name: audio_session
-      sha256: "6fdf255ed3af86535c96452c33ecff1245990bb25a605bfb1958661ccc3d467f"
+      sha256: "4012d798e25a0ebfd4ad7203fefe7e386fdfedd2243afc52fa700b8bde6a3a4f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.18"
+    version: "0.1.20"
   audiotagger:
     dependency: "direct main"
     description:
@@ -676,18 +676,18 @@ packages:
     dependency: "direct main"
     description:
       name: just_audio_background
-      sha256: "3454ffc97edfa1282b7f42759bfa8aa13d9114a24465f4101e0d3ae58a9327fb"
+      sha256: "7547b076d5445431c780b0915707f18baa6d9588077d5d8f811e8a77b4e0bec5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1-beta.11"
+    version: "0.0.1-beta.13"
   just_audio_platform_interface:
     dependency: transitive
     description:
       name: just_audio_platform_interface
-      sha256: c3dee0014248c97c91fe6299edb73dc4d6c6930a2f4f713579cd692d9e47f4a1
+      sha256: "0243828cce503c8366cc2090cefb2b3c871aa8ed2f520670d76fd47aa1ab2790"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.2"
+    version: "4.3.0"
   just_audio_web:
     dependency: transitive
     description:

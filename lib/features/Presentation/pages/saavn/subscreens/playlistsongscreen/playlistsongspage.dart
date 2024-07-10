@@ -4,7 +4,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import '../../../../../../configs/constants/Spaces.dart';
 import '../../../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 import '../../../../Blocs/Musicbloc/playlistsongs_bloc/playlistsongs_bloc.dart';
-import '../../../../CustomWidgets/backgroundGradient.dart';
+import '../../../../CustomWidgets/bgblur.dart';
 import '../../../MainHomePage/MainHomePage.dart';
 import '../../Favpage/localfavsongpage.dart';
 import '../SongDetailsPage/SongDetailsPage.dart';
@@ -53,10 +53,24 @@ class _PlaylistsongspageState extends State<Playlistsongspage> {
         height: size.height,
         width: size.width,
         child: Stack(
+          fit: StackFit.expand,
           children: [
-            const backgroundgradient(),
-            Container(
-              color: Colors.black.withOpacity(0.8),
+            const BGblur(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: MediaQuery.sizeOf(context).height,
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                      Colors.black,
+                      Colors.black.withOpacity(0.9),
+                      Colors.transparent.withOpacity(0.5)
+                    ])),
+              ),
             ),
             SafeArea(
               child: Column(
