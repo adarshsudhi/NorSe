@@ -325,12 +325,21 @@ class _MainHomePageState extends State<MainHomePage> {
                                                       FontWeight.normal),
                                               Textutil(
                                                   text:
-                                                      'Check your Connection and try again later',
+                                                      'Check your Connection and try again',
                                                   fontsize: 13,
                                                   color: Colors.white
                                                       .withOpacity(0.7),
                                                   fontWeight:
                                                       FontWeight.normal),
+                                              Container
+                                               (
+                                                 height:50;
+                                                 width:40;
+                                                 decoration: boxdecoration(
+                                                   border-radius:borderadius.circular(20)
+                                                 )
+                                                child:Text("Try again")
+                                              )
                                               Spaces.kheight20
                                             ],
                                           ),
