@@ -1,4 +1,4 @@
-<h1>Nebula</h1>
+<h1>NorSe</h1>
 <p>An Opensource music player build with flutter (Currently only for android)</p>  
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/initial.jpg?raw=true" width=100%">
 <h1>Features</h1>
@@ -34,7 +34,7 @@
 ```
 Copyright © 2024 Adarsh N S
 
-Nebula is a free software licensed under GPL v3.0
+NorSe is a free software licensed under GPL v3.0
 It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
@@ -64,10 +64,10 @@ See the [GNU General Public License](https://github.com/adarshsudhi/Nebula/blob/
 <h1 align='center'>Disclaimer</h1>
 
 ```
-Nebula does not own or have any affiliation with the songs and other content available through the app.
+NorSe does not own or have any affiliation with the songs and other content available through the app.
 All songs and other content are the property of their respective owners and are protected by copyright law.
-Nebula holds no liability for any copyright infringement or other violations of intellectual property rights
-that may arise from the use of the songs and other content accessible through the app. Nebula uses third-party plugins and
+NorSe holds no liability for any copyright infringement or other violations of intellectual property rights
+that may arise from the use of the songs and other content accessible through the app. NorSe uses third-party plugins and
 is not responsible for any harm or damage to the respective owners or any other parties resulting from the use
 of the songs and other content through the third-party plugins.
 By using the app, you agree to use the songs and other content only for personal, non-commercial purposes
