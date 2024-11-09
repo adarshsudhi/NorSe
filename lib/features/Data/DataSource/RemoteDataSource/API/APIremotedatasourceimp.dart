@@ -388,7 +388,6 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   @override
   Future<List<Map<String, dynamic>>> decrypt(String encriptedmediaurl) async {
     try {
-      String data = '38346591';
       Uint8List encryptedBytes = base64.decode(encriptedmediaurl);
       List<int> keyBytes = utf8.encode(data);
       final decripted = DES(
