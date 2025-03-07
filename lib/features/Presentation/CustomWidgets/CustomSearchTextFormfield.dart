@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nebula/features/Domain/UseCases/Sql_UseCase/usersearch_usecase.dart';
+import 'package:norse/features/Domain/UseCases/Sql_UseCase/usersearch_usecase.dart';
+import 'package:norse/features/Presentation/Blocs/Musicbloc/Suggestion/suggestion_bloc.dart';
 import '../Blocs/Musicbloc/SearchSong_bloc/search_song_bloc.dart';
-import 'package:nebula/injection_container.dart' as di;
+import 'package:norse/injection_container.dart' as di;
 import '../pages/saavn/subscreens/SearchResultPage/SearchResultPage.dart';
 
 class CustomSearchTextFormfield extends StatefulWidget {
-  CustomSearchTextFormfield({
+  const CustomSearchTextFormfield({
     Key? key,
     required this.ontap,
     required this.searchController,
@@ -52,8 +53,14 @@ class _CustomSearchTextFormfieldState extends State<CustomSearchTextFormfield> {
         child: Padding(
           padding: const EdgeInsets.only(left: 7, right: 7),
           child: TextFormField(
+            onChanged: (value) {
+              BlocProvider.of<SuggestionBloc>(context)
+                  .add(SuggestionEvent.getSuggestion(value));
+            },
             focusNode: node,
             onFieldSubmitted: (value) async {
+              BlocProvider.of<SuggestionBloc>(context)
+                  .add(const SuggestionEvent.started());
               if (widget.search) {
                 BlocProvider.of<SearchSongBloc>(context)
                     .add(GetSearchSong(Querydata: value));

@@ -1,22 +1,25 @@
 import 'dart:io';
+import 'package:audiotagger/audiotagger.dart';
+import 'package:audiotagger/models/tag.dart';
 import 'package:dartz/dartz.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:nebula/configs/Error/Errors.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:nebula/features/Data/DataSource/LocalDataSource/Platform/PlatFormDatasource.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:norse/features/Data/DataSource/LocalDataSource/Platform/PlatFormDatasource.dart';
+import '../../../../../configs/Error/Errors.dart';
 
 class PlatformDataRepositoryimp extends PlatformDataRepository {
   final OnAudioQuery onAudioQuery;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final Audiotagger audiotagger;
 
   PlatformDataRepositoryimp(
-    this.flutterLocalNotificationsPlugin, {
-    required this.onAudioQuery,
-  });
+      {required this.onAudioQuery,
+      required this.flutterLocalNotificationsPlugin,
+      required this.audiotagger});
 
   @override
   Future<bool> getpermissions() async {
@@ -47,7 +50,7 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
             await Permission.manageExternalStorage.status;
         if (permisson.isDenied && managestoragestatus.isDenied) {
           switch (version) {
-            case 33 || 34:
+            case 33 || 34 || 35:
               PermissionStatus notificationpermission =
                   await Permission.notification.request();
               PermissionStatus audiopermission =
@@ -212,7 +215,7 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
       importance: Importance.max,
       priority: Priority.max,
       showProgress: false,
-      playSound: true,
+      playSound: false,
       enableVibration: false,
       onlyAlertOnce: true,
     );
@@ -221,9 +224,102 @@ class PlatformDataRepositoryimp extends PlatformDataRepository {
         NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
       id,
-      "$title.m4a",
+      title,
       "Download Completed",
       notificationDetails,
     );
+  }
+
+  @override
+  Future<bool> deletesongfromdevice(String path) async {
+    try {
+      File file = File(path);
+
+      if (await file.exists()) {
+        await file.delete();
+        await onAudioQuery.scanMedia(path);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<ArtistModel>>> getartistwise() async {
+    try {
+      List<ArtistModel> response = await onAudioQuery.queryArtists();
+      if (response.isNotEmpty) {
+        return right(response);
+      }
+      return left(const Failures.clientfailure());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<SongModel>>> getSongsFromArtist(int id) async {
+    try {
+      List<SongModel> artistsong =
+          await onAudioQuery.queryAudiosFrom(AudiosFromType.ARTIST_ID, id);
+
+      if (artistsong.isNotEmpty) {
+        return right(artistsong);
+      }
+      return left(const Failures.clientfailure());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failures, bool>> updateaudiotag(
+      Map<String, dynamic> audiotags) async {
+    String title = audiotags['title'];
+    String artist = audiotags['artist'];
+    String album = audiotags['album'];
+    String ganre = audiotags['ganre'];
+    String path = audiotags['path'];
+
+    Tag tag = Tag(title: title, artist: artist, album: album, genre: ganre);
+
+    bool? isedited = await audiotagger.writeTags(path: path, tag: tag);
+
+    if (isedited != null && isedited) {
+      return right(true);
+    } else {
+      return left(const Failures.clientfailure());
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<GenreModel>>> getGenre() async {
+    try {
+      List<GenreModel> genres =
+          await onAudioQuery.queryGenres(sortType: GenreSortType.GENRE);
+
+      if (genres.isNotEmpty) {
+        return right(genres);
+      }
+      return left(const Failures.clientfailure());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<SongModel>>> getSongsFromGenre(int id) async {
+    try {
+      List<SongModel> genresongs =
+          await onAudioQuery.queryAudiosFrom(AudiosFromType.GENRE_ID, id);
+      if (genresongs.isNotEmpty) {
+        return right(genresongs);
+      }
+      return left(const Failures.clientfailure());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

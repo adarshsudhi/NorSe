@@ -3,30 +3,35 @@ part of 'trending_song_bloc.dart';
 
 sealed class TrendingSongState extends Equatable {
   const TrendingSongState();
-  
+
   @override
   List<Object> get props => [];
 }
 
- class TrendingSongInitial extends TrendingSongState {}
+class TrendingSongInitial extends TrendingSongState {}
 
- class TrendingSongLoading extends TrendingSongState {}
- @immutable
+class TrendingSongLoading extends TrendingSongState {}
+
+@immutable
 class Songstate extends TrendingSongState {
-  final List<launchdataEntity>Tamil;
-  final List<launchdataEntity>Malayalam;
-  final List<launchdataEntity>English;
-  final List<launchdataEntity>trendingnow;
-  final List<launchdataEntity>hindi;
+  final List<launchdataEntity> Tamil;
+  final List<launchdataEntity> Malayalam;
+  final List<launchdataEntity> English;
+  final List<launchdataEntity> trendingnow;
+  final List<launchdataEntity> hindi;
   final List<launchdataEntity> newlyreleased;
   final List<launchdataEntity> topalbums;
-  final List<SearchEntity> picks;
   final List<topchartsEntity> charts;
 
-  Songstate({required this.Tamil, required this.Malayalam, required this.English, required this.trendingnow, required this.hindi, required this.newlyreleased, 
-  required this.topalbums,required this.picks,required this.charts});
-
-
+  Songstate(
+      {required this.Tamil,
+      required this.Malayalam,
+      required this.English,
+      required this.trendingnow,
+      required this.hindi,
+      required this.newlyreleased,
+      required this.topalbums,
+      required this.charts});
 }
 
 class AlbumsongsState extends TrendingSongState {

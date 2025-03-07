@@ -5,31 +5,24 @@ class AudioEvent with _$AudioEvent {
   const factory AudioEvent.started() = _Started;
   const factory AudioEvent.dispose() = _Dispose;
 
-
   const factory AudioEvent.onlineaudio(
-   String key,
-   int index,
-   String downloadUrl,
-   String poster,
-   String name,
-   String artists,
-   List<Map> moreinfo,
-   List<AlbumSongEntity> allsongs,
-   List<SearchEntity> deachSongs,
-   List<playlistEntity>playlistsongs,
+    String key,
+    int index,
+    String downloadUrl,
+    String poster,
+    String name,
+    String artists,
+    List<Map> moreinfo,
+    List<AlbumSongEntity> allsongs,
+    List<SearchEntity> deachSongs,
+    List<playlistEntity> playlistsongs,
   ) = _Onlineaudio;
 
-
-  const factory AudioEvent.localaudio(
-
-    List<SongModel> songs,
-    List<Map<String,dynamic>> favsongs,
-    int index
-
-  ) = _Localaudio;
+  const factory AudioEvent.localaudio(List<SongModel> songs,
+      List<Map<String, dynamic>> favsongs, int index) = _Localaudio;
 
   const factory AudioEvent.pause() = _Pause;
-  const factory AudioEvent.resume() = _Resume; 
+  const factory AudioEvent.resume() = _Resume;
   const factory AudioEvent.loopon(
     bool islooped,
   ) = _Loopon;
@@ -39,9 +32,9 @@ class AudioEvent with _$AudioEvent {
   const factory AudioEvent.seeknextaudio() = _Seeknextaudio;
   const factory AudioEvent.SeekPreviousAudio() = _Seekpreviousaudio;
   const factory AudioEvent.updatequeue(
-   String mode,
-   int newindex,
-   int oldindex,
+    String mode,
+    int newindex,
+    int oldindex,
   ) = _Updatequeue;
   const factory AudioEvent.getqueue() = _Queue;
   const factory AudioEvent.removeitemfromqueue(
@@ -56,12 +49,17 @@ class AudioEvent with _$AudioEvent {
     String type,
     Songmodel song,
   ) = _Addsongtoqueue;
+
   const factory AudioEvent.clearqueueexceptplaying(
     String mode,
     int currentplaying,
   ) = _Clearqueueexceptplaying;
+
   const factory AudioEvent.parselocalaudio(
-    SongModel currentsong,
-    List<SongModel> allsongs
-  ) = _Parselocalaudio;
+      SongModel currentsong, List<SongModel> allsongs) = _Parselocalaudio;
+
+  const factory AudioEvent.clearspecificaudio(String path, int id) =
+      _ClearSpecificAudio;
+  const factory AudioEvent.ytaudio(Map<String,dynamic> audiodetails) =
+      _YtPlayerEvent;
 }

@@ -1,11 +1,13 @@
-import 'package:nebula/configs/Error/Errors.dart';
-import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
+import 'package:norse/configs/Error/Errors.dart';
+import 'package:norse/features/Data/Models/MusicModels/usermodel.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class Sqlrepository {
   Future<Database> intializedatabase();
+  Future<String> getstoredresponse(String id);
   Future<bool> addtodownloads(AlbumElements song);
   Future<Either<Failures, List<Map<String, dynamic>>>> QueryDownloaddata();
   Future<Either<Failures, bool>> removefromdownloads(String id);
@@ -45,4 +47,13 @@ abstract class Sqlrepository {
   Future<Map<String, dynamic>> getuserdetails();
   Future<Either<bool, List<Map<String, dynamic>>>> getsearchsuggestions(
       String mode, String search);
+  Future<Either<Failures, List<List<Map<String, dynamic>>>>> librarysearchfunc(
+      String query);
+  Future<Map<String, dynamic>> getplayerui(String uitype);
+  Future<void> initialplayerui();
+  Future<void> updateplayerui(String type);
+  Future<bool> videoAndAudioDownload(VideoOnlyStreamInfo videoOnlyStreamInfo,
+    AudioOnlyStreamInfo audioOnlyStreamInfo,Map<String,dynamic> details);
+  Future<List<Map<String, dynamic>>> getAddedDownloadVideos();
+  Future<bool> removeFromVideoDownloadTab(String id);
 }

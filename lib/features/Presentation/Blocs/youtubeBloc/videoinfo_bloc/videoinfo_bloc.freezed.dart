@@ -19,19 +19,19 @@ mixin _$VideoinfoEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String id) getinfo,
+    required TResult Function(String url) getinfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String id)? getinfo,
+    TResult? Function(String url)? getinfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String id)? getinfo,
+    TResult Function(String url)? getinfo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +113,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String id) getinfo,
+    required TResult Function(String url) getinfo,
   }) {
     return started();
   }
@@ -122,7 +122,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String id)? getinfo,
+    TResult? Function(String url)? getinfo,
   }) {
     return started?.call();
   }
@@ -131,7 +131,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String id)? getinfo,
+    TResult Function(String url)? getinfo,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -182,7 +182,7 @@ abstract class _$$GetinfoImplCopyWith<$Res> {
           _$GetinfoImpl value, $Res Function(_$GetinfoImpl) then) =
       __$$GetinfoImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String id});
+  $Res call({String url});
 }
 
 /// @nodoc
@@ -196,12 +196,12 @@ class __$$GetinfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? url = null,
   }) {
     return _then(_$GetinfoImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -210,14 +210,14 @@ class __$$GetinfoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetinfoImpl implements _Getinfo {
-  const _$GetinfoImpl(this.id);
+  const _$GetinfoImpl(this.url);
 
   @override
-  final String id;
+  final String url;
 
   @override
   String toString() {
-    return 'VideoinfoEvent.getinfo(id: $id)';
+    return 'VideoinfoEvent.getinfo(url: $url)';
   }
 
   @override
@@ -225,11 +225,11 @@ class _$GetinfoImpl implements _Getinfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetinfoImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.url, url) || other.url == url));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, url);
 
   @JsonKey(ignore: true)
   @override
@@ -241,29 +241,29 @@ class _$GetinfoImpl implements _Getinfo {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String id) getinfo,
+    required TResult Function(String url) getinfo,
   }) {
-    return getinfo(id);
+    return getinfo(url);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String id)? getinfo,
+    TResult? Function(String url)? getinfo,
   }) {
-    return getinfo?.call(id);
+    return getinfo?.call(url);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String id)? getinfo,
+    TResult Function(String url)? getinfo,
     required TResult orElse(),
   }) {
     if (getinfo != null) {
-      return getinfo(id);
+      return getinfo(url);
     }
     return orElse();
   }
@@ -301,9 +301,9 @@ class _$GetinfoImpl implements _Getinfo {
 }
 
 abstract class _Getinfo implements VideoinfoEvent {
-  const factory _Getinfo(final String id) = _$GetinfoImpl;
+  const factory _Getinfo(final String url) = _$GetinfoImpl;
 
-  String get id;
+  String get url;
   @JsonKey(ignore: true)
   _$$GetinfoImplCopyWith<_$GetinfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -314,19 +314,22 @@ mixin _$VideoinfoState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool isloading, Video video) info,
+    required TResult Function(bool isloading, Map<dynamic, dynamic> video) info,
+    required TResult Function(bool isfailed, bool isloading) loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool isloading, Video video)? info,
+    TResult? Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult? Function(bool isfailed, bool isloading)? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool isloading, Video video)? info,
+    TResult Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult Function(bool isfailed, bool isloading)? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -334,18 +337,21 @@ mixin _$VideoinfoState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Info value) info,
+    required TResult Function(_Loading value) loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Info value)? info,
+    TResult? Function(_Loading value)? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Info value)? info,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -408,7 +414,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool isloading, Video video) info,
+    required TResult Function(bool isloading, Map<dynamic, dynamic> video) info,
+    required TResult Function(bool isfailed, bool isloading) loading,
   }) {
     return initial();
   }
@@ -417,7 +424,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool isloading, Video video)? info,
+    TResult? Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult? Function(bool isfailed, bool isloading)? loading,
   }) {
     return initial?.call();
   }
@@ -426,7 +434,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool isloading, Video video)? info,
+    TResult Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult Function(bool isfailed, bool isloading)? loading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -440,6 +449,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Info value) info,
+    required TResult Function(_Loading value) loading,
   }) {
     return initial(this);
   }
@@ -449,6 +459,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Info value)? info,
+    TResult? Function(_Loading value)? loading,
   }) {
     return initial?.call(this);
   }
@@ -458,6 +469,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Info value)? info,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -477,9 +489,7 @@ abstract class _$$InfoImplCopyWith<$Res> {
           _$InfoImpl value, $Res Function(_$InfoImpl) then) =
       __$$InfoImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool isloading, Video video});
-
-  $VideoCopyWith<$Res> get video;
+  $Res call({bool isloading, Map<dynamic, dynamic> video});
 }
 
 /// @nodoc
@@ -501,30 +511,28 @@ class __$$InfoImplCopyWithImpl<$Res>
           : isloading // ignore: cast_nullable_to_non_nullable
               as bool,
       null == video
-          ? _value.video
+          ? _value._video
           : video // ignore: cast_nullable_to_non_nullable
-              as Video,
+              as Map<dynamic, dynamic>,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VideoCopyWith<$Res> get video {
-    return $VideoCopyWith<$Res>(_value.video, (value) {
-      return _then(_value.copyWith(video: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$InfoImpl implements _Info {
-  const _$InfoImpl(this.isloading, this.video);
+  const _$InfoImpl(this.isloading, final Map<dynamic, dynamic> video)
+      : _video = video;
 
   @override
   final bool isloading;
+  final Map<dynamic, dynamic> _video;
   @override
-  final Video video;
+  Map<dynamic, dynamic> get video {
+    if (_video is EqualUnmodifiableMapView) return _video;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_video);
+  }
 
   @override
   String toString() {
@@ -538,11 +546,12 @@ class _$InfoImpl implements _Info {
             other is _$InfoImpl &&
             (identical(other.isloading, isloading) ||
                 other.isloading == isloading) &&
-            (identical(other.video, video) || other.video == video));
+            const DeepCollectionEquality().equals(other._video, _video));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isloading, video);
+  int get hashCode => Object.hash(
+      runtimeType, isloading, const DeepCollectionEquality().hash(_video));
 
   @JsonKey(ignore: true)
   @override
@@ -554,7 +563,8 @@ class _$InfoImpl implements _Info {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool isloading, Video video) info,
+    required TResult Function(bool isloading, Map<dynamic, dynamic> video) info,
+    required TResult Function(bool isfailed, bool isloading) loading,
   }) {
     return info(isloading, video);
   }
@@ -563,7 +573,8 @@ class _$InfoImpl implements _Info {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool isloading, Video video)? info,
+    TResult? Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult? Function(bool isfailed, bool isloading)? loading,
   }) {
     return info?.call(isloading, video);
   }
@@ -572,7 +583,8 @@ class _$InfoImpl implements _Info {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool isloading, Video video)? info,
+    TResult Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult Function(bool isfailed, bool isloading)? loading,
     required TResult orElse(),
   }) {
     if (info != null) {
@@ -586,6 +598,7 @@ class _$InfoImpl implements _Info {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Info value) info,
+    required TResult Function(_Loading value) loading,
   }) {
     return info(this);
   }
@@ -595,6 +608,7 @@ class _$InfoImpl implements _Info {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Info value)? info,
+    TResult? Function(_Loading value)? loading,
   }) {
     return info?.call(this);
   }
@@ -604,6 +618,7 @@ class _$InfoImpl implements _Info {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Info value)? info,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (info != null) {
@@ -614,11 +629,163 @@ class _$InfoImpl implements _Info {
 }
 
 abstract class _Info implements VideoinfoState {
-  const factory _Info(final bool isloading, final Video video) = _$InfoImpl;
+  const factory _Info(final bool isloading, final Map<dynamic, dynamic> video) =
+      _$InfoImpl;
 
   bool get isloading;
-  Video get video;
+  Map<dynamic, dynamic> get video;
   @JsonKey(ignore: true)
   _$$InfoImplCopyWith<_$InfoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isfailed, bool isloading});
+}
+
+/// @nodoc
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$VideoinfoStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isfailed = null,
+    Object? isloading = null,
+  }) {
+    return _then(_$LoadingImpl(
+      null == isfailed
+          ? _value.isfailed
+          : isfailed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == isloading
+          ? _value.isloading
+          : isloading // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl(this.isfailed, this.isloading);
+
+  @override
+  final bool isfailed;
+  @override
+  final bool isloading;
+
+  @override
+  String toString() {
+    return 'VideoinfoState.loading(isfailed: $isfailed, isloading: $isloading)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingImpl &&
+            (identical(other.isfailed, isfailed) ||
+                other.isfailed == isfailed) &&
+            (identical(other.isloading, isloading) ||
+                other.isloading == isloading));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isfailed, isloading);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
+      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(bool isloading, Map<dynamic, dynamic> video) info,
+    required TResult Function(bool isfailed, bool isloading) loading,
+  }) {
+    return loading(isfailed, isloading);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult? Function(bool isfailed, bool isloading)? loading,
+  }) {
+    return loading?.call(isfailed, isloading);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(bool isloading, Map<dynamic, dynamic> video)? info,
+    TResult Function(bool isfailed, bool isloading)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(isfailed, isloading);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Info value) info,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Info value)? info,
+    TResult? Function(_Loading value)? loading,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Info value)? info,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements VideoinfoState {
+  const factory _Loading(final bool isfailed, final bool isloading) =
+      _$LoadingImpl;
+
+  bool get isfailed;
+  bool get isloading;
+  @JsonKey(ignore: true)
+  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

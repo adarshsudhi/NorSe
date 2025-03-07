@@ -3,24 +3,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
-import 'package:nebula/features/Presentation/CustomWidgets/shimmer.dart';
+import 'package:norse/configs/constants/Spaces.dart';
+import 'package:norse/features/Data/Models/MusicModels/usermodel.dart';
+import 'package:norse/features/Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
+import 'package:norse/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
+import 'package:norse/features/Presentation/Blocs/Musicbloc/playerui_bloc/playerui_bloc.dart';
+import 'package:norse/features/Presentation/CustomWidgets/shimmer.dart';
+import 'package:norse/features/Presentation/pages/saavn/onlinefavepage.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../../injection_container.dart' as di;
-import '../../../Domain/UseCases/Sql_UseCase/initializedatabase_Usecase.dart';
+import '../../../../configs/notifier/notifiers.dart';
 import '../../Blocs/Musicbloc/LocalSongs_bloc/localsong_bloc.dart';
 import '../../Blocs/Musicbloc/Trending_Song_bloc/trending_song_bloc.dart';
 import '../../Blocs/Musicbloc/User_bloc/user_bloc_bloc.dart';
 import '../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
-import '../../Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
 import '../../Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
 import '../../Blocs/Musicbloc/recents_bloc/recents_bloc.dart';
-import '../../Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 import '../../CustomWidgets/CustomTextFormField.dart';
+import '../MainHomePage/MainHomePage.dart';
+import 'DownloadPages/Downloadpages.dart';
+import 'Settings/settingspage.dart';
 import 'subscreens/SearchResultPage/SearchResultPage.dart';
 import 'subscreens/SongDetailsPage/SongDetailsPage.dart';
 
@@ -33,8 +34,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
+
   final ScrollController _scrollController = ScrollController();
-  double allocatespace = 50;
+
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -43,20 +46,26 @@ class _HomePageState extends State<HomePage> {
     _scrollController.dispose();
   }
 
-  call() async {
+  call1() async {
     BlocProvider.of<PlaylistBloc>(context)
         .add(const PlaylistEvent.getallplaylist());
     BlocProvider.of<LocalsongBloc>(context)
         .add(const LocalsongEvent.getallsongs());
-    BlocProvider.of<FavoriteplaylistBloc>(context)
-        .add(const FavoriteplaylistEvent.getallsongs());
-    BlocProvider.of<TrendingSongBloc>(context).add(TrendingSongs());
-    BlocProvider.of<YtsearchBloc>(context).add(const YtsearchEvent.freestate());
-    await di.di<initializedbusecase>().call();
+    BlocProvider.of<TrendingSongBloc>(context)
+        .add(const TrendingSongs(mode: 'refresh'));
+  }
+
+  void openDrawer() {
+    scaffoldKey.currentState!.openDrawer();
+  }
+
+  void closeDrawer() {
+    scaffoldKey.currentState!.closeDrawer();
   }
 
   @override
   void initState() {
+    BlocProvider.of<PlayeruiBloc>(context).add(const PlayeruiEvent.initialui());
     BlocProvider.of<UserBlocBloc>(context)
         .add(const UserBlocEvent.getuserdetails());
     super.initState();
@@ -70,8 +79,119 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
+      key: scaffoldKey,
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
+      drawer: Drawer(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        backgroundColor: Colors.black.withOpacity(0.9),
+        surfaceTintColor: Colors.transparent,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height / 4,
+                    child: Center(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                              width: double.infinity,
+                              child: Image.asset(
+                                'assets/sound-wave.png',
+                                fit: BoxFit.fill,
+                                color: const Color.fromARGB(255, 157, 157, 157)
+                                    .withOpacity(0.1),
+                              )),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'NorSe',
+                                style: GoogleFonts.aldrich(
+                                    color: Colors.white,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "v${Spaces.version}",
+                                style: Spaces.Getstyle(
+                                    10,
+                                    Colors.white.withOpacity(0.7),
+                                    FontWeight.normal),
+                              ),
+                              Spaces.kheight10,
+                              SafeArea(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Build with ",
+                                      style: Spaces.Getstyle(
+                                          10, Colors.white, FontWeight.normal),
+                                    ),
+                                    const Icon(
+                                      Icons.favorite,
+                                      color: Colors.red,
+                                      size: 12,
+                                    ),
+                                    Text(
+                                      ' by Adarsh N S ',
+                                      style: Spaces.Getstyle(
+                                          10, Colors.white, FontWeight.normal),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey.withOpacity(0.1),
+                  ),
+                  Column(
+                    children: [
+                      Draweritems(
+                          ontap: () {
+                            setState(() {});
+                            closeDrawer();
+                          },
+                          title: "Home",
+                          iconsdata: Icons.home),
+                      Draweritems(
+                          ontap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const Downloadpage()));
+                          },
+                          title: "Downloads",
+                          iconsdata: Icons.download),
+                      Draweritems(
+                          ontap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const Settingpage()));
+                          },
+                          title: "Settings",
+                          iconsdata: Icons.settings),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Spaces.kheight20,
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +199,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () {
-                  return call();
+                  return call1();
                 },
                 child: Column(
                   children: [
@@ -90,24 +210,46 @@ class _HomePageState extends State<HomePage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 90,
-                                width: double.infinity,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: Userspace(
-                                      size: size, controller: controller),
+                              GestureDetector(
+                                onTap: () {
+                                  openDrawer();
+                                },
+                                child: SizedBox(
+                                  height: 40,
+                                  width: 48,
+                                  child: Image.asset(
+                                    'assets/list.png',
+                                    color: Colors.white,
+                                    scale: 23,
+                                  ),
                                 ),
                               ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 80,
+                            width: double.infinity,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child:
+                                  Userspace(size: size, controller: controller),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 9),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context,
-                                        SearchResultscreen.searchscreen,
-                                        arguments: 'null');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SearchResultscreen(
+                                                    querydata: 'null')));
                                   },
                                   child: Hero(
                                     tag: "search",
@@ -144,11 +286,14 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
+                              Spaces.kheigth5,
+                              Lastsession(size: size),
                               Spaces.kheight10,
                               const TitleText(titleTextt: 'Trending now'),
                               BlocBuilder<TrendingSongBloc, TrendingSongState>(
                                 builder: (context, state) {
                                   if (state is Songstate) {
+                                   
                                     return TrendingSongsWidget(
                                         details: state.trendingnow, size: size);
                                   } else if (state is TrendingSongLoading) {
@@ -219,15 +364,27 @@ class _HomePageState extends State<HomePage> {
                                             final charts = state.charts[index];
                                             return GestureDetector(
                                               onTap: () {
-                                                Navigator.pushNamed(context,
-                                                    SongDetailsPage.SongDetials,
-                                                    arguments: SongDetailsPage(
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return SongDetailsPage(
                                                         type: charts.type,
                                                         imageurl: charts.image,
                                                         albumurl:
                                                             charts.playlisturl,
                                                         name: charts.title,
-                                                        id: charts.id));
+                                                        id: charts.id);
+                                                  },
+                                                ));
+                                                //      Navigator.pushNamed(context,
+                                                //         SongDetailsPage.SongDetials,
+                                                //         arguments: SongDetailsPage(
+                                                //            type: charts.type,
+                                                //             imageurl: charts.image,
+                                                //             albumurl:
+                                                //                charts.playlisturl,
+                                                //            name: charts.title,
+                                                //            id: charts.id));
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
@@ -341,7 +498,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               const Spaceadjust()
                             ],
-                          ),
+                          )
                         ],
                       ),
                     )
@@ -491,9 +648,9 @@ class Userspace extends StatelessWidget {
                           Spaces.kheight10,
                           const Textutil(
                               text: 'Hi, There',
-                              fontsize: 20,
+                              fontsize: 17,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.normal),
                           Spaces.kheigth5,
                           Expanded(
                             child: Row(
@@ -636,9 +793,9 @@ class Userspace extends StatelessWidget {
                           Spaces.kheight10,
                           const Textutil(
                               text: 'Hi, There',
-                              fontsize: 20,
+                              fontsize: 17,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.normal),
                           Spaces.kheigth5,
                           Expanded(
                             child: Row(
@@ -778,9 +935,9 @@ class Userspace extends StatelessWidget {
                       Spaces.kheight10,
                       const Textutil(
                           text: 'Hi, There',
-                          fontsize: 20,
+                          fontsize: 17,
                           color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.normal),
                       Spaces.kheigth5,
                       Expanded(
                         child: Row(
@@ -915,20 +1072,28 @@ class Userspace extends StatelessWidget {
   }
 }
 
-class Lastsession extends StatelessWidget {
-  final List<SearchEntity> quickpicks;
+class Lastsession extends StatefulWidget {
   const Lastsession({
-    Key? key,
-    required this.quickpicks,
+    super.key,
     required this.size,
-  }) : super(key: key);
+  });
 
   final Size size;
 
   @override
+  State<Lastsession> createState() => _LastsessionState();
+}
+
+class _LastsessionState extends State<Lastsession> {
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 330,
+        BlocProvider.of<RecentsBloc>(context)
+        .add(const RecentsEvent.getallrecent());
+    return BlocBuilder<RecentsBloc,RecentsState>(builder:(context, state) {
+      return state.maybeWhen(
+        recents: (quickpicks) {
+          return SizedBox(
+      height: quickpicks.length ==3 ? 260: quickpicks.length == 2? 190: quickpicks.length == 1? 110 : quickpicks.isEmpty?0: 330,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -936,7 +1101,7 @@ class Lastsession extends StatelessWidget {
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TitleText(titleTextt: 'Quick picks'),
+              TitleText(titleTextt: 'Recently played'),
             ],
           ),
           Spaces.kheight10,
@@ -949,7 +1114,7 @@ class Lastsession extends StatelessWidget {
                     itemCount: (quickpicks.length / 4).ceil(),
                     itemBuilder: (BuildContext context, int index) {
                       return SizedBox(
-                        width: size.width,
+                        width: widget.size.width,
                         child: Column(
                           children: List.generate(
                             4,
@@ -958,17 +1123,19 @@ class Lastsession extends StatelessWidget {
                               if (itemIndex < quickpicks.length) {
                                 return InkWell(
                                   onTap: () {
+                                    Notifiers.showplayer.value = true;
                                     List<AlbumSongEntity> allsongs = [];
                                     for (var element in quickpicks) {
                                       final song = AlbumSongEntity(
-                                          id: element.id,
-                                          name: element.name,
+                                          id: element['id'],
+                                          name: element['title'],
                                           year: 'null',
                                           primaryArtists:
-                                              element.primaryArtists,
-                                          image: element.image,
-                                          songs: element.downloadUrl,
-                                          albumurl: element.moreinfo['album']);
+                                              element['artist'],
+                                          image: element['imageurl'],
+                                          songs: element['downloadurl'],
+                                          albumurl: 
+                                          'null');
                                       allsongs.add(song);
                                     }
 
@@ -1000,11 +1167,11 @@ class Lastsession extends StatelessWidget {
                                                   image:
                                                       CachedNetworkImageProvider(
                                                           quickpicks[itemIndex]
-                                                              .image),
+                                                              ['imageurl']),
                                                   fit: BoxFit.cover)),
                                         ),
                                         subtitle: Text(
-                                          quickpicks[itemIndex].primaryArtists,
+                                          quickpicks[itemIndex]['artist'],
                                           style: Spaces.Getstyle(
                                               10,
                                               const Color.fromARGB(
@@ -1013,7 +1180,7 @@ class Lastsession extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         title: Text(
-                                          quickpicks[itemIndex].name,
+                                          quickpicks[itemIndex]['title'],
                                           style: Spaces.Getstyle(15,
                                               Colors.white, FontWeight.w500),
                                           overflow: TextOverflow.ellipsis,
@@ -1036,29 +1203,33 @@ class Lastsession extends StatelessWidget {
         ],
       ),
     );
+        },
+        orElse: ()=> Nullstate());
+    },);
   }
 }
 
 class TitleText extends StatelessWidget {
   final String titleTextt;
   const TitleText({
-    Key? key,
+    super.key,
     required this.titleTextt,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: SizedBox(
-          height: 30,
+          height: 20,
           child: Center(
               widthFactor: 1.0,
-              child: Textutil(
-                text: titleTextt,
-                fontsize: 22,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+              child: Text(
+                titleTextt,
+                style: GoogleFonts.aldrich(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
               ))),
     );
   }
@@ -1068,10 +1239,10 @@ class TrendingSongsWidget extends StatelessWidget {
   final List<launchdataEntity> details;
   final Size size;
   const TrendingSongsWidget({
-    Key? key,
+    super.key,
     required this.details,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1094,11 +1265,11 @@ class TrendingSongsWidget extends StatelessWidget {
 
 class TrendingImageWidgets extends StatelessWidget {
   const TrendingImageWidgets({
-    Key? key,
+    super.key,
     required this.size,
     required this.results,
     required this.index,
-  }) : super(key: key);
+  });
 
   final Size size;
   final launchdataEntity results;
@@ -1115,21 +1286,27 @@ class TrendingImageWidgets extends StatelessWidget {
         child: InkWell(
           onTap: () {
             if (results.type == 'album') {
-              Navigator.pushNamed(context, SongDetailsPage.SongDetials,
-                  arguments: SongDetailsPage(
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return SongDetailsPage(
                       type: results.type,
                       imageurl: results.image,
                       albumurl: results.albumurl,
                       name: results.title,
-                      id: results.id));
+                      id: results.id);
+                },
+              ));
             } else if (results.type == 'playlist') {
-              Navigator.pushNamed(context, SongDetailsPage.SongDetials,
-                  arguments: SongDetailsPage(
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return SongDetailsPage(
                       type: results.type,
                       imageurl: results.image,
                       albumurl: results.albumurl,
                       name: results.title,
-                      id: results.id));
+                      id: results.id);
+                },
+              ));
             }
           },
           child: SizedBox(

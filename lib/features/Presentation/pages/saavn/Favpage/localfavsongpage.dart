@@ -1,11 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
+import 'package:norse/configs/constants/Spaces.dart';
 import '../../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
 import '../../../Blocs/Musicbloc/favorite_bloc/favoriteplaylist_bloc.dart';
+import '../../../CustomWidgets/bgblur.dart';
 import '../../MainHomePage/MainHomePage.dart';
 import '../subscreens/SongDetailsPage/SongDetailsPage.dart';
 
@@ -42,12 +42,14 @@ class _LocalfavsongpageState extends State<Localfavsongpage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
       ),
-      backgroundColor: Colors.black.withOpacity(0.8),
+      backgroundColor: Colors.black,
       body: SizedBox(
         height: size.height,
         width: size.width,
         child: Stack(
+          fit: StackFit.expand,
           children: [
+            const BGblur(),
             SafeArea(
               child: Column(
                 children: [
@@ -306,7 +308,7 @@ class _LocalfavsongpageState extends State<Localfavsongpage> {
             ),
             const Align(
               alignment: Alignment.bottomCenter,
-              child: BottomMusicBar(),
+              child: SafeArea(child: BottomMusicBar()),
             )
           ],
         ),

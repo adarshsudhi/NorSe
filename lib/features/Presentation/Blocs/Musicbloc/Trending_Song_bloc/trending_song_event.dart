@@ -9,7 +9,7 @@ sealed class TrendingSongEvent extends Equatable {
 }
 
 class TrendingSongs extends TrendingSongEvent {
+  final String mode;
+
+  const TrendingSongs({required this.mode});
 }
-
-
-

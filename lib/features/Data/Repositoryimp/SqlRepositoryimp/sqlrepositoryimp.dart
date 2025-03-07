@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
+import 'package:norse/features/Data/Models/MusicModels/usermodel.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:nebula/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
-import 'package:nebula/features/Domain/Repositorys/SqlReposiotory/Sqlreppository.dart';
+import 'package:norse/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
+import 'package:norse/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
+import 'package:norse/features/Domain/Repositorys/SqlReposiotory/Sqlreppository.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../configs/Error/Errors.dart';
 
 class Sqlrepositoryimp extends Sqlrepository {
@@ -148,4 +149,41 @@ class Sqlrepositoryimp extends Sqlrepository {
   @override
   Future<Either<Failures, bool>> removesongfromlib(String id) =>
       sqldatasourcerepository.removesongfromlib(id);
+
+  @override
+  Future<Either<Failures, List<List<Map<String, dynamic>>>>> librarysearchfunc(
+          String query) async =>
+      sqldatasourcerepository.librarysearchfunc(query);
+
+  @override
+  Future<Map<String, dynamic>> getplayerui(String uitype) async =>
+      sqldatasourcerepository.getplayerui(uitype);
+
+  @override
+  Future<void> initialplayerui() async {
+    return sqldatasourcerepository.initialplayerui();
+  }
+
+  @override
+  Future<void> updateplayerui(String type) async {
+    return sqldatasourcerepository.updateplayerui(type);
+  }
+
+  @override
+  Future<String> getstoredresponse(String id) async =>
+      sqldatasourcerepository.getstoredresponse(id);
+
+  @override
+  Future<List<Map<String, dynamic>>> getAddedDownloadVideos() async =>
+      sqldatasourcerepository.getAddedDownloadVideos();
+
+  @override
+  Future<bool> videoAndAudioDownload(VideoOnlyStreamInfo videoOnlyStreamInfo,
+    AudioOnlyStreamInfo audioOnlyStreamInfo,Map<String,dynamic> details) async =>
+      sqldatasourcerepository.videoAndAudioDownload(
+          videoOnlyStreamInfo, audioOnlyStreamInfo,details);
+
+  @override
+  Future<bool> removeFromVideoDownloadTab(String id) async =>
+      sqldatasourcerepository.removeFromVideoDownloadTab(id);
 }

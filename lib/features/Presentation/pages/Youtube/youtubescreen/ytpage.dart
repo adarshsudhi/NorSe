@@ -1,17 +1,23 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_firs
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:norse/configs/notifier/notifiers.dart';
+import 'package:norse/features/Presentation/CustomWidgets/custumlistviewbuilder.dart';
+import 'package:norse/features/Presentation/pages/MainHomePage/MainHomePage.dart';
+import 'package:norse/features/Presentation/pages/Youtube/ytsearchpage/ytsearchpage.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:norse/features/Presentation/Blocs/youtubeBloc/youtubeplayer_bloc/youtubeplayer_bloc.dart';
+import 'package:norse/features/Presentation/pages/saavn/musicplayerpage/testonlineplayerscreen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
+import 'package:norse/configs/constants/Spaces.dart';
+import '../../../Blocs/youtubeBloc/ytrelatedvideos_bloc/ytrelatedvideos_bloc.dart';
 import '../../../Blocs/youtubeBloc/ytsearch_bloc/ytsearch_bloc.dart';
 import '../youtubeplayer/testytplayerscreen.dart';
-import '../../saavn/subscreens/SongDetailsPage/SongDetailsPage.dart';
-import '../youtube_playlistpage.dart';
 
 class Youtubepage extends StatefulWidget {
+  static const String ytHome = './ythome';
   const Youtubepage({super.key});
 
   @override
@@ -19,126 +25,578 @@ class Youtubepage extends StatefulWidget {
 }
 
 class _YoutubepageState extends State<Youtubepage> {
+  String formatdatetime(DateTime dateTime) {
+    String date = "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+    return date;
+  }
+
+  String formatViewCount(int count) {
+    if (count >= 1000000000) {
+      return '${(count / 1000000000).toStringAsFixed(1)}B';
+    } else if (count >= 1000000) {
+      return '${(count / 1000000).toStringAsFixed(1)}M';
+    } else if (count >= 1000) {
+      return '${(count / 1000).toStringAsFixed(1)}K';
+    } else {
+      return count.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Column(
-        children: [
-          Spaces.kheight10,
-          Expanded(
-            child: SafeArea(
-              child: BlocBuilder<YtsearchBloc, YtsearchState>(
-                builder: (context, state) {
-                  return state.maybeWhen(
-                    fres: (videos, vidoes1, videos2, videos3, isloading,
-                        isfailed) {
-                      return ListView(
-                        children: [
-                          Spaces.kheight10,
-                          CarouselSlider(
-                              options: CarouselOptions(
-                                height: 200.0,
-                                viewportFraction: 1,
-                                autoPlayInterval: const Duration(seconds: 5),
-                                autoPlay: true,
-                              ),
-                              items: List.generate(
-                                videos.length,
-                                (index) => GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, Testytplayer.testytplayer,
-                                        arguments: Testytplayer(
-                                            video: videos, index: index));
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.1,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: CachedNetworkImage(
-                                      errorWidget: (context, url, error) {
-                                        return const Center(
-                                            child: Icon(
-                                          Icons.music_note,
-                                          color: Colors.white,
-                                        ));
-                                      },
-                                      imageUrl:
-                                          videos[index].thumbnails.maxResUrl,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                          Spaces.kheight10,
-                          SizedBox(
-                              height: 250,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView(
-                                padding: const EdgeInsets.only(left: 19),
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  YtplaylistWidget(
-                                    ontap: () {
-                                      Navigator.pushNamed(
-                                          context,
-                                          Youtubeplaylistpage
-                                              .youtubeplaylistpage,
-                                          arguments: Youtubeplaylistpage(
-                                              songs: videos2,
-                                              title: "Top 100 party songs"));
-                                    },
-                                    video: videos2,
-                                    title: "Top 100 party songs",
-                                    subtitle: 'YOUTUBE',
-                                  ),
-                                  YtplaylistWidget(
-                                    ontap: () {
-                                      Navigator.pushNamed(
-                                          context,
-                                          Youtubeplaylistpage
-                                              .youtubeplaylistpage,
-                                          arguments: Youtubeplaylistpage(
-                                              songs: vidoes1,
-                                              title:
-                                                  "All time best bollywood songs"));
-                                    },
-                                    video: vidoes1,
-                                    title: "All time best bollywood songs",
-                                    subtitle: 'YOUTUBE',
-                                  ),
-                                ],
-                              )),
-                          YtplaylistWidget(
-                            ontap: () {
-                              Navigator.pushNamed(context,
-                                  Youtubeplaylistpage.youtubeplaylistpage,
-                                  arguments: Youtubeplaylistpage(
-                                      songs: videos3,
-                                      title: "Top 100 Indian Music 2024-2025"));
-                            },
-                            video: videos3,
-                            title: "Top 100 Indian Music 2024-2025",
-                            subtitle: 'YOUTUBE',
-                          ),
-                        ],
-                      );
-                    },
-                    loader: () => const Syncaudiolaoding(),
-                    orElse: () => const Syncaudiolaoding(),
-                  );
+    Size size = MediaQuery.sizeOf(context);
+    return SafeArea(
+      child: Container(
+          color: Colors.black,
+          width: size.width,
+          height: size.width,
+          child: Stack(
+            children: [
+              Navigator(
+                key: ytnavigator0,
+                initialRoute: '/',
+                onGenerateRoute: (settings) {
+                  switch (settings.name) {
+                    case 'search':
+                      return MaterialPageRoute(builder: (_) => Ytsearchpage());
+
+                    default:
+                      return MaterialPageRoute(
+                          builder: (_) => const IntialytHomepage());
+                  }
                 },
               ),
-            ),
-          ),
-          const Spaceadjust()
-        ],
-      ),
+              /* SafeArea(
+                child: BlocBuilder<YoutubeplayerBloc, YoutubeplayerState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                        youtubeplayerstate: (controller, index, video, m, audio,
+                                vid, loading,failed) =>
+                            Offstage(
+                              offstage: state.maybeWhen(
+                                loading: () => false,
+                                switchstate: () => true,
+                                orElse: () => true,
+                                youtubeplayerstate: (controller, index, video,
+                                        m, audio, vid, loading) =>
+                                    false,
+                              ),
+                              child: Miniplayer(
+                                minHeight: 60,
+                                maxHeight: size.height,
+                                valueNotifier: Notifiers.ytexpandnotifer,
+                                builder: (height, percentage) {
+                                  return Testytplayer(
+                                      height: height,
+                                      persentage: percentage,
+                                      video: video,
+                                      index: index,
+                                      context: context,
+                                      controller: controller);
+                                },
+                              ),
+                            ),
+                        orElse: () => const SizedBox.shrink());
+                  },
+                ),
+              ) */
+            ],
+          )),
     );
+  }
+}
+
+class IntialytHomepage extends StatefulWidget {
+  const IntialytHomepage({
+    super.key,
+  });
+
+  @override
+  State<IntialytHomepage> createState() => _IntialytHomepageState();
+}
+
+class _IntialytHomepageState extends State<IntialytHomepage> {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    return Material(
+        color: Colors.black,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Spaces.backgroundColor,
+              actions: [
+                PlayIcons(
+                    playicons: Icons.search,
+                    iconscolors: Colors.white,
+                    iconsize: 24,
+                    ontap: () {
+                     
+                      Navigator.push(context,
+                         MaterialPageRoute(builder: (_) => Ytsearchpage()));
+                    })
+              ],
+              title: SizedBox(
+                width: size.width / 2,
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/yt.png',
+                      scale: 15,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Textutil(
+                        text: 'YouTube',
+                        fontsize: 21,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)
+                  ],
+                ),
+              ),
+            ),
+            BlocBuilder<YtsearchBloc, YtsearchState>(
+              builder: (context, state) {
+                return state.maybeWhen(
+                  fres:
+                      (videos, vidoes1, videos2, videos3, isloading, isfailed) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Spaces.kheight10,
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Textutil(
+                                  text: 'Hot ',
+                                  fontsize: 20,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                              Textutil(
+                                  text: 'Tracks',
+                                  fontsize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ],
+                          ),
+                        ),
+                        Spaces.kheight10,
+                        CarouselSlider(
+                            options: CarouselOptions(
+                              pauseAutoPlayOnTouch: true,
+                              height: 300.0,
+                              viewportFraction: 1,
+                              autoPlayInterval: const Duration(seconds: 10),
+                              autoPlay: true,
+                            ),
+                            items: Spaces().getList(videos.length, (index) {
+                              Video vid = videos[index];
+                              return GestureDetector(
+                                  onTap: () {
+                                    Notifiers.showplayer.value = false;
+                                    BlocProvider.of<YtrelatedvideosBloc>(
+                                            context)
+                                        .add(YtrelatedvideosEvent.relatedvideos(
+                                            videos[index].id.toString()));
+                                    BlocProvider.of<YoutubeplayerBloc>(context)
+                                        .add(YoutubeplayerEvent.ytplayerevent(
+                                            videos, index));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10, left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 220,
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Cachednetimagewidget(
+                                            thumbnailSet: vid.thumbnails,
+                                          ),
+                                        ),
+                                        Spaces.kheight10,
+                                        Textutil(
+                                          text: vid.title,
+                                          fontsize: 15,
+                                          color: Spaces.textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Textutil(
+                                              text: "${vid.author}  •",
+                                              fontsize: 10,
+                                              color: Spaces.textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Textutil(
+                                              text: timeago
+                                                  .format(vid.uploadDate!),
+                                              fontsize: 10,
+                                              color: Spaces.textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ],
+                                        ),
+                                        const Textutil(
+                                          text: '',
+                                          fontsize: 10,
+                                          color: Spaces.textColor,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                        Spaces.kheight20,
+                                      ],
+                                    ),
+                                  ));
+                            })),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Textutil(
+                                  text: 'Bollywood ',
+                                  fontsize: 20,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                              Textutil(
+                                  text: ' Tadka',
+                                  fontsize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ],
+                          ),
+                        ),
+                        Spaces.kheight10,
+                        CarouselSlider(
+                            options: CarouselOptions(
+                              pauseAutoPlayOnTouch: true,
+                              height: 300.0,
+                              viewportFraction: 1,
+                              autoPlayInterval: const Duration(seconds: 10),
+                              autoPlay: true,
+                            ),
+                            items: Spaces().getList(videos2.length, (index) {
+                              Video vid = videos2[index];
+                              return GestureDetector(
+                                  onTap: () {
+                                    Notifiers.showplayer.value = false;
+                                    BlocProvider.of<YtrelatedvideosBloc>(
+                                            context)
+                                        .add(YtrelatedvideosEvent.relatedvideos(
+                                            videos2[index].id.toString()));
+                                    BlocProvider.of<YoutubeplayerBloc>(context)
+                                        .add(YoutubeplayerEvent.ytplayerevent(
+                                            videos2, index));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10, left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 220,
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Cachednetimagewidget(
+                                            thumbnailSet: vid.thumbnails,
+                                          ),
+                                        ),
+                                        Spaces.kheight10,
+                                        Textutil(
+                                          text: vid.title,
+                                          fontsize: 15,
+                                          color: Spaces.textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Textutil(
+                                              text: "${vid.author}  •",
+                                              fontsize: 10,
+                                              color: Spaces.textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Textutil(
+                                              text: timeago
+                                                  .format(vid.uploadDate!),
+                                              fontsize: 10,
+                                              color: Spaces.textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ],
+                                        ),
+                                        const Textutil(
+                                          text: '',
+                                          fontsize: 10,
+                                          color: Spaces.textColor,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                        Spaces.kheight20,
+                                      ],
+                                    ),
+                                  ));
+                            })),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Textutil(
+                                  text: 'Kollywood ',
+                                  fontsize: 20,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                              Textutil(
+                                  text: ' hits',
+                                  fontsize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ],
+                          ),
+                        ),
+                        Spaces.kheight10,
+                        CarouselSlider(
+                            options: CarouselOptions(
+                              pauseAutoPlayOnTouch: true,
+                              height: 300.0,
+                              viewportFraction: 1,
+                              autoPlayInterval: const Duration(seconds: 10),
+                              autoPlay: true,
+                            ),
+                            items: Spaces().getList(vidoes1.length, (index) {
+                              Video vid = vidoes1[index];
+                              return GestureDetector(
+                                  onTap: () {
+                                    Notifiers.showplayer.value = false;
+                                    BlocProvider.of<YtrelatedvideosBloc>(
+                                            context)
+                                        .add(YtrelatedvideosEvent.relatedvideos(
+                                            vidoes1[index].id.toString()));
+                                    BlocProvider.of<YoutubeplayerBloc>(context)
+                                        .add(YoutubeplayerEvent.ytplayerevent(
+                                            vidoes1, index));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10, left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 220,
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Cachednetimagewidget(
+                                            thumbnailSet: vid.thumbnails,
+                                          ),
+                                        ),
+                                        Spaces.kheight10,
+                                        Textutil(
+                                          text: vid.title,
+                                          fontsize: 15,
+                                          color: Spaces.textColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Textutil(
+                                              text: "${vid.author}  •",
+                                              fontsize: 10,
+                                              color: Spaces.textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Textutil(
+                                              text: timeago
+                                                  .format(vid.uploadDate!),
+                                              fontsize: 10,
+                                              color: Spaces.textColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ],
+                                        ),
+                                        const Textutil(
+                                          text: '',
+                                          fontsize: 10,
+                                          color: Spaces.textColor,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                        Spaces.kheight20,
+                                      ],
+                                    ),
+                                  ));
+                            }) /* List.generate(vidoes1.length, (index) {
+                            Video vid = vidoes1[index];
+                            return  GestureDetector(
+                                onTap: () {
+                                  Notifiers.showplayer.value = false;
+                                  BlocProvider.of<YoutubeplayerBloc>(context)
+                                      .add(YoutubeplayerEvent.ytplayerevent(
+                                          vidoes1, index));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10, left: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 220,
+                                        width:
+                                            MediaQuery.sizeOf(context).width,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Cachednetimagewidget(
+                                          thumbnailSet: vid.thumbnails,
+                                        ),
+                                      ),
+                                      Spaces.kheight10,
+                                      Textutil(
+                                        text: vid.title,
+                                        fontsize: 15,
+                                        color: Spaces.textColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Textutil(
+                                            text: "${vid.author}  •",
+                                            fontsize: 10,
+                                            color: Spaces.textColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Textutil(
+                                            text: timeago
+                                                .format(vid.uploadDate!),
+                                            fontsize: 10,
+                                            color: Spaces.textColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ],
+                                      ),
+                                      const Textutil(
+                                        text: '',
+                                        fontsize: 10,
+                                        color: Spaces.textColor,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                      Spaces.kheight20,
+                                    ],
+                                  ),
+                                ));
+                          })
+                          */
+                            ),
+                        Spaces.kheight10,
+                        CustomListViewBuilderwidget(
+                          physics: const NeverScrollableScrollPhysics(),
+                          length: videos3.length,
+                          widget: (context, index) {
+                            Video vid = videos3[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Notifiers.showplayer.value = false;
+                                BlocProvider.of<YtrelatedvideosBloc>(context)
+                                    .add(YtrelatedvideosEvent.relatedvideos(
+                                        videos3[index].id.toString()));
+                                BlocProvider.of<YoutubeplayerBloc>(context).add(
+                                    YoutubeplayerEvent.ytplayerevent(
+                                        videos3, index));
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 220,
+                                    width: MediaQuery.sizeOf(context).width,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Cachednetimagewidget(
+                                      thumbnailSet: vid.thumbnails,
+                                    ),
+                                  ),
+                                  Spaces.kheight10,
+                                  Textutil(
+                                    text: vid.title,
+                                    fontsize: 15,
+                                    color: Spaces.textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Textutil(
+                                        text: "${vid.author}  •",
+                                        fontsize: 10,
+                                        color: Spaces.textColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Textutil(
+                                        text: timeago.format(vid.uploadDate!),
+                                        fontsize: 10,
+                                        color: Spaces.textColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ],
+                                  ),
+                                  const Textutil(
+                                    text: '',
+                                    fontsize: 10,
+                                    color: Spaces.textColor,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  Spaces.kheight20,
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                  loader: () => const Syncaudiolaoding(),
+                  orElse: () => const Syncaudiolaoding(),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 60,
+            )
+          ],
+        ));
   }
 }
 
@@ -149,9 +607,10 @@ class Syncaudiolaoding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height,
       width: double.infinity,
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -188,12 +647,12 @@ class YtplaylistWidget extends StatelessWidget {
   final VoidCallback ontap;
   final String subtitle;
   const YtplaylistWidget({
-    Key? key,
+    super.key,
     required this.video,
     required this.title,
     required this.ontap,
     required this.subtitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -253,16 +712,6 @@ class YtplaylistWidget extends StatelessWidget {
               ),
             ),
           ),
-          Textutil(
-              text: title,
-              fontsize: 12,
-              color: Colors.white,
-              fontWeight: FontWeight.bold),
-          Textutil(
-              text: subtitle,
-              fontsize: 8,
-              color: Colors.white,
-              fontWeight: FontWeight.normal)
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:just_audio/just_audio.dart';
@@ -8,26 +9,32 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Data/Models/MusicModels/songmodel.dart';
+import 'package:norse/configs/constants/Spaces.dart';
+import 'package:norse/features/Data/Models/MusicModels/songmodel.dart';
+import 'package:spotify/spotify.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../Data/Models/MusicModels/onlinesongmodel.dart';
 import '../../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import '../../../../Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
 import '../../../../Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
+import 'package:norse/injection_container.dart' as di;
 
 part 'audio_bloc.freezed.dart';
 part 'audio_event.dart';
 part 'audio_state.dart';
 
+
 class AudioBloc extends Bloc<AudioEvent, AudioState> {
   AudioBloc() : super(const _Initial()) {
+
+    YoutubeExplode yt = di.di<YoutubeExplode>();
+
     //vr
     List<OnlineSongModel> onlinesongs = [];
 
     //forchecking
-    List<OnlineSongModel> onlineaudiosforchecking = [];
 
+    List<OnlineSongModel> onlineaudiosforchecking = [];
     final onlineplayerstreamcontroller = BehaviorSubject<AudioState>();
 
     //offlinechecking
@@ -55,25 +62,13 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
     parselocalsong(
         List<Map<String, dynamic>> favsongs, List<SongModel> songs) async {
       if (songs.isNotEmpty) {
-        //   Directory dir = await getTemporaryDirectory();
         for (var item in songs) {
           Songmodel songmodel = Songmodel(
               id: item.id,
-              title: item.displayNameWOExt,
+              title: item.title,
               subtitle: item.artist ?? 'unkown',
               uri: item.uri!);
 
-          //   Uint8List? img = await OnAudioQuery().queryArtwork(songmodel.id, ArtworkType.AUDIO,size: 500,format: ArtworkFormat.JPEG);
-
-          //   if (img != null) {
-          //   String path = "${dir.path}/${songmodel.id}";
-          //  File(path).writeAsBytesSync(img,mode: FileMode.writeOnlyAppend);
-          //  AudioSource source = AudioSource.uri(Uri.parse(songmodel.uri),tag: MediaItem(id: songmodel.id.toString(),
-          // //  title: songmodel.title, artist: songmodel.subtitle,));
-          //   audiosources.add(source);
-          //   song.add(songmodel);
-          //   sourcesforchecking.add(songmodel);
-          // } else {
           AudioSource source = AudioSource.uri(Uri.parse(songmodel.uri),
               tag: MediaItem(
                   id: songmodel.id.toString(),
@@ -82,11 +77,9 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
           audiosources.add(source);
           song.add(songmodel);
           sourcesforchecking.add(songmodel);
-          //  }
         }
       } else {
         clearall();
-
         for (var element in favsongs) {
           Songmodel songmodel = Songmodel(
               id: int.parse(element['id']),
@@ -109,7 +102,6 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
         return;
       }
     }
-
     parse({
       required String album,
       required List<Map<String, dynamic>> favsong,
@@ -191,6 +183,96 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
       }
     }
 
+    on<_YtPlayerEvent>((event, emit) async{
+
+      emit(const AudioState.loading());
+      List<String> artist = [];
+
+       state.mapOrNull(
+        Localsongs: (value) => emit(value.copyWith(isloading: true)),
+      );
+
+      if (audiosources.isNotEmpty) {
+        onlinesongs.clear();
+        onlinesongs = [];
+        onlineaudiosforchecking.clear();
+        sourcesforchecking.clear();
+        sourcesforchecking = [];
+        audiosources.clear();
+        audiosources = [];
+      }
+      
+      Map<String,dynamic> audiodetails = event.audiodetails;
+
+      String songtitle = audiodetails['title'];
+
+      var songartist = audiodetails['artist'] as List<Artist>;
+      
+      for (var ar in songartist) {
+        artist.add(ar.name ?? "unknown");
+      }
+
+      log('Called');
+      
+      VideoSearchList searchlist = await yt.search.search(songtitle,filter: TypeFilters.video);
+
+      Video song = searchlist.first;
+
+      log('Called');
+
+      StreamManifest streamManifest = await yt.videos.streams.getManifest(song.id);
+
+      UnmodifiableListView<AudioOnlyStreamInfo> audioonly =  streamManifest.audioOnly;
+      log('Called here');
+
+      List<AudioOnlyStreamInfo> audioOnlyStreamInfo = List.from(audioonly);
+      log('Called here');
+
+      AudioOnlyStreamInfo audio = audioOnlyStreamInfo[0];
+
+      log(audio.url.toString());
+
+     OnlineSongModel onlineSongModel = OnlineSongModel(
+        id: song.id.toString(), 
+        title: song.title, 
+        imageurl: audiodetails['image'], 
+        downloadurl: audio.url.toString(), 
+        album: audiodetails['album'], 
+        artist: artist.join(","));
+
+          onlinesongs.add(onlineSongModel);
+          onlineaudiosforchecking.add(onlineSongModel);
+
+          AudioSource source = AudioSource.uri(Uri.parse(onlineSongModel.downloadurl),
+              tag: MediaItem(
+                  id: onlineSongModel.id,
+                  title: onlineSongModel.title,
+                  artist: onlineSongModel.artist,
+                  artUri: Uri.parse(onlineSongModel.imageurl)));
+          audiosources.add(source);
+
+                Stream<AudioState> streams = Rx.combineLatest5(
+          audioPlayer.playerStateStream,
+          audioPlayer.durationStream,
+          audioPlayer.positionStream,
+          audioPlayer.bufferedPositionStream,
+          audioPlayer.currentIndexStream,
+          (play, dur, pos, buf, playstate) =>
+              AudioState.onlinestreams(pos, dur!, play, buf, playstate!));
+
+      streams.listen((event) {
+        onlineplayerstreamcontroller.sink.add(event);
+      });
+
+      concatenatingAudioSource = ConcatenatingAudioSource(
+          children: audiosources, useLazyPreparation: false);
+      emit(AudioState.onlinesongs(false, false, onlinesongs,
+          onlineplayerstreamcontroller.stream, 0, audioPlayer));
+      await audioPlayer.setAudioSource(concatenatingAudioSource,
+          initialIndex: 0, initialPosition: Duration.zero);
+      await audioPlayer.play();
+    });
+
     on<_Dispose>((event, emit) async {
       if (audiosources.isNotEmpty) {
         song.clear();
@@ -210,6 +292,7 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
     });
 
     on<_Localaudio>((event, emit) async {
+      emit(const AudioState.loading());
       state.mapOrNull(
         Localsongs: (value) => emit(value.copyWith(isloading: true)),
       );
@@ -254,6 +337,7 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
 
     ///Online event
     on<_Onlineaudio>((event, emit) async {
+      emit(const AudioState.loading());
       state.mapOrNull(
         onlinesongs: (value) => emit(value.copyWith(isloading: true)),
       );
@@ -289,8 +373,8 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
         onlineplayerstreamcontroller.sink.add(event);
       });
 
-      concatenatingAudioSource =
-          ConcatenatingAudioSource(children: audiosources);
+      concatenatingAudioSource = ConcatenatingAudioSource(
+          children: audiosources, useLazyPreparation: false);
       emit(AudioState.onlinesongs(false, false, onlinesongs,
           onlineplayerstreamcontroller.stream, event.index, audioPlayer));
       await audioPlayer.setAudioSource(concatenatingAudioSource,
@@ -368,6 +452,7 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
           sourcesforchecking.add(event.song);
           song.add(event.song);
           await concatenatingAudioSource.add(source);
+          Spaces.showtoast('added');
         }
       }
     });
@@ -389,11 +474,12 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
             .any((element) => element.id == event.song.id);
 
         if (isexist) {
-          Spaces.showtoast('added already');
+          Spaces.showtoast('already exists');
         } else {
           onlineaudiosforchecking.add(event.song);
           onlinesongs.add(event.song);
           await concatenatingAudioSource.add(source);
+          Spaces.showtoast('added');
         }
       }
     });
@@ -420,6 +506,30 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
           }
         }
       }
+    });
+    on<_ClearSpecificAudio>((event, emit) async {
+      if (song.isNotEmpty && sourcesforchecking.isNotEmpty) {
+        int index =
+            sourcesforchecking.indexWhere((element) => element.id == event.id);
+        int index1 = song.indexWhere((element) => element.id == event.id);
+        sourcesforchecking.removeAt(index);
+        song.removeAt(index1);
+        await concatenatingAudioSource.removeAt(index);
+      }
+    });
+
+    on<_Started>((event, emit) async {
+      song.clear();
+      song = [];
+      sourcesforchecking.clear();
+      song.clear();
+      onlineaudiosforchecking = [];
+      onlinesongs.clear();
+      sourcesforchecking = [];
+      audiosources.clear();
+      audiosources = [];
+      await audioPlayer.stop();
+      emit(const AudioState.initial());
     });
   }
 }

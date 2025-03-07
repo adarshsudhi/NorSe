@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:norse/configs/notifier/notifiers.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../../../../../../configs/constants/Spaces.dart';
 import '../../../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
@@ -56,22 +57,7 @@ class _PlaylistsongspageState extends State<Playlistsongspage> {
           fit: StackFit.expand,
           children: [
             const BGblur(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: MediaQuery.sizeOf(context).height,
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                      Colors.black,
-                      Colors.black.withOpacity(0.9),
-                      Colors.transparent.withOpacity(0.5)
-                    ])),
-              ),
-            ),
+            
             SafeArea(
               child: Column(
                 children: [
@@ -169,6 +155,38 @@ class _PlaylistsongspageState extends State<Playlistsongspage> {
                                 child: Center(
                                   child: TextButton.icon(
                                       onPressed: () {
+                                        Notifiers.isLoshufflednotifier.value =
+                                            true;
+                                        BlocProvider.of<AudioBloc>(context).add(
+                                            const AudioEvent.shuffleon(true));
+                                        BlocProvider.of<AudioBloc>(context).add(
+                                            AudioEvent.localaudio(
+                                                [], songs, 0));
+                                      },
+                                      icon: const Icon(
+                                        Icons.shuffle,
+                                        color: Colors.white,
+                                      ),
+                                      label: Text(
+                                        'Shuffle',
+                                        style: Spaces.Getstyle(15, Colors.white,
+                                            FontWeight.normal),
+                                      )),
+                                ),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 130,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white.withOpacity(0.2)),
+                                child: Center(
+                                  child: TextButton.icon(
+                                      onPressed: () {
+                                        Notifiers.isLoshufflednotifier.value =
+                                            false;
+                                        BlocProvider.of<AudioBloc>(context).add(
+                                            const AudioEvent.shuffleon(false));
                                         BlocProvider.of<AudioBloc>(context).add(
                                             AudioEvent.localaudio(
                                                 [], songs, 0));
@@ -183,7 +201,7 @@ class _PlaylistsongspageState extends State<Playlistsongspage> {
                                             FontWeight.normal),
                                       )),
                                 ),
-                              )
+                              ),
                             ],
                           );
                         },
@@ -365,7 +383,7 @@ class _PlaylistsongspageState extends State<Playlistsongspage> {
             ),
             const Align(
               alignment: Alignment.bottomCenter,
-              child: BottomMusicBar(),
+              child: SafeArea(child: BottomMusicBar()),
             )
           ],
         ),

@@ -327,7 +327,9 @@ mixin _$YtState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    required TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)
         vidoeinfo,
     required TResult Function() loader,
@@ -336,7 +338,9 @@ mixin _$YtState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult? Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult? Function()? loader,
@@ -345,7 +349,9 @@ mixin _$YtState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult Function()? loader,
@@ -438,7 +444,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    required TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)
         vidoeinfo,
     required TResult Function() loader,
@@ -450,7 +458,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult? Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult? Function()? loader,
@@ -462,7 +472,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult Function()? loader,
@@ -520,11 +532,9 @@ abstract class _$$VideoinfoImplCopyWith<$Res> {
       __$$VideoinfoImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {Video videoinfo,
+      {Map<dynamic, dynamic> videoinfo,
       List<VideoOnlyStreamInfo> videos,
       AudioOnlyStreamInfo audioOnlyStreamInfo});
-
-  $VideoCopyWith<$Res> get videoinfo;
 }
 
 /// @nodoc
@@ -544,9 +554,9 @@ class __$$VideoinfoImplCopyWithImpl<$Res>
   }) {
     return _then(_$VideoinfoImpl(
       null == videoinfo
-          ? _value.videoinfo
+          ? _value._videoinfo
           : videoinfo // ignore: cast_nullable_to_non_nullable
-              as Video,
+              as Map<dynamic, dynamic>,
       null == videos
           ? _value._videos
           : videos // ignore: cast_nullable_to_non_nullable
@@ -557,25 +567,24 @@ class __$$VideoinfoImplCopyWithImpl<$Res>
               as AudioOnlyStreamInfo,
     ));
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VideoCopyWith<$Res> get videoinfo {
-    return $VideoCopyWith<$Res>(_value.videoinfo, (value) {
-      return _then(_value.copyWith(videoinfo: value));
-    });
-  }
 }
 
 /// @nodoc
 
 class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
-  const _$VideoinfoImpl(this.videoinfo, final List<VideoOnlyStreamInfo> videos,
-      this.audioOnlyStreamInfo)
-      : _videos = videos;
+  const _$VideoinfoImpl(final Map<dynamic, dynamic> videoinfo,
+      final List<VideoOnlyStreamInfo> videos, this.audioOnlyStreamInfo)
+      : _videoinfo = videoinfo,
+        _videos = videos;
 
+  final Map<dynamic, dynamic> _videoinfo;
   @override
-  final Video videoinfo;
+  Map<dynamic, dynamic> get videoinfo {
+    if (_videoinfo is EqualUnmodifiableMapView) return _videoinfo;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_videoinfo);
+  }
+
   final List<VideoOnlyStreamInfo> _videos;
   @override
   List<VideoOnlyStreamInfo> get videos {
@@ -607,16 +616,19 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VideoinfoImpl &&
-            (identical(other.videoinfo, videoinfo) ||
-                other.videoinfo == videoinfo) &&
+            const DeepCollectionEquality()
+                .equals(other._videoinfo, _videoinfo) &&
             const DeepCollectionEquality().equals(other._videos, _videos) &&
             (identical(other.audioOnlyStreamInfo, audioOnlyStreamInfo) ||
                 other.audioOnlyStreamInfo == audioOnlyStreamInfo));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, videoinfo,
-      const DeepCollectionEquality().hash(_videos), audioOnlyStreamInfo);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_videoinfo),
+      const DeepCollectionEquality().hash(_videos),
+      audioOnlyStreamInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -628,7 +640,9 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    required TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)
         vidoeinfo,
     required TResult Function() loader,
@@ -640,7 +654,9 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult? Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult? Function()? loader,
@@ -652,7 +668,9 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult Function()? loader,
@@ -701,11 +719,11 @@ class _$VideoinfoImpl with DiagnosticableTreeMixin implements _Videoinfo {
 
 abstract class _Videoinfo implements YtState {
   const factory _Videoinfo(
-      final Video videoinfo,
+      final Map<dynamic, dynamic> videoinfo,
       final List<VideoOnlyStreamInfo> videos,
       final AudioOnlyStreamInfo audioOnlyStreamInfo) = _$VideoinfoImpl;
 
-  Video get videoinfo;
+  Map<dynamic, dynamic> get videoinfo;
   List<VideoOnlyStreamInfo> get videos;
   AudioOnlyStreamInfo get audioOnlyStreamInfo;
   @JsonKey(ignore: true)
@@ -758,7 +776,9 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    required TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)
         vidoeinfo,
     required TResult Function() loader,
@@ -770,7 +790,9 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult? Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult? Function()? loader,
@@ -782,7 +804,9 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Video videoinfo, List<VideoOnlyStreamInfo> videos,
+    TResult Function(
+            Map<dynamic, dynamic> videoinfo,
+            List<VideoOnlyStreamInfo> videos,
             AudioOnlyStreamInfo audioOnlyStreamInfo)?
         vidoeinfo,
     TResult Function()? loader,

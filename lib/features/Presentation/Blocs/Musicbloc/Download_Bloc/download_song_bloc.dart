@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:audiotagger/audiotagger.dart';
 import 'package:audiotagger/models/tag.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nebula/features/Domain/UseCases/API_UseCase/DownloadArtwork_UseCase.dart';
-import 'package:nebula/features/Domain/UseCases/API_UseCase/DownloadSong_UseCase.dart';
-import 'package:nebula/features/Domain/UseCases/Platform_UseCase/shownotification_usecase.dart';
+import 'package:norse/features/Domain/UseCases/API_UseCase/DownloadArtwork_UseCase.dart';
+import 'package:norse/features/Domain/UseCases/API_UseCase/DownloadSong_UseCase.dart';
+import 'package:norse/features/Domain/UseCases/Platform_UseCase/shownotification_usecase.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../../../../configs/constants/Spaces.dart';
+import 'package:norse/injection_container.dart' as di;
 
 part 'download_song_event.dart';
 part 'download_song_state.dart';
@@ -25,7 +27,7 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
     this.downloadArworkUseCase,
     this.shownotificationusecase,
   ) : super(DownloadSongInitial()) {
-    Audiotagger tagger = Audiotagger();
+    Audiotagger tagger = di.di<Audiotagger>();
 
     List<Map<String, dynamic>> streams = [];
 
@@ -37,6 +39,7 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
         Map<String, dynamic> m = {
           'id': id,
           'stream': controller,
+          'loading': false,
         };
 
         streams.add(m);
@@ -46,11 +49,13 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
     on<DownloadStated>(
       (event, emit) async {
         await additem(event.key, event.itemstreamindex, true);
-
         try {
-          (streams.firstWhere((element) => element['id'] == event.key)['stream']
-                  as StreamController<double>)
-              .add(0.0);
+          for (var i = 0; i < 1; i++) {
+            (streams.firstWhere(
+                        (element) => element['id'] == event.key)['stream']
+                    as StreamController<double>)
+                .add(i.toDouble());
+          }
           emit(DownloadSongStarted(streams: streams));
           Directory temp = await getTemporaryDirectory();
           String path =
@@ -63,7 +68,6 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
             try {
               emit(DownloadSongStarted(streams: streams));
               await downloadSongUseCase.call(event.url, (count, total) async {
-                emit(DownloadSongStarted(streams: streams));
                 double progress = (count / total) * 100;
                 (streams.firstWhere(
                             (element) => element['id'] == event.key)['stream']
@@ -79,9 +83,11 @@ class DownloadSongBloc extends Bloc<DownloadSongEvent, DownloadSongState> {
                   artist: event.artists,
                   artwork: artworkpath,
                   album: event.albumname,
-                  comment: 'Nebula');
+                  comment: 'norse');
+
               await shownotificationusecase.call(
                   0.0, event.itemstreamindex, event.songname, 'null');
+
               emit(DownloadSongFinished());
               await tagger.writeTags(path: path, tag: tag);
               for (int i = streams.length - 1; i >= 0; i--) {

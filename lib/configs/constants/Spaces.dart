@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:marquee/marquee.dart';
+import 'package:norse/features/Presentation/Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
+import 'package:norse/features/Presentation/pages/Youtube/youtubeplayer/testytplayerscreen.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class Spaces {
+  List<Widget> getList(int length, Widget Function(int) generator) {
+    return List.generate(length, generator);
+  }
+
+  static const String version = '3.2.2';
+
   static const kheigth5 = SizedBox(
     height: 5,
   );
@@ -17,16 +24,22 @@ class Spaces {
     height: 20,
   );
 
-  static showtoast(String Content) {
+  static const baseColor = Color.fromARGB(255, 133, 133, 133);
+  static Color highlightColor = Colors.grey;
+  static const textColor = Color.fromARGB(255, 221, 221, 221);
+  static const backgroundColor = Colors.black;
+  static const iconColor = Color.fromARGB(255, 58, 58, 58);
+
+  static showtoast(String content) {
     return Fluttertoast.showToast(
         timeInSecForIosWeb: 03,
-        msg: Content,
+        msg: content,
         textColor: Colors.black,
         backgroundColor: Colors.white,
         gravity: ToastGravity.SNACKBAR);
   }
 
-  static songtitle(String title, double size, Color color, FontWeight weight,
+  /* static songtitle(String title, double size, Color color, FontWeight weight,
       BuildContext context) {
     return Marquee(
       startAfter: const Duration(seconds: 3),
@@ -43,13 +56,22 @@ class Spaces {
       decelerationDuration: const Duration(milliseconds: 500),
       decelerationCurve: Curves.easeOut,
     );
-  }
+  } */
 
   static LinearGradient musicgradient() {
     return const LinearGradient(colors: [
       Color.fromARGB(255, 27, 27, 27),
       Color.fromARGB(255, 0, 0, 0)
     ]);
+  }
+
+  static bool isLateVarInitialized() {
+    try {
+      controller;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static TextStyle Getstyle(
@@ -71,13 +93,7 @@ class Spaces {
       if (response.statusCode == 200) {
         return thumbnailSet.highResUrl;
       } else {
-        Response response =
-            await http.get(Uri.parse(thumbnailSet.mediumResUrl));
-        if (response.statusCode == 200) {
-          return thumbnailSet.mediumResUrl;
-        } else {
-          return 'https://cdn.pixabay.com/photo/2016/11/19/03/08/youtube-1837872_1280.png';
-        }
+        return 'https://cdn.pixabay.com/photo/2016/11/19/03/08/youtube-1837872_1280.png';
       }
     }
   }

@@ -19,19 +19,23 @@ mixin _$YtdownloadEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(Video info, String id) downloadsong,
+    required TResult Function(
+            AudioOnlyStreamInfo audiostream, Video info, String id)
+        downloadsong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(Video info, String id)? downloadsong,
+    TResult? Function(AudioOnlyStreamInfo audiostream, Video info, String id)?
+        downloadsong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(Video info, String id)? downloadsong,
+    TResult Function(AudioOnlyStreamInfo audiostream, Video info, String id)?
+        downloadsong,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +117,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(Video info, String id) downloadsong,
+    required TResult Function(
+            AudioOnlyStreamInfo audiostream, Video info, String id)
+        downloadsong,
   }) {
     return started();
   }
@@ -122,7 +128,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(Video info, String id)? downloadsong,
+    TResult? Function(AudioOnlyStreamInfo audiostream, Video info, String id)?
+        downloadsong,
   }) {
     return started?.call();
   }
@@ -131,7 +138,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(Video info, String id)? downloadsong,
+    TResult Function(AudioOnlyStreamInfo audiostream, Video info, String id)?
+        downloadsong,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -182,7 +190,7 @@ abstract class _$$DownloadImplCopyWith<$Res> {
           _$DownloadImpl value, $Res Function(_$DownloadImpl) then) =
       __$$DownloadImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Video info, String id});
+  $Res call({AudioOnlyStreamInfo audiostream, Video info, String id});
 
   $VideoCopyWith<$Res> get info;
 }
@@ -198,10 +206,15 @@ class __$$DownloadImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? audiostream = null,
     Object? info = null,
     Object? id = null,
   }) {
     return _then(_$DownloadImpl(
+      null == audiostream
+          ? _value.audiostream
+          : audiostream // ignore: cast_nullable_to_non_nullable
+              as AudioOnlyStreamInfo,
       null == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
@@ -225,8 +238,10 @@ class __$$DownloadImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DownloadImpl implements _Download {
-  const _$DownloadImpl(this.info, this.id);
+  const _$DownloadImpl(this.audiostream, this.info, this.id);
 
+  @override
+  final AudioOnlyStreamInfo audiostream;
   @override
   final Video info;
   @override
@@ -234,7 +249,7 @@ class _$DownloadImpl implements _Download {
 
   @override
   String toString() {
-    return 'YtdownloadEvent.downloadsong(info: $info, id: $id)';
+    return 'YtdownloadEvent.downloadsong(audiostream: $audiostream, info: $info, id: $id)';
   }
 
   @override
@@ -242,12 +257,14 @@ class _$DownloadImpl implements _Download {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DownloadImpl &&
+            (identical(other.audiostream, audiostream) ||
+                other.audiostream == audiostream) &&
             (identical(other.info, info) || other.info == info) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, info, id);
+  int get hashCode => Object.hash(runtimeType, audiostream, info, id);
 
   @JsonKey(ignore: true)
   @override
@@ -259,29 +276,33 @@ class _$DownloadImpl implements _Download {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(Video info, String id) downloadsong,
+    required TResult Function(
+            AudioOnlyStreamInfo audiostream, Video info, String id)
+        downloadsong,
   }) {
-    return downloadsong(info, id);
+    return downloadsong(audiostream, info, id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(Video info, String id)? downloadsong,
+    TResult? Function(AudioOnlyStreamInfo audiostream, Video info, String id)?
+        downloadsong,
   }) {
-    return downloadsong?.call(info, id);
+    return downloadsong?.call(audiostream, info, id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(Video info, String id)? downloadsong,
+    TResult Function(AudioOnlyStreamInfo audiostream, Video info, String id)?
+        downloadsong,
     required TResult orElse(),
   }) {
     if (downloadsong != null) {
-      return downloadsong(info, id);
+      return downloadsong(audiostream, info, id);
     }
     return orElse();
   }
@@ -319,8 +340,10 @@ class _$DownloadImpl implements _Download {
 }
 
 abstract class _Download implements YtdownloadEvent {
-  const factory _Download(final Video info, final String id) = _$DownloadImpl;
+  const factory _Download(final AudioOnlyStreamInfo audiostream,
+      final Video info, final String id) = _$DownloadImpl;
 
+  AudioOnlyStreamInfo get audiostream;
   Video get info;
   String get id;
   @JsonKey(ignore: true)
@@ -334,7 +357,7 @@ mixin _$YtdownloadState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Stream<int> progress) downloading,
+    required TResult Function(StreamController<int> progress) downloading,
     required TResult Function() complete,
   }) =>
       throw _privateConstructorUsedError;
@@ -342,7 +365,7 @@ mixin _$YtdownloadState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Stream<int> progress)? downloading,
+    TResult? Function(StreamController<int> progress)? downloading,
     TResult? Function()? complete,
   }) =>
       throw _privateConstructorUsedError;
@@ -350,7 +373,7 @@ mixin _$YtdownloadState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Stream<int> progress)? downloading,
+    TResult Function(StreamController<int> progress)? downloading,
     TResult Function()? complete,
     required TResult orElse(),
   }) =>
@@ -440,7 +463,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Stream<int> progress) downloading,
+    required TResult Function(StreamController<int> progress) downloading,
     required TResult Function() complete,
   }) {
     return initial();
@@ -451,7 +474,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Stream<int> progress)? downloading,
+    TResult? Function(StreamController<int> progress)? downloading,
     TResult? Function()? complete,
   }) {
     return initial?.call();
@@ -462,7 +485,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Stream<int> progress)? downloading,
+    TResult Function(StreamController<int> progress)? downloading,
     TResult Function()? complete,
     required TResult orElse(),
   }) {
@@ -554,7 +577,7 @@ class _$LoaderImpl implements _Loader {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Stream<int> progress) downloading,
+    required TResult Function(StreamController<int> progress) downloading,
     required TResult Function() complete,
   }) {
     return loading();
@@ -565,7 +588,7 @@ class _$LoaderImpl implements _Loader {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Stream<int> progress)? downloading,
+    TResult? Function(StreamController<int> progress)? downloading,
     TResult? Function()? complete,
   }) {
     return loading?.call();
@@ -576,7 +599,7 @@ class _$LoaderImpl implements _Loader {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Stream<int> progress)? downloading,
+    TResult Function(StreamController<int> progress)? downloading,
     TResult Function()? complete,
     required TResult orElse(),
   }) {
@@ -634,7 +657,7 @@ abstract class _$$DowndloadingImplCopyWith<$Res> {
           _$DowndloadingImpl value, $Res Function(_$DowndloadingImpl) then) =
       __$$DowndloadingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Stream<int> progress});
+  $Res call({StreamController<int> progress});
 }
 
 /// @nodoc
@@ -654,7 +677,7 @@ class __$$DowndloadingImplCopyWithImpl<$Res>
       null == progress
           ? _value.progress
           : progress // ignore: cast_nullable_to_non_nullable
-              as Stream<int>,
+              as StreamController<int>,
     ));
   }
 }
@@ -665,7 +688,7 @@ class _$DowndloadingImpl implements _Downdloading {
   const _$DowndloadingImpl(this.progress);
 
   @override
-  final Stream<int> progress;
+  final StreamController<int> progress;
 
   @override
   String toString() {
@@ -695,7 +718,7 @@ class _$DowndloadingImpl implements _Downdloading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Stream<int> progress) downloading,
+    required TResult Function(StreamController<int> progress) downloading,
     required TResult Function() complete,
   }) {
     return downloading(progress);
@@ -706,7 +729,7 @@ class _$DowndloadingImpl implements _Downdloading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Stream<int> progress)? downloading,
+    TResult? Function(StreamController<int> progress)? downloading,
     TResult? Function()? complete,
   }) {
     return downloading?.call(progress);
@@ -717,7 +740,7 @@ class _$DowndloadingImpl implements _Downdloading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Stream<int> progress)? downloading,
+    TResult Function(StreamController<int> progress)? downloading,
     TResult Function()? complete,
     required TResult orElse(),
   }) {
@@ -766,9 +789,10 @@ class _$DowndloadingImpl implements _Downdloading {
 }
 
 abstract class _Downdloading implements YtdownloadState {
-  const factory _Downdloading(final Stream<int> progress) = _$DowndloadingImpl;
+  const factory _Downdloading(final StreamController<int> progress) =
+      _$DowndloadingImpl;
 
-  Stream<int> get progress;
+  StreamController<int> get progress;
   @JsonKey(ignore: true)
   _$$DowndloadingImplCopyWith<_$DowndloadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -814,7 +838,7 @@ class _$CompleteImpl implements _Complete {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Stream<int> progress) downloading,
+    required TResult Function(StreamController<int> progress) downloading,
     required TResult Function() complete,
   }) {
     return complete();
@@ -825,7 +849,7 @@ class _$CompleteImpl implements _Complete {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Stream<int> progress)? downloading,
+    TResult? Function(StreamController<int> progress)? downloading,
     TResult? Function()? complete,
   }) {
     return complete?.call();
@@ -836,7 +860,7 @@ class _$CompleteImpl implements _Complete {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Stream<int> progress)? downloading,
+    TResult Function(StreamController<int> progress)? downloading,
     TResult Function()? complete,
     required TResult orElse(),
   }) {

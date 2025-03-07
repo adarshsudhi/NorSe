@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:norse/features/Presentation/Blocs/youtubeBloc/youtubeplayer_bloc/youtubeplayer_bloc.dart';
+import 'package:norse/features/Presentation/CustomWidgets/bgblur.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Data/Models/MusicModels/onlinesongmodel.dart';
-import 'package:nebula/injection_container.dart' as di;
+import 'package:norse/configs/constants/Spaces.dart';
+import 'package:norse/features/Data/Models/MusicModels/onlinesongmodel.dart';
+import 'package:norse/injection_container.dart' as di;
 import '../../../../../Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import '../../../../../Domain/UseCases/Sql_UseCase/addtodownloads_Usecase.dart';
 import '../../../../Blocs/Musicbloc/Albumsongs/albums_songs_bloc.dart';
@@ -13,19 +15,18 @@ import '../../../../Blocs/Musicbloc/Library/album/libraryalbumlike/libraryalbuml
 import '../../../../Blocs/Musicbloc/Library/playlist/libraryplaylist/libraryplaylist_bloc.dart';
 import '../../../../Blocs/Musicbloc/Library/playlist/libraryplaylistlike/libraryplaylistlike_bloc.dart';
 import '../../../../Blocs/Musicbloc/audio_bloc/audio_bloc.dart';
-import '../../../MainHomePage/MainHomePage.dart';
 import '../../musicplayerpage/testonlineplayerscreen.dart';
 
 class SongDetailsPage extends StatefulWidget {
   static const String SongDetials = '/SongDetailPage';
   const SongDetailsPage({
-    Key? key,
+    super.key,
     required this.imageurl,
     required this.albumurl,
     required this.name,
     required this.id,
     required this.type,
-  }) : super(key: key);
+  });
   final String imageurl;
   final String albumurl;
   final String name;
@@ -105,15 +106,12 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                   } else if (state is AlbumsSongsloaded) {
                     return Stack(
                       children: [
-                        Container(
-                          color: Colors.black,
-                          height: size.height,
-                          width: size.width,
-                        ),
+                        const BGblur(),
                         CustomScrollView(
                           physics: const BouncingScrollPhysics(),
                           slivers: [
                             SliverAppBar(
+                              surfaceTintColor: Colors.transparent,
                               leading: IconButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -141,15 +139,18 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                           .replaceAll('150x150', '500x500'),
                                       fit: BoxFit.cover,
                                     ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.bottomCenter,
-                                              end: Alignment.topCenter,
-                                              colors: [
-                                            Colors.black,
-                                            Colors.transparent
-                                          ])),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                              Colors.black,
+                                              Colors.transparent
+                                            ])),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -290,25 +291,6 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                               );
                                             },
                                           ),
-                                          const SizedBox(
-                                            width: 30,
-                                          ),
-                                          Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 255, 255, 255),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50)),
-                                              child: IconButton(
-                                                  onPressed: () {},
-                                                  icon: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Color.fromARGB(
-                                                        255, 0, 0, 0),
-                                                  ))),
                                         ],
                                       )
                                     ],
@@ -326,6 +308,10 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                   onTap: () {
                                     Recents(state.songs, index, context,
                                         widget.name);
+
+                                    BlocProvider.of<YoutubeplayerBloc>(context)
+                                        .add(const YoutubeplayerEvent
+                                            .switchevent());
 
                                     BlocProvider.of<AudioBloc>(context).add(
                                         AudioEvent.onlineaudio(
@@ -394,15 +380,12 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                   } else if (state is playlistsongs) {
                     return Stack(
                       children: [
-                        Container(
-                          color: Colors.black,
-                          height: size.height,
-                          width: size.width,
-                        ),
+                        const BGblur(),
                         CustomScrollView(
                           physics: const BouncingScrollPhysics(),
                           slivers: [
                             SliverAppBar(
+                              surfaceTintColor: Colors.transparent,
                               leading: IconButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -431,15 +414,18 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                           .replaceAll('150x150', '500x500'),
                                       fit: BoxFit.cover,
                                     ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.bottomCenter,
-                                              end: Alignment.topCenter,
-                                              colors: [
-                                            Colors.black,
-                                            Colors.transparent
-                                          ])),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                              Colors.black,
+                                              Colors.transparent
+                                            ])),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -580,32 +566,6 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                               });
                                             },
                                           ),
-                                          const SizedBox(
-                                            width: 30,
-                                          ),
-                                          Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 255, 255, 255),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50)),
-                                              child: IconButton(
-                                                  onPressed: () {
-                                                    List<Map> moreinfo = [];
-                                                    for (var itemss
-                                                        in state.songs) {
-                                                      moreinfo.add(
-                                                          itemss.more_info);
-                                                    }
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.play_arrow,
-                                                    color: Color.fromARGB(
-                                                        255, 0, 0, 0),
-                                                  ))),
                                         ],
                                       )
                                     ],
@@ -630,6 +590,10 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                                     }
                                     Recents(state.songs, index, context,
                                         widget.name);
+
+                                    BlocProvider.of<YoutubeplayerBloc>(context)
+                                        .add(const YoutubeplayerEvent
+                                            .switchevent());
 
                                     BlocProvider.of<AudioBloc>(context).add(
                                         AudioEvent.onlineaudio(
@@ -703,10 +667,6 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
                   }
                 },
               ),
-              const Align(
-                alignment: Alignment.bottomCenter,
-                child: SafeArea(child: BottomMusicBar()),
-              )
             ],
           ),
         ));
@@ -715,10 +675,10 @@ class _SongDetailsPageState extends State<SongDetailsPage> {
 
 class Songslistloading extends StatelessWidget {
   const Songslistloading({
-    Key? key,
+    super.key,
     required this.size,
     required this.show,
-  }) : super(key: key);
+  });
   final Size size;
   final bool show;
 
@@ -726,130 +686,137 @@ class Songslistloading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(
-          height: size.height / 2,
-          child: Shimmer.fromColors(
-              period: const Duration(seconds: 2),
-              baseColor: const Color.fromARGB(255, 18, 41, 61),
-              highlightColor:
-                  const Color.fromARGB(255, 2, 38, 68).withOpacity(0.5),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 67, 67, 67),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              )),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: size.height,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Colors.transparent,
-              Colors.black.withOpacity(0.5),
-              Colors.black,
-              Colors.black,
-              Colors.black
-            ], end: Alignment.bottomCenter, begin: Alignment.topCenter)),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            height: size.height / 1.5,
-            child: Column(
-              children: [
-                Spaces.kheight20,
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 20,
-                            width: size.width / 2,
-                            child: Shimmer.fromColors(
-                                period: const Duration(seconds: 2),
-                                baseColor:
-                                    const Color.fromARGB(255, 18, 41, 61),
-                                highlightColor:
-                                    const Color.fromARGB(255, 2, 38, 68)
-                                        .withOpacity(0.5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 3, 33, 57),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                )),
+        const BGblur(),
+        CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              surfaceTintColor: Colors.transparent,
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                    size: 20,
+                  )),
+              stretch: true,
+              pinned: true,
+              expandedHeight: 280,
+              foregroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+              flexibleSpace: FlexibleSpaceBar(
+                stretchModes: const [StretchMode.zoomBackground],
+                collapseMode: CollapseMode.parallax,
+                background: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Shimmer.fromColors(
+                        period: const Duration(seconds: 2),
+                        baseColor: const Color.fromARGB(255, 18, 41, 61),
+                        highlightColor: const Color.fromARGB(255, 2, 38, 68)
+                            .withOpacity(0.5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 67, 67, 67),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          Spaces.kheight10,
-                          SizedBox(
-                            height: 10,
-                            width: size.width / 3.4,
-                            child: Shimmer.fromColors(
-                                period: const Duration(seconds: 2),
-                                baseColor:
-                                    const Color.fromARGB(255, 18, 41, 61),
-                                highlightColor:
-                                    const Color.fromARGB(255, 2, 38, 68)
-                                        .withOpacity(0.5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 3, 33, 57),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                )),
-                          )
-                        ],
-                      ),
-                      show
-                          ? Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.favorite,
-                                      color: Colors.white,
-                                      size: 27,
-                                    )),
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 255, 255, 255),
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: const Center(
-                                    child: Icon(Icons.play_arrow),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox()
-                    ],
-                  ),
+                        )),
+                  ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Songtileloadingwidget(size: size);
-                    },
-                  ),
-                ),
-                const Spaceadjust()
-              ],
+              ),
             ),
-          ),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                height: 70,
+                width: double.infinity,
+                child: Center(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                              width: size.width / 2,
+                              child: Shimmer.fromColors(
+                                  period: const Duration(seconds: 2),
+                                  baseColor:
+                                      const Color.fromARGB(255, 18, 41, 61),
+                                  highlightColor:
+                                      const Color.fromARGB(255, 2, 38, 68)
+                                          .withOpacity(0.5),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color:
+                                          const Color.fromARGB(255, 3, 33, 57),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  )),
+                            ),
+                            Spaces.kheight10,
+                            SizedBox(
+                              height: 10,
+                              width: size.width / 3.4,
+                              child: Shimmer.fromColors(
+                                  period: const Duration(seconds: 2),
+                                  baseColor:
+                                      const Color.fromARGB(255, 18, 41, 61),
+                                  highlightColor:
+                                      const Color.fromARGB(255, 2, 38, 68)
+                                          .withOpacity(0.5),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color:
+                                          const Color.fromARGB(255, 3, 33, 57),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  )),
+                            )
+                          ],
+                        ),
+                        show
+                            ? Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.favorite,
+                                        color: Colors.white,
+                                        size: 27,
+                                      )),
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )),
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 20),
+              sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(childCount: 20,
+                      (context, index) {
+                return Songtileloadingwidget(size: size);
+              })),
+            ),
+            const SliverToBoxAdapter(
+              child: Spaceadjust(),
+            )
+          ],
         ),
       ],
     );
@@ -970,13 +937,13 @@ class Spaceadjust extends StatelessWidget {
             onlinesongs:
                 (isloading, isfailed, audios, valueStream, index, audioPlayer) {
               return const SizedBox(
-                height: 70,
+                height: 75,
               );
             },
             Localsongs:
                 (isloading, isfailed, audios, valueStream, index, audioPlayer) {
               return const SizedBox(
-                height: 70,
+                height: 75,
               );
             },
             orElse: () => const SizedBox());
@@ -987,7 +954,7 @@ class Spaceadjust extends StatelessWidget {
 
 class Songtiles extends StatelessWidget {
   const Songtiles({
-    Key? key,
+    super.key,
     required this.name,
     required this.image,
     required this.artist,
@@ -997,7 +964,7 @@ class Songtiles extends StatelessWidget {
     required this.ontapqueue,
     required this.visible1,
     required this.visible2,
-  }) : super(key: key);
+  });
   final String name;
   final String image;
   final String artist;

@@ -20,18 +20,21 @@ mixin _$LocalsongEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getallsongs,
     required TResult Function() started,
+    required TResult Function(int id, String location) removesongsfromdevice,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getallsongs,
     TResult? Function()? started,
+    TResult? Function(int id, String location)? removesongsfromdevice,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getallsongs,
     TResult Function()? started,
+    TResult Function(int id, String location)? removesongsfromdevice,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,22 @@ mixin _$LocalsongEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Getallsongs value) getallsongs,
     required TResult Function(_Started value) started,
+    required TResult Function(_RemoveSongFromDevice value)
+        removesongsfromdevice,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Getallsongs value)? getallsongs,
     TResult? Function(_Started value)? started,
+    TResult? Function(_RemoveSongFromDevice value)? removesongsfromdevice,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Getallsongs value)? getallsongs,
     TResult Function(_Started value)? started,
+    TResult Function(_RemoveSongFromDevice value)? removesongsfromdevice,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +121,7 @@ class _$GetallsongsImpl implements _Getallsongs {
   TResult when<TResult extends Object?>({
     required TResult Function() getallsongs,
     required TResult Function() started,
+    required TResult Function(int id, String location) removesongsfromdevice,
   }) {
     return getallsongs();
   }
@@ -123,6 +131,7 @@ class _$GetallsongsImpl implements _Getallsongs {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getallsongs,
     TResult? Function()? started,
+    TResult? Function(int id, String location)? removesongsfromdevice,
   }) {
     return getallsongs?.call();
   }
@@ -132,6 +141,7 @@ class _$GetallsongsImpl implements _Getallsongs {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getallsongs,
     TResult Function()? started,
+    TResult Function(int id, String location)? removesongsfromdevice,
     required TResult orElse(),
   }) {
     if (getallsongs != null) {
@@ -145,6 +155,8 @@ class _$GetallsongsImpl implements _Getallsongs {
   TResult map<TResult extends Object?>({
     required TResult Function(_Getallsongs value) getallsongs,
     required TResult Function(_Started value) started,
+    required TResult Function(_RemoveSongFromDevice value)
+        removesongsfromdevice,
   }) {
     return getallsongs(this);
   }
@@ -154,6 +166,7 @@ class _$GetallsongsImpl implements _Getallsongs {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Getallsongs value)? getallsongs,
     TResult? Function(_Started value)? started,
+    TResult? Function(_RemoveSongFromDevice value)? removesongsfromdevice,
   }) {
     return getallsongs?.call(this);
   }
@@ -163,6 +176,7 @@ class _$GetallsongsImpl implements _Getallsongs {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Getallsongs value)? getallsongs,
     TResult Function(_Started value)? started,
+    TResult Function(_RemoveSongFromDevice value)? removesongsfromdevice,
     required TResult orElse(),
   }) {
     if (getallsongs != null) {
@@ -216,6 +230,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() getallsongs,
     required TResult Function() started,
+    required TResult Function(int id, String location) removesongsfromdevice,
   }) {
     return started();
   }
@@ -225,6 +240,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getallsongs,
     TResult? Function()? started,
+    TResult? Function(int id, String location)? removesongsfromdevice,
   }) {
     return started?.call();
   }
@@ -234,6 +250,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getallsongs,
     TResult Function()? started,
+    TResult Function(int id, String location)? removesongsfromdevice,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -247,6 +264,8 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Getallsongs value) getallsongs,
     required TResult Function(_Started value) started,
+    required TResult Function(_RemoveSongFromDevice value)
+        removesongsfromdevice,
   }) {
     return started(this);
   }
@@ -256,6 +275,7 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Getallsongs value)? getallsongs,
     TResult? Function(_Started value)? started,
+    TResult? Function(_RemoveSongFromDevice value)? removesongsfromdevice,
   }) {
     return started?.call(this);
   }
@@ -265,6 +285,7 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Getallsongs value)? getallsongs,
     TResult Function(_Started value)? started,
+    TResult Function(_RemoveSongFromDevice value)? removesongsfromdevice,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -279,27 +300,195 @@ abstract class _Started implements LocalsongEvent {
 }
 
 /// @nodoc
+abstract class _$$RemoveSongFromDeviceImplCopyWith<$Res> {
+  factory _$$RemoveSongFromDeviceImplCopyWith(_$RemoveSongFromDeviceImpl value,
+          $Res Function(_$RemoveSongFromDeviceImpl) then) =
+      __$$RemoveSongFromDeviceImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int id, String location});
+}
+
+/// @nodoc
+class __$$RemoveSongFromDeviceImplCopyWithImpl<$Res>
+    extends _$LocalsongEventCopyWithImpl<$Res, _$RemoveSongFromDeviceImpl>
+    implements _$$RemoveSongFromDeviceImplCopyWith<$Res> {
+  __$$RemoveSongFromDeviceImplCopyWithImpl(_$RemoveSongFromDeviceImpl _value,
+      $Res Function(_$RemoveSongFromDeviceImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? location = null,
+  }) {
+    return _then(_$RemoveSongFromDeviceImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RemoveSongFromDeviceImpl implements _RemoveSongFromDevice {
+  const _$RemoveSongFromDeviceImpl(this.id, this.location);
+
+  @override
+  final int id;
+  @override
+  final String location;
+
+  @override
+  String toString() {
+    return 'LocalsongEvent.removesongsfromdevice(id: $id, location: $location)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RemoveSongFromDeviceImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.location, location) ||
+                other.location == location));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, location);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RemoveSongFromDeviceImplCopyWith<_$RemoveSongFromDeviceImpl>
+      get copyWith =>
+          __$$RemoveSongFromDeviceImplCopyWithImpl<_$RemoveSongFromDeviceImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getallsongs,
+    required TResult Function() started,
+    required TResult Function(int id, String location) removesongsfromdevice,
+  }) {
+    return removesongsfromdevice(id, location);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getallsongs,
+    TResult? Function()? started,
+    TResult? Function(int id, String location)? removesongsfromdevice,
+  }) {
+    return removesongsfromdevice?.call(id, location);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getallsongs,
+    TResult Function()? started,
+    TResult Function(int id, String location)? removesongsfromdevice,
+    required TResult orElse(),
+  }) {
+    if (removesongsfromdevice != null) {
+      return removesongsfromdevice(id, location);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Getallsongs value) getallsongs,
+    required TResult Function(_Started value) started,
+    required TResult Function(_RemoveSongFromDevice value)
+        removesongsfromdevice,
+  }) {
+    return removesongsfromdevice(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Getallsongs value)? getallsongs,
+    TResult? Function(_Started value)? started,
+    TResult? Function(_RemoveSongFromDevice value)? removesongsfromdevice,
+  }) {
+    return removesongsfromdevice?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Getallsongs value)? getallsongs,
+    TResult Function(_Started value)? started,
+    TResult Function(_RemoveSongFromDevice value)? removesongsfromdevice,
+    required TResult orElse(),
+  }) {
+    if (removesongsfromdevice != null) {
+      return removesongsfromdevice(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RemoveSongFromDevice implements LocalsongEvent {
+  const factory _RemoveSongFromDevice(final int id, final String location) =
+      _$RemoveSongFromDeviceImpl;
+
+  int get id;
+  String get location;
+  @JsonKey(ignore: true)
+  _$$RemoveSongFromDeviceImplCopyWith<_$RemoveSongFromDeviceImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$LocalsongState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)
+    required TResult Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)
         songs,
     required TResult Function() initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)?
+    TResult? Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)?
         songs,
     TResult? Function()? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)?
+    TResult Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)?
         songs,
     TResult Function()? initial,
     required TResult orElse(),
@@ -353,6 +542,8 @@ abstract class _$$SongsImplCopyWith<$Res> {
   $Res call(
       {List<SongModel> songlist,
       List<AlbumModel> albums,
+      List<ArtistModel> artist,
+      List<GenreModel> genre,
       bool isloading,
       bool failed});
 }
@@ -370,6 +561,8 @@ class __$$SongsImplCopyWithImpl<$Res>
   $Res call({
     Object? songlist = null,
     Object? albums = null,
+    Object? artist = null,
+    Object? genre = null,
     Object? isloading = null,
     Object? failed = null,
   }) {
@@ -382,6 +575,14 @@ class __$$SongsImplCopyWithImpl<$Res>
           ? _value._albums
           : albums // ignore: cast_nullable_to_non_nullable
               as List<AlbumModel>,
+      null == artist
+          ? _value._artist
+          : artist // ignore: cast_nullable_to_non_nullable
+              as List<ArtistModel>,
+      null == genre
+          ? _value._genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as List<GenreModel>,
       null == isloading
           ? _value.isloading
           : isloading // ignore: cast_nullable_to_non_nullable
@@ -397,10 +598,17 @@ class __$$SongsImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SongsImpl implements _Songs {
-  const _$SongsImpl(final List<SongModel> songlist,
-      final List<AlbumModel> albums, this.isloading, this.failed)
+  const _$SongsImpl(
+      final List<SongModel> songlist,
+      final List<AlbumModel> albums,
+      final List<ArtistModel> artist,
+      final List<GenreModel> genre,
+      this.isloading,
+      this.failed)
       : _songlist = songlist,
-        _albums = albums;
+        _albums = albums,
+        _artist = artist,
+        _genre = genre;
 
   final List<SongModel> _songlist;
   @override
@@ -418,6 +626,22 @@ class _$SongsImpl implements _Songs {
     return EqualUnmodifiableListView(_albums);
   }
 
+  final List<ArtistModel> _artist;
+  @override
+  List<ArtistModel> get artist {
+    if (_artist is EqualUnmodifiableListView) return _artist;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_artist);
+  }
+
+  final List<GenreModel> _genre;
+  @override
+  List<GenreModel> get genre {
+    if (_genre is EqualUnmodifiableListView) return _genre;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_genre);
+  }
+
   @override
   final bool isloading;
   @override
@@ -425,7 +649,7 @@ class _$SongsImpl implements _Songs {
 
   @override
   String toString() {
-    return 'LocalsongState.songs(songlist: $songlist, albums: $albums, isloading: $isloading, failed: $failed)';
+    return 'LocalsongState.songs(songlist: $songlist, albums: $albums, artist: $artist, genre: $genre, isloading: $isloading, failed: $failed)';
   }
 
   @override
@@ -435,6 +659,8 @@ class _$SongsImpl implements _Songs {
             other is _$SongsImpl &&
             const DeepCollectionEquality().equals(other._songlist, _songlist) &&
             const DeepCollectionEquality().equals(other._albums, _albums) &&
+            const DeepCollectionEquality().equals(other._artist, _artist) &&
+            const DeepCollectionEquality().equals(other._genre, _genre) &&
             (identical(other.isloading, isloading) ||
                 other.isloading == isloading) &&
             (identical(other.failed, failed) || other.failed == failed));
@@ -445,6 +671,8 @@ class _$SongsImpl implements _Songs {
       runtimeType,
       const DeepCollectionEquality().hash(_songlist),
       const DeepCollectionEquality().hash(_albums),
+      const DeepCollectionEquality().hash(_artist),
+      const DeepCollectionEquality().hash(_genre),
       isloading,
       failed);
 
@@ -457,36 +685,51 @@ class _$SongsImpl implements _Songs {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)
+    required TResult Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)
         songs,
     required TResult Function() initial,
   }) {
-    return songs(songlist, albums, isloading, failed);
+    return songs(songlist, albums, artist, genre, isloading, failed);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)?
+    TResult? Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)?
         songs,
     TResult? Function()? initial,
   }) {
-    return songs?.call(songlist, albums, isloading, failed);
+    return songs?.call(songlist, albums, artist, genre, isloading, failed);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)?
+    TResult Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)?
         songs,
     TResult Function()? initial,
     required TResult orElse(),
   }) {
     if (songs != null) {
-      return songs(songlist, albums, isloading, failed);
+      return songs(songlist, albums, artist, genre, isloading, failed);
     }
     return orElse();
   }
@@ -527,11 +770,15 @@ abstract class _Songs implements LocalsongState {
   const factory _Songs(
       final List<SongModel> songlist,
       final List<AlbumModel> albums,
+      final List<ArtistModel> artist,
+      final List<GenreModel> genre,
       final bool isloading,
       final bool failed) = _$SongsImpl;
 
   List<SongModel> get songlist;
   List<AlbumModel> get albums;
+  List<ArtistModel> get artist;
+  List<GenreModel> get genre;
   bool get isloading;
   bool get failed;
   @JsonKey(ignore: true)
@@ -577,8 +824,13 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)
+    required TResult Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)
         songs,
     required TResult Function() initial,
   }) {
@@ -588,8 +840,13 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)?
+    TResult? Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)?
         songs,
     TResult? Function()? initial,
   }) {
@@ -599,8 +856,13 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<SongModel> songlist, List<AlbumModel> albums,
-            bool isloading, bool failed)?
+    TResult Function(
+            List<SongModel> songlist,
+            List<AlbumModel> albums,
+            List<ArtistModel> artist,
+            List<GenreModel> genre,
+            bool isloading,
+            bool failed)?
         songs,
     TResult Function()? initial,
     required TResult orElse(),

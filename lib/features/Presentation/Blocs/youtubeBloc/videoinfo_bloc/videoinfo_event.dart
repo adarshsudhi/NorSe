@@ -4,6 +4,6 @@ part of 'videoinfo_bloc.dart';
 class VideoinfoEvent with _$VideoinfoEvent {
   const factory VideoinfoEvent.started() = _Started;
   const factory VideoinfoEvent.getinfo(
-    String id
+    String url
   ) = _Getinfo;
 }

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/configs/Error/Errors.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+
+import '../../../../../configs/Error/Errors.dart';
 
 abstract class PlatformDataRepository {
   Future<bool> getpermissions();
@@ -11,4 +12,10 @@ abstract class PlatformDataRepository {
   Future<Either<Failures, bool>> restoredata();
   Future<void> initnotification();
   void showprogress(double progress, int id, String title, String auther);
+  Future<bool> deletesongfromdevice(String path);
+  Future<Either<Failures, List<ArtistModel>>> getartistwise();
+  Future<Either<Failures, List<SongModel>>> getSongsFromArtist(int id);
+  Future<Either<Failures, bool>> updateaudiotag(Map<String, dynamic> audiotags);
+  Future<Either<Failures, List<GenreModel>>> getGenre();
+  Future<Either<Failures, List<SongModel>>> getSongsFromGenre(int id);
 }

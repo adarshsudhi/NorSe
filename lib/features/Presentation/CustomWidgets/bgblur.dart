@@ -22,18 +22,32 @@ class BGblur extends StatelessWidget {
               stream: valueStream,
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  final songindex = snapshot.data!.maybeMap(
-                    orElse: () => 0,
-                    onlinestreams: (value) => value.index,
-                  );
+                  int songindex = snapshot.data!.maybeMap(
+                      orElse: () => 0, onlinestreams: (val) => val.index);
 
-                  return ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                    child: CachedNetworkImage(
-                      imageUrl: audios[songindex].imageurl,
-                      fit: BoxFit.cover,
-                      filterQuality: FilterQuality.high,
-                    ),
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      ImageFiltered(
+                        imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                        child: CachedNetworkImage(
+                          imageUrl: audios[songindex].imageurl,
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                              Colors.black,
+                              Colors.black.withOpacity(0.96),
+                              Colors.black.withOpacity(0.79),
+                            ])),
+                      ),
+                    ],
                   );
                 } else {
                   return const SizedBox();
@@ -47,14 +61,31 @@ class BGblur extends StatelessWidget {
               stream: valueStream,
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  final songindex = snapshot.data!.mapOrNull(
+                  final songindex = snapshot.data!.maybeMap(
+                    orElse: () => 0,
                     LocalStreams: (value) => value.index,
                   );
-                  return QueryArtworkWidget(
-                      keepOldArtwork: true,
-                      size: 5,
-                      id: audios[songindex!].id,
-                      type: ArtworkType.AUDIO);
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      QueryArtworkWidget(
+                          keepOldArtwork: true,
+                          size: 1,
+                          id: audios[songindex].id,
+                          type: ArtworkType.AUDIO),
+                      Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                              Colors.black,
+                              Colors.black.withOpacity(0.95),
+                              Colors.black.withOpacity(0.79),
+                            ])),
+                      )
+                    ],
+                  );
                 } else {
                   return const SizedBox();
                 }

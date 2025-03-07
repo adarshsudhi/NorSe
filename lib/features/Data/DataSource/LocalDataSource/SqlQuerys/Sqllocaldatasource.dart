@@ -1,10 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../../configs/Error/Errors.dart';
+import '../../../../Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
+import '../../../Models/MusicModels/usermodel.dart';
 
 abstract class Sqldatasourcerepository {
+  Future<bool> storeresponse(String jsonString, String type);
+  Future<String> getstoredresponse(String id);
   Future<Database> intializedatabase();
   Future<bool> addtodownloads(AlbumElements song);
   Future<Either<Failures, List<Map<String, dynamic>>>> QueryDownloaddata();
@@ -45,4 +48,13 @@ abstract class Sqldatasourcerepository {
   Future<Map<String, dynamic>> getuserdetails();
   Future<Either<bool, List<Map<String, dynamic>>>> getsearchsuggestions(
       String mode, String search);
+  Future<Either<Failures, List<List<Map<String, dynamic>>>>> librarysearchfunc(
+      String query);
+  Future<Map<String, dynamic>> getplayerui(String uitype);
+  Future<void> initialplayerui();
+  Future<void> updateplayerui(String type);
+  Future<bool> videoAndAudioDownload(VideoOnlyStreamInfo videoOnlyStreamInfo,
+    AudioOnlyStreamInfo audioOnlyStreamInfo,Map<String,dynamic> details);
+  Future<List<Map<String, dynamic>>> getAddedDownloadVideos();
+  Future<bool> removeFromVideoDownloadTab(String id);
 }

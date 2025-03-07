@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
+import 'package:norse/configs/constants/Spaces.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Aboutpage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _AboutpageState extends State<Aboutpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
         title: const Textutil(
@@ -91,12 +91,12 @@ class _AboutpageState extends State<Aboutpage> {
                             children: [
                               Column(children: [
                                 const Textutil(
-                                    text: 'Nebula music player',
+                                    text: 'NorSe Music',
                                     fontsize: 24,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                                 const Textutil(
-                                    text: 'v 1.0.1',
+                                    text: Spaces.version,
                                     fontsize: 10,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -126,7 +126,7 @@ class _AboutpageState extends State<Aboutpage> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 30),
                                 child: Text(
-                                  'Nebula is an Opensource project and can be found in here',
+                                  'NorSe is an Opensource project and can be found in here',
                                   style: GoogleFonts.aldrich(
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
@@ -255,7 +255,7 @@ class _AboutpageState extends State<Aboutpage> {
                                                           onPressed: () {
                                                             _copyToClipboard(
                                                                 context,
-                                                                'adarshadar543@okaxis');
+                                                                'adarshadar543-1@okaxis');
                                                           },
                                                           icon: const Icon(
                                                             Icons.copy,
@@ -292,7 +292,7 @@ class _AboutpageState extends State<Aboutpage> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           const Textutil(
-                                              text: 'Support',
+                                              text: 'Donate',
                                               fontsize: 10,
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal),

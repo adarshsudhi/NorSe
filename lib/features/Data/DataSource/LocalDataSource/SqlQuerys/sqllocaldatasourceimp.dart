@@ -1,21 +1,38 @@
 import 'dart:math';
 import 'package:dartz/dartz.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
-import 'package:nebula/features/Data/Models/MusicModels/usermodel.dart';
+import 'package:norse/features/Data/DataSource/LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
+import 'package:path/path.dart' as p;
+import 'dart:developer' as dev;
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../../../../configs/Error/Errors.dart';
+import '../../../../../configs/constants/Spaces.dart';
 import '../../../../Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
+import '../../../Models/MusicModels/usermodel.dart';
 
 class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
   @override
   Future<Database> intializedatabase() async {
-    try {
-      final directory = await getDatabasesPath();
-      String path = join(directory, 'nebula.db');
+    final directory = await getDatabasesPath();
+    String path = p.join(directory, 'nebula.db');
 
-      const fav = '''
+    const ui = '''
+        CREATE TABLE settings (
+         key INTEGER PRIMARY KEY AUTOINCREMENT,
+         id varchar[10],
+         uitype varchar[20]
+        );
+    ''';
+
+    const cache = '''
+       CREATE TABLE response (
+         key INTEGER PRIMARY KEY AUTOINCREMENT,
+         id varchar[10],
+         json TEXT
+        );
+      ''';
+
+    const fav = '''
         CREATE TABLE fav (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         id varchar[150],
@@ -25,7 +42,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
     ''';
 
-      const recent = '''
+    const recent = '''
         CREATE TABLE recent (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         id varchar[150],
@@ -36,7 +53,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
     ''';
 
-      const playlist = '''
+    const playlist = '''
         CREATE TABLE playlists (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         id varchar[50],
@@ -45,7 +62,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
     ''';
 
-      const userquery = '''
+    const userquery = '''
       CREATE TABLE user (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         name varchar[150],
@@ -53,7 +70,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
        );
     ''';
 
-      const query = '''
+    const query = '''
       CREATE TABLE downloads (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         id varchar[150],
@@ -65,14 +82,14 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
     ''';
 
-      const create = '''
+    const create = '''
       CREATE TABLE usersearch (
         key INTEGER PRIMARY KEY AUTOINCREMENT,
         search varchar[150]
       );
       ''';
 
-      const librarysong = '''
+    const librarysong = '''
        CREATE TABLE librarysong (
        key INTEGER PRIMARY KEY AUTOINCREMENT,
        id varchar[150],
@@ -83,7 +100,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
                ''';
 
-      const libraryalbum = '''
+    const libraryalbum = '''
        CREATE TABLE libraryalbum (
        key INTEGER PRIMARY KEY AUTOINCREMENT,
        id varchar[150],
@@ -93,7 +110,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
       ''';
 
-      const libraryplaylist = '''
+    const libraryplaylist = '''
        CREATE TABLE libraryplaylist (
        key INTEGER PRIMARY KEY AUTOINCREMENT,
        id varchar[150],
@@ -103,24 +120,36 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       );
       ''';
 
-      return await openDatabase(
-        path,
-        version: 2,
-        onCreate: (db, version) async {
-          await db.execute(query);
-          await db.execute(recent);
-          await db.execute(fav);
-          await db.execute(playlist);
-          await db.execute(librarysong);
-          await db.execute(libraryalbum);
-          await db.execute(libraryplaylist);
-          await db.execute(userquery);
-          await db.execute(create);
-        },
+    const videoaudiodownload = '''
+       CREATE TABLE VideoDownload (
+       key INTEGER PRIMARY KEY AUTOINCREMENT,
+       id varchar[150],
+       name varchar[250],
+       author varchar[150],
+       videourl varchar[250],
+       size varchar[60],
+       imageurl varchar[50]
       );
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+      ''';
+
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: (db, version) async {
+        await db.execute(ui);
+        await db.execute(query);
+        await db.execute(recent);
+        await db.execute(fav);
+        await db.execute(playlist);
+        await db.execute(librarysong);
+        await db.execute(libraryalbum);
+        await db.execute(libraryplaylist);
+        await db.execute(userquery);
+        await db.execute(create);
+        await db.execute(cache);
+        await db.execute(videoaudiodownload);
+      },
+    );
   }
 
   @override
@@ -420,7 +449,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
     try {
       Database db = await intializedatabase();
       String selectquery = '''
-      SELECT * FROM playlists;
+      SELECT * FROM playlists ORDER BY key DESC;
       ''';
       List<Map<String, dynamic>> allplaylists = await db.rawQuery(selectquery);
       if (allplaylists.isNotEmpty) {
@@ -638,7 +667,7 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
     try {
       Database db = await intializedatabase();
       String getquery = '''
-       SELECT * FROM librarysong;
+       SELECT * FROM librarysong ORDER BY key DESC;
       ''';
       List<Map<String, dynamic>> songs = await db.rawQuery(getquery);
       if (songs.isNotEmpty) {
@@ -714,7 +743,8 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
       getlibraryplaylist() async {
     try {
       Database db = await intializedatabase();
-      List<Map<String, dynamic>> playlists = await db.query('libraryplaylist');
+      List<Map<String, dynamic>> playlists =
+          await db.rawQuery('SELECT * FROM libraryplaylist ORDER BY key DESC');
       if (playlists.isNotEmpty) {
         return right(playlists);
       }
@@ -812,6 +842,189 @@ class Sqldatasourcerepositoryimp extends Sqldatasourcerepository {
         await db.delete('usersearch', where: "search = ?", whereArgs: [search]);
         return left(true);
       }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<List<Map<String, dynamic>>>>> librarysearchfunc(
+      String query) async {
+    List<List<Map<String, dynamic>>> searchresults = [];
+
+    try {
+      Database db = await intializedatabase();
+
+      String onfavsongs =
+          '''SELECT * FROM librarysong WHERE name LIKE ? COLLATE NOCASE''';
+      String onfavalbums =
+          '''SELECT * FROM libraryalbum WHERE name LIKE ? COLLATE NOCASE''';
+      String onfavplaylist =
+          '''SELECT * FROM libraryplaylist WHERE name LIKE ? COLLATE NOCASE''';
+      String onrecents =
+          '''SELECT * FROM recent WHERE title LIKE ? COLLATE NOCASE''';
+
+      final songs = await db.rawQuery(onfavsongs, ['%$query%']);
+      final albums = await db.rawQuery(onfavalbums, ['%$query%']);
+      final playlists = await db.rawQuery(onfavplaylist, ['%$query%']);
+      final recents = await db.rawQuery(onrecents, ['%$query%']);
+
+      searchresults.add(songs);
+      searchresults.add(albums);
+      searchresults.add(playlists);
+      searchresults.add(recents);
+
+      return right(searchresults);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getplayerui(String uitype) async {
+    try {
+      Database db = await intializedatabase();
+
+      List<Map<String, Object?>> response =
+          await db.query('settings', where: 'id = ?', whereArgs: ['0']);
+
+      return response[0];
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<void> initialplayerui() async {
+    try {
+      Database db = await intializedatabase();
+
+      List<Map<String, Object?>> response = await db.query('settings');
+
+      if (response.isEmpty) {
+        await db.insert(
+          'settings',
+          {
+            'id': '0',
+            'uitype': '96kbps.low',
+          },
+        );
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updateplayerui(String type) async {
+    try {
+      Database db = await intializedatabase();
+
+      await db.update('settings', {'uitype': type},
+          where: 'id = ?', whereArgs: ['0']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> storeresponse(String jsonString, String type) async {
+    try {
+      Database database = await intializedatabase();
+
+      int res = await database.insert(
+          'response', {'id': type, 'json': jsonString},
+          conflictAlgorithm: ConflictAlgorithm.replace);
+
+      if (res != 0) {
+        return true;
+      }
+      throw Exception('insertion failed');
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<String> getstoredresponse(String id) async {
+    try {
+      Database db = await intializedatabase();
+
+      List<Map<String, dynamic>> res =
+          await db.query('response', where: 'id=?', whereArgs: [id]);
+
+      if (res.isNotEmpty) {
+        return res[0]['json'];
+      } else {
+        return 'failed';
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> videoAndAudioDownload(VideoOnlyStreamInfo videoOnlyStreamInfo,
+    AudioOnlyStreamInfo audioOnlyStreamInfo,Map<String,dynamic> details) async {
+ 
+    try {
+      dev.log(details.toString());
+      Database db = await intializedatabase();
+
+      final res = await db.query('VideoDownload',
+          where: 'id=?', whereArgs: [details['id']]);
+
+      if (res.isEmpty) {
+         int effected = await db.insert('VideoDownload', {
+            "id" : details['id'],
+            "name" : details['title'],
+            "author" : details['author'],
+            "videourl" : details['url'],
+            "size" : details['size'],
+            "imageurl" : details['img']
+        });
+        if (effected != 0) {
+          return true;
+        }
+        return false;
+      } else {
+        Spaces.showtoast('Already Added');
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    } 
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAddedDownloadVideos() async {
+    try {
+      Database db = await intializedatabase();
+      String get = '''
+      SELECT * FROM VideoDownload ORDER BY key DESC;
+      ''';
+      List<Map<String, dynamic>> videos = await db.rawQuery(get);
+      if (videos.isEmpty) {
+        return [];
+      }
+      return videos;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> removeFromVideoDownloadTab(String id) async {
+    try {
+      Database db = await intializedatabase();
+      String get = '''
+      DELETE FROM VideoDownload WHERE id = ?;
+      ''';
+      int effected = await db.rawDelete(get, [id]);
+      if (effected == 0) {
+        throw Exception('VideoDownload Table is Empty');
+      }
+      return true;
     } catch (e) {
       throw Exception(e.toString());
     }

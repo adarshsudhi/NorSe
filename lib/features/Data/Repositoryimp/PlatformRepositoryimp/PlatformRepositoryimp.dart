@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/features/Data/DataSource/LocalDataSource/Platform/PlatFormDatasource.dart';
-import 'package:nebula/features/Domain/Repositorys/PlatformRepository/PlatformRepository.dart';
+import 'package:norse/features/Data/DataSource/LocalDataSource/Platform/PlatFormDatasource.dart';
+import 'package:norse/features/Domain/Repositorys/PlatformRepository/PlatformRepository.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../../../../configs/Error/Errors.dart';
 
@@ -38,4 +38,29 @@ class PlatformRepositoryimp extends PlatformRepository {
   @override
   void showprogress(double progress, int id, String title, String auther) =>
       platformDataRepository.showprogress(progress, id, title, auther);
+
+  @override
+  Future<bool> deletesongfromdevice(String path) async =>
+      platformDataRepository.deletesongfromdevice(path);
+
+  @override
+  Future<Either<Failures, List<ArtistModel>>> getartistwise() =>
+      platformDataRepository.getartistwise();
+
+  @override
+  Future<Either<Failures, List<SongModel>>> getSongsFromArtist(int id) =>
+      platformDataRepository.getSongsFromArtist(id);
+
+  @override
+  Future<Either<Failures, bool>> updateaudiotag(
+          Map<String, dynamic> audiotags) =>
+      platformDataRepository.updateaudiotag(audiotags);
+
+  @override
+  Future<Either<Failures, List<GenreModel>>> getGenre() =>
+      platformDataRepository.getGenre();
+
+  @override
+  Future<Either<Failures, List<SongModel>>> getSongsFromGenre(int id) =>
+      platformDataRepository.getSongsFromGenre(id);
 }

@@ -1,11 +1,11 @@
-import 'package:nebula/features/Domain/Repositorys/PlatformRepository/PlatformRepository.dart';
+import '../../Repositorys/PlatformRepository/PlatformRepository.dart';
 
 class InitializeNotificationusecase {
   final PlatformRepository repository;
   InitializeNotificationusecase({
     required this.repository,
   });
-  Future<void>call(){
+  Future<void> call() {
     return repository.initnotification();
   }
 }

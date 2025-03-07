@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
-import 'package:nebula/features/Presentation/CustomWidgets/CustomTextFormField.dart';
+import 'package:norse/features/Domain/Entity/MusicEntity/SongsDetailsEntity/SongsEntity.dart';
+import 'package:norse/features/Presentation/CustomWidgets/CustomTextFormField.dart';
+import 'package:norse/features/Presentation/CustomWidgets/bgblur.dart';
 import '../../../configs/constants/Spaces.dart';
 import '../../Data/Models/MusicModels/songmodel.dart';
 import '../Blocs/Musicbloc/playlist_Bloc/playlist_bloc.dart';
@@ -19,14 +20,17 @@ class Custombottomsheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Material(
-      color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.8),
+      clipBehavior: Clip.antiAlias,
+      color: Colors.black,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(40))),
       child: Column(
         children: [
           Expanded(
             child: Container(
+              clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
+                color: Colors.transparent,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(40),
                       topRight: Radius.circular(40)),
@@ -42,16 +46,7 @@ class Custombottomsheet extends StatelessWidget {
               width: size.width,
               child: Stack(
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40)),
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [Colors.transparent, Colors.black])),
-                  ),
+                  const BGblur(),
                   Column(
                     children: [
                       Spaces.kheight10,

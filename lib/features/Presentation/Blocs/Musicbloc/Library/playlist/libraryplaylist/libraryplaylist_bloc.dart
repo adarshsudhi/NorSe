@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nebula/configs/Error/Errors.dart';
-import 'package:nebula/features/Domain/UseCases/Sql_UseCase/getlibraryplaylist_usecase.dart';
-import 'package:nebula/injection_container.dart' as di;
+import 'package:norse/configs/Error/Errors.dart';
+import 'package:norse/features/Domain/UseCases/Sql_UseCase/getlibraryplaylist_usecase.dart';
+import 'package:norse/injection_container.dart' as di;
 
 part 'libraryplaylist_event.dart';
 part 'libraryplaylist_state.dart';

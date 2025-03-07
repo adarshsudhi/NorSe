@@ -53,6 +53,8 @@ mixin _$AudioEvent {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -88,6 +90,8 @@ mixin _$AudioEvent {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -123,6 +127,8 @@ mixin _$AudioEvent {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -146,6 +152,8 @@ mixin _$AudioEvent {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -167,6 +175,8 @@ mixin _$AudioEvent {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -188,6 +198,8 @@ mixin _$AudioEvent {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -229,18 +241,12 @@ class __$$StartedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
+class _$StartedImpl implements _Started {
   const _$StartedImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.started()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.started'));
   }
 
   @override
@@ -290,6 +296,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return started();
   }
@@ -328,6 +336,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return started?.call();
   }
@@ -366,6 +376,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -395,6 +407,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return started(this);
   }
@@ -419,6 +433,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return started?.call(this);
   }
@@ -443,6 +459,8 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -474,18 +492,12 @@ class __$$DisposeImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
+class _$DisposeImpl implements _Dispose {
   const _$DisposeImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.dispose()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.dispose'));
   }
 
   @override
@@ -535,6 +547,8 @@ class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return dispose();
   }
@@ -573,6 +587,8 @@ class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return dispose?.call();
   }
@@ -611,6 +627,8 @@ class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (dispose != null) {
@@ -640,6 +658,8 @@ class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return dispose(this);
   }
@@ -664,6 +684,8 @@ class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return dispose?.call(this);
   }
@@ -688,6 +710,8 @@ class _$DisposeImpl with DiagnosticableTreeMixin implements _Dispose {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (dispose != null) {
@@ -789,7 +813,7 @@ class __$$OnlineaudioImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
+class _$OnlineaudioImpl implements _Onlineaudio {
   const _$OnlineaudioImpl(
       this.key,
       this.index,
@@ -851,25 +875,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.onlineaudio(key: $key, index: $index, downloadUrl: $downloadUrl, poster: $poster, name: $name, artists: $artists, moreinfo: $moreinfo, allsongs: $allsongs, deachSongs: $deachSongs, playlistsongs: $playlistsongs)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.onlineaudio'))
-      ..add(DiagnosticsProperty('key', key))
-      ..add(DiagnosticsProperty('index', index))
-      ..add(DiagnosticsProperty('downloadUrl', downloadUrl))
-      ..add(DiagnosticsProperty('poster', poster))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('artists', artists))
-      ..add(DiagnosticsProperty('moreinfo', moreinfo))
-      ..add(DiagnosticsProperty('allsongs', allsongs))
-      ..add(DiagnosticsProperty('deachSongs', deachSongs))
-      ..add(DiagnosticsProperty('playlistsongs', playlistsongs));
   }
 
   @override
@@ -950,6 +957,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return onlineaudio(key, index, downloadUrl, poster, name, artists, moreinfo,
         allsongs, deachSongs, playlistsongs);
@@ -989,6 +998,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return onlineaudio?.call(key, index, downloadUrl, poster, name, artists,
         moreinfo, allsongs, deachSongs, playlistsongs);
@@ -1028,6 +1039,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (onlineaudio != null) {
@@ -1058,6 +1071,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return onlineaudio(this);
   }
@@ -1082,6 +1097,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return onlineaudio?.call(this);
   }
@@ -1106,6 +1123,8 @@ class _$OnlineaudioImpl with DiagnosticableTreeMixin implements _Onlineaudio {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (onlineaudio != null) {
@@ -1187,7 +1206,7 @@ class __$$LocalaudioImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
+class _$LocalaudioImpl implements _Localaudio {
   const _$LocalaudioImpl(final List<SongModel> songs,
       final List<Map<String, dynamic>> favsongs, this.index)
       : _songs = songs,
@@ -1213,18 +1232,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
   final int index;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.localaudio(songs: $songs, favsongs: $favsongs, index: $index)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.localaudio'))
-      ..add(DiagnosticsProperty('songs', songs))
-      ..add(DiagnosticsProperty('favsongs', favsongs))
-      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -1288,6 +1297,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return localaudio(songs, favsongs, index);
   }
@@ -1326,6 +1337,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return localaudio?.call(songs, favsongs, index);
   }
@@ -1364,6 +1377,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (localaudio != null) {
@@ -1393,6 +1408,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return localaudio(this);
   }
@@ -1417,6 +1434,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return localaudio?.call(this);
   }
@@ -1441,6 +1460,8 @@ class _$LocalaudioImpl with DiagnosticableTreeMixin implements _Localaudio {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (localaudio != null) {
@@ -1482,18 +1503,12 @@ class __$$PauseImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
+class _$PauseImpl implements _Pause {
   const _$PauseImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.pause()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.pause'));
   }
 
   @override
@@ -1543,6 +1558,8 @@ class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return pause();
   }
@@ -1581,6 +1598,8 @@ class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return pause?.call();
   }
@@ -1619,6 +1638,8 @@ class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (pause != null) {
@@ -1648,6 +1669,8 @@ class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return pause(this);
   }
@@ -1672,6 +1695,8 @@ class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return pause?.call(this);
   }
@@ -1696,6 +1721,8 @@ class _$PauseImpl with DiagnosticableTreeMixin implements _Pause {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (pause != null) {
@@ -1727,18 +1754,12 @@ class __$$ResumeImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
+class _$ResumeImpl implements _Resume {
   const _$ResumeImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.resume()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.resume'));
   }
 
   @override
@@ -1788,6 +1809,8 @@ class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return resume();
   }
@@ -1826,6 +1849,8 @@ class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return resume?.call();
   }
@@ -1864,6 +1889,8 @@ class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (resume != null) {
@@ -1893,6 +1920,8 @@ class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return resume(this);
   }
@@ -1917,6 +1946,8 @@ class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return resume?.call(this);
   }
@@ -1941,6 +1972,8 @@ class _$ResumeImpl with DiagnosticableTreeMixin implements _Resume {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (resume != null) {
@@ -1987,23 +2020,15 @@ class __$$LooponImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
+class _$LooponImpl implements _Loopon {
   const _$LooponImpl(this.islooped);
 
   @override
   final bool islooped;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.loopon(islooped: $islooped)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.loopon'))
-      ..add(DiagnosticsProperty('islooped', islooped));
   }
 
   @override
@@ -2062,6 +2087,8 @@ class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return loopon(islooped);
   }
@@ -2100,6 +2127,8 @@ class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return loopon?.call(islooped);
   }
@@ -2138,6 +2167,8 @@ class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (loopon != null) {
@@ -2167,6 +2198,8 @@ class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return loopon(this);
   }
@@ -2191,6 +2224,8 @@ class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return loopon?.call(this);
   }
@@ -2215,6 +2250,8 @@ class _$LooponImpl with DiagnosticableTreeMixin implements _Loopon {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (loopon != null) {
@@ -2266,23 +2303,15 @@ class __$$ShuffleonImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
+class _$ShuffleonImpl implements _Shuffleon {
   const _$ShuffleonImpl(this.isshuffled);
 
   @override
   final bool isshuffled;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.shuffleon(isshuffled: $isshuffled)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.shuffleon'))
-      ..add(DiagnosticsProperty('isshuffled', isshuffled));
   }
 
   @override
@@ -2341,6 +2370,8 @@ class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return shuffleon(isshuffled);
   }
@@ -2379,6 +2410,8 @@ class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return shuffleon?.call(isshuffled);
   }
@@ -2417,6 +2450,8 @@ class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (shuffleon != null) {
@@ -2446,6 +2481,8 @@ class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return shuffleon(this);
   }
@@ -2470,6 +2507,8 @@ class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return shuffleon?.call(this);
   }
@@ -2494,6 +2533,8 @@ class _$ShuffleonImpl with DiagnosticableTreeMixin implements _Shuffleon {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (shuffleon != null) {
@@ -2530,20 +2571,12 @@ class __$$SeeknextaudioImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SeeknextaudioImpl
-    with DiagnosticableTreeMixin
-    implements _Seeknextaudio {
+class _$SeeknextaudioImpl implements _Seeknextaudio {
   const _$SeeknextaudioImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.seeknextaudio()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.seeknextaudio'));
   }
 
   @override
@@ -2593,6 +2626,8 @@ class _$SeeknextaudioImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return seeknextaudio();
   }
@@ -2631,6 +2666,8 @@ class _$SeeknextaudioImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return seeknextaudio?.call();
   }
@@ -2669,6 +2706,8 @@ class _$SeeknextaudioImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (seeknextaudio != null) {
@@ -2698,6 +2737,8 @@ class _$SeeknextaudioImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return seeknextaudio(this);
   }
@@ -2722,6 +2763,8 @@ class _$SeeknextaudioImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return seeknextaudio?.call(this);
   }
@@ -2746,6 +2789,8 @@ class _$SeeknextaudioImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (seeknextaudio != null) {
@@ -2777,20 +2822,12 @@ class __$$SeekpreviousaudioImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SeekpreviousaudioImpl
-    with DiagnosticableTreeMixin
-    implements _Seekpreviousaudio {
+class _$SeekpreviousaudioImpl implements _Seekpreviousaudio {
   const _$SeekpreviousaudioImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.SeekPreviousAudio()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.SeekPreviousAudio'));
   }
 
   @override
@@ -2840,6 +2877,8 @@ class _$SeekpreviousaudioImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return SeekPreviousAudio();
   }
@@ -2878,6 +2917,8 @@ class _$SeekpreviousaudioImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return SeekPreviousAudio?.call();
   }
@@ -2916,6 +2957,8 @@ class _$SeekpreviousaudioImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (SeekPreviousAudio != null) {
@@ -2945,6 +2988,8 @@ class _$SeekpreviousaudioImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return SeekPreviousAudio(this);
   }
@@ -2969,6 +3014,8 @@ class _$SeekpreviousaudioImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return SeekPreviousAudio?.call(this);
   }
@@ -2993,6 +3040,8 @@ class _$SeekpreviousaudioImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (SeekPreviousAudio != null) {
@@ -3049,7 +3098,7 @@ class __$$UpdatequeueImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
+class _$UpdatequeueImpl implements _Updatequeue {
   const _$UpdatequeueImpl(this.mode, this.newindex, this.oldindex);
 
   @override
@@ -3060,18 +3109,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
   final int oldindex;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.updatequeue(mode: $mode, newindex: $newindex, oldindex: $oldindex)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.updatequeue'))
-      ..add(DiagnosticsProperty('mode', mode))
-      ..add(DiagnosticsProperty('newindex', newindex))
-      ..add(DiagnosticsProperty('oldindex', oldindex));
   }
 
   @override
@@ -3133,6 +3172,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return updatequeue(mode, newindex, oldindex);
   }
@@ -3171,6 +3212,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return updatequeue?.call(mode, newindex, oldindex);
   }
@@ -3209,6 +3252,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (updatequeue != null) {
@@ -3238,6 +3283,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return updatequeue(this);
   }
@@ -3262,6 +3309,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return updatequeue?.call(this);
   }
@@ -3286,6 +3335,8 @@ class _$UpdatequeueImpl with DiagnosticableTreeMixin implements _Updatequeue {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (updatequeue != null) {
@@ -3326,18 +3377,12 @@ class __$$QueueImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
+class _$QueueImpl implements _Queue {
   const _$QueueImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.getqueue()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioEvent.getqueue'));
   }
 
   @override
@@ -3387,6 +3432,8 @@ class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return getqueue();
   }
@@ -3425,6 +3472,8 @@ class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return getqueue?.call();
   }
@@ -3463,6 +3512,8 @@ class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (getqueue != null) {
@@ -3492,6 +3543,8 @@ class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return getqueue(this);
   }
@@ -3516,6 +3569,8 @@ class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return getqueue?.call(this);
   }
@@ -3540,6 +3595,8 @@ class _$QueueImpl with DiagnosticableTreeMixin implements _Queue {
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (getqueue != null) {
@@ -3591,9 +3648,7 @@ class __$$RemovefromqueueImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RemovefromqueueImpl
-    with DiagnosticableTreeMixin
-    implements _Removefromqueue {
+class _$RemovefromqueueImpl implements _Removefromqueue {
   const _$RemovefromqueueImpl(this.mode, this.indextoberemoved);
 
   @override
@@ -3602,17 +3657,8 @@ class _$RemovefromqueueImpl
   final int indextoberemoved;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.removeitemfromqueue(mode: $mode, indextoberemoved: $indextoberemoved)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.removeitemfromqueue'))
-      ..add(DiagnosticsProperty('mode', mode))
-      ..add(DiagnosticsProperty('indextoberemoved', indextoberemoved));
   }
 
   @override
@@ -3673,6 +3719,8 @@ class _$RemovefromqueueImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return removeitemfromqueue(mode, indextoberemoved);
   }
@@ -3711,6 +3759,8 @@ class _$RemovefromqueueImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return removeitemfromqueue?.call(mode, indextoberemoved);
   }
@@ -3749,6 +3799,8 @@ class _$RemovefromqueueImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (removeitemfromqueue != null) {
@@ -3778,6 +3830,8 @@ class _$RemovefromqueueImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return removeitemfromqueue(this);
   }
@@ -3802,6 +3856,8 @@ class _$RemovefromqueueImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return removeitemfromqueue?.call(this);
   }
@@ -3826,6 +3882,8 @@ class _$RemovefromqueueImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (removeitemfromqueue != null) {
@@ -3884,9 +3942,7 @@ class __$$AddtoOnlinequeueImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AddtoOnlinequeueImpl
-    with DiagnosticableTreeMixin
-    implements _AddtoOnlinequeue {
+class _$AddtoOnlinequeueImpl implements _AddtoOnlinequeue {
   const _$AddtoOnlinequeueImpl(this.type, this.song);
 
   @override
@@ -3895,17 +3951,8 @@ class _$AddtoOnlinequeueImpl
   final OnlineSongModel song;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.addtonlinequeue(type: $type, song: $song)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.addtonlinequeue'))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('song', song));
   }
 
   @override
@@ -3965,6 +4012,8 @@ class _$AddtoOnlinequeueImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return addtonlinequeue(type, song);
   }
@@ -4003,6 +4052,8 @@ class _$AddtoOnlinequeueImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return addtonlinequeue?.call(type, song);
   }
@@ -4041,6 +4092,8 @@ class _$AddtoOnlinequeueImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (addtonlinequeue != null) {
@@ -4070,6 +4123,8 @@ class _$AddtoOnlinequeueImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return addtonlinequeue(this);
   }
@@ -4094,6 +4149,8 @@ class _$AddtoOnlinequeueImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return addtonlinequeue?.call(this);
   }
@@ -4118,6 +4175,8 @@ class _$AddtoOnlinequeueImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (addtonlinequeue != null) {
@@ -4176,9 +4235,7 @@ class __$$AddsongtoqueueImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AddsongtoqueueImpl
-    with DiagnosticableTreeMixin
-    implements _Addsongtoqueue {
+class _$AddsongtoqueueImpl implements _Addsongtoqueue {
   const _$AddsongtoqueueImpl(this.type, this.song);
 
   @override
@@ -4187,17 +4244,8 @@ class _$AddsongtoqueueImpl
   final Songmodel song;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.addsongtoqueue(type: $type, song: $song)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.addsongtoqueue'))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('song', song));
   }
 
   @override
@@ -4257,6 +4305,8 @@ class _$AddsongtoqueueImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return addsongtoqueue(type, song);
   }
@@ -4295,6 +4345,8 @@ class _$AddsongtoqueueImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return addsongtoqueue?.call(type, song);
   }
@@ -4333,6 +4385,8 @@ class _$AddsongtoqueueImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (addsongtoqueue != null) {
@@ -4362,6 +4416,8 @@ class _$AddsongtoqueueImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return addsongtoqueue(this);
   }
@@ -4386,6 +4442,8 @@ class _$AddsongtoqueueImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return addsongtoqueue?.call(this);
   }
@@ -4410,6 +4468,8 @@ class _$AddsongtoqueueImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (addsongtoqueue != null) {
@@ -4470,9 +4530,7 @@ class __$$ClearqueueexceptplayingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ClearqueueexceptplayingImpl
-    with DiagnosticableTreeMixin
-    implements _Clearqueueexceptplaying {
+class _$ClearqueueexceptplayingImpl implements _Clearqueueexceptplaying {
   const _$ClearqueueexceptplayingImpl(this.mode, this.currentplaying);
 
   @override
@@ -4481,17 +4539,8 @@ class _$ClearqueueexceptplayingImpl
   final int currentplaying;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.clearqueueexceptplaying(mode: $mode, currentplaying: $currentplaying)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.clearqueueexceptplaying'))
-      ..add(DiagnosticsProperty('mode', mode))
-      ..add(DiagnosticsProperty('currentplaying', currentplaying));
   }
 
   @override
@@ -4552,6 +4601,8 @@ class _$ClearqueueexceptplayingImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return clearqueueexceptplaying(mode, currentplaying);
   }
@@ -4590,6 +4641,8 @@ class _$ClearqueueexceptplayingImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return clearqueueexceptplaying?.call(mode, currentplaying);
   }
@@ -4628,6 +4681,8 @@ class _$ClearqueueexceptplayingImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (clearqueueexceptplaying != null) {
@@ -4657,6 +4712,8 @@ class _$ClearqueueexceptplayingImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return clearqueueexceptplaying(this);
   }
@@ -4681,6 +4738,8 @@ class _$ClearqueueexceptplayingImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return clearqueueexceptplaying?.call(this);
   }
@@ -4705,6 +4764,8 @@ class _$ClearqueueexceptplayingImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (clearqueueexceptplaying != null) {
@@ -4764,9 +4825,7 @@ class __$$ParselocalaudioImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ParselocalaudioImpl
-    with DiagnosticableTreeMixin
-    implements _Parselocalaudio {
+class _$ParselocalaudioImpl implements _Parselocalaudio {
   const _$ParselocalaudioImpl(this.currentsong, final List<SongModel> allsongs)
       : _allsongs = allsongs;
 
@@ -4781,17 +4840,8 @@ class _$ParselocalaudioImpl
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioEvent.parselocalaudio(currentsong: $currentsong, allsongs: $allsongs)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioEvent.parselocalaudio'))
-      ..add(DiagnosticsProperty('currentsong', currentsong))
-      ..add(DiagnosticsProperty('allsongs', allsongs));
   }
 
   @override
@@ -4853,6 +4903,8 @@ class _$ParselocalaudioImpl
         clearqueueexceptplaying,
     required TResult Function(SongModel currentsong, List<SongModel> allsongs)
         parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
   }) {
     return parselocalaudio(currentsong, allsongs);
   }
@@ -4891,6 +4943,8 @@ class _$ParselocalaudioImpl
     TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
   }) {
     return parselocalaudio?.call(currentsong, allsongs);
   }
@@ -4929,6 +4983,8 @@ class _$ParselocalaudioImpl
     TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
     TResult Function(SongModel currentsong, List<SongModel> allsongs)?
         parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
     required TResult orElse(),
   }) {
     if (parselocalaudio != null) {
@@ -4958,6 +5014,8 @@ class _$ParselocalaudioImpl
     required TResult Function(_Clearqueueexceptplaying value)
         clearqueueexceptplaying,
     required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
   }) {
     return parselocalaudio(this);
   }
@@ -4982,6 +5040,8 @@ class _$ParselocalaudioImpl
     TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
   }) {
     return parselocalaudio?.call(this);
   }
@@ -5006,6 +5066,8 @@ class _$ParselocalaudioImpl
     TResult Function(_Addsongtoqueue value)? addsongtoqueue,
     TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
     TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
     required TResult orElse(),
   }) {
     if (parselocalaudio != null) {
@@ -5024,6 +5086,590 @@ abstract class _Parselocalaudio implements AudioEvent {
   List<SongModel> get allsongs;
   @JsonKey(ignore: true)
   _$$ParselocalaudioImplCopyWith<_$ParselocalaudioImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ClearSpecificAudioImplCopyWith<$Res> {
+  factory _$$ClearSpecificAudioImplCopyWith(_$ClearSpecificAudioImpl value,
+          $Res Function(_$ClearSpecificAudioImpl) then) =
+      __$$ClearSpecificAudioImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String path, int id});
+}
+
+/// @nodoc
+class __$$ClearSpecificAudioImplCopyWithImpl<$Res>
+    extends _$AudioEventCopyWithImpl<$Res, _$ClearSpecificAudioImpl>
+    implements _$$ClearSpecificAudioImplCopyWith<$Res> {
+  __$$ClearSpecificAudioImplCopyWithImpl(_$ClearSpecificAudioImpl _value,
+      $Res Function(_$ClearSpecificAudioImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? path = null,
+    Object? id = null,
+  }) {
+    return _then(_$ClearSpecificAudioImpl(
+      null == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ClearSpecificAudioImpl implements _ClearSpecificAudio {
+  const _$ClearSpecificAudioImpl(this.path, this.id);
+
+  @override
+  final String path;
+  @override
+  final int id;
+
+  @override
+  String toString() {
+    return 'AudioEvent.clearspecificaudio(path: $path, id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ClearSpecificAudioImpl &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, path, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ClearSpecificAudioImplCopyWith<_$ClearSpecificAudioImpl> get copyWith =>
+      __$$ClearSpecificAudioImplCopyWithImpl<_$ClearSpecificAudioImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() dispose,
+    required TResult Function(
+            String key,
+            int index,
+            String downloadUrl,
+            String poster,
+            String name,
+            String artists,
+            List<Map> moreinfo,
+            List<AlbumSongEntity> allsongs,
+            List<SearchEntity> deachSongs,
+            List<playlistEntity> playlistsongs)
+        onlineaudio,
+    required TResult Function(List<SongModel> songs,
+            List<Map<String, dynamic>> favsongs, int index)
+        localaudio,
+    required TResult Function() pause,
+    required TResult Function() resume,
+    required TResult Function(bool islooped) loopon,
+    required TResult Function(bool isshuffled) shuffleon,
+    required TResult Function() seeknextaudio,
+    required TResult Function() SeekPreviousAudio,
+    required TResult Function(String mode, int newindex, int oldindex)
+        updatequeue,
+    required TResult Function() getqueue,
+    required TResult Function(String mode, int indextoberemoved)
+        removeitemfromqueue,
+    required TResult Function(String type, OnlineSongModel song)
+        addtonlinequeue,
+    required TResult Function(String type, Songmodel song) addsongtoqueue,
+    required TResult Function(String mode, int currentplaying)
+        clearqueueexceptplaying,
+    required TResult Function(SongModel currentsong, List<SongModel> allsongs)
+        parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
+  }) {
+    return clearspecificaudio(path, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? dispose,
+    TResult? Function(
+            String key,
+            int index,
+            String downloadUrl,
+            String poster,
+            String name,
+            String artists,
+            List<Map> moreinfo,
+            List<AlbumSongEntity> allsongs,
+            List<SearchEntity> deachSongs,
+            List<playlistEntity> playlistsongs)?
+        onlineaudio,
+    TResult? Function(List<SongModel> songs,
+            List<Map<String, dynamic>> favsongs, int index)?
+        localaudio,
+    TResult? Function()? pause,
+    TResult? Function()? resume,
+    TResult? Function(bool islooped)? loopon,
+    TResult? Function(bool isshuffled)? shuffleon,
+    TResult? Function()? seeknextaudio,
+    TResult? Function()? SeekPreviousAudio,
+    TResult? Function(String mode, int newindex, int oldindex)? updatequeue,
+    TResult? Function()? getqueue,
+    TResult? Function(String mode, int indextoberemoved)? removeitemfromqueue,
+    TResult? Function(String type, OnlineSongModel song)? addtonlinequeue,
+    TResult? Function(String type, Songmodel song)? addsongtoqueue,
+    TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
+    TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
+        parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
+  }) {
+    return clearspecificaudio?.call(path, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? dispose,
+    TResult Function(
+            String key,
+            int index,
+            String downloadUrl,
+            String poster,
+            String name,
+            String artists,
+            List<Map> moreinfo,
+            List<AlbumSongEntity> allsongs,
+            List<SearchEntity> deachSongs,
+            List<playlistEntity> playlistsongs)?
+        onlineaudio,
+    TResult Function(List<SongModel> songs, List<Map<String, dynamic>> favsongs,
+            int index)?
+        localaudio,
+    TResult Function()? pause,
+    TResult Function()? resume,
+    TResult Function(bool islooped)? loopon,
+    TResult Function(bool isshuffled)? shuffleon,
+    TResult Function()? seeknextaudio,
+    TResult Function()? SeekPreviousAudio,
+    TResult Function(String mode, int newindex, int oldindex)? updatequeue,
+    TResult Function()? getqueue,
+    TResult Function(String mode, int indextoberemoved)? removeitemfromqueue,
+    TResult Function(String type, OnlineSongModel song)? addtonlinequeue,
+    TResult Function(String type, Songmodel song)? addsongtoqueue,
+    TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
+    TResult Function(SongModel currentsong, List<SongModel> allsongs)?
+        parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
+    required TResult orElse(),
+  }) {
+    if (clearspecificaudio != null) {
+      return clearspecificaudio(path, id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Dispose value) dispose,
+    required TResult Function(_Onlineaudio value) onlineaudio,
+    required TResult Function(_Localaudio value) localaudio,
+    required TResult Function(_Pause value) pause,
+    required TResult Function(_Resume value) resume,
+    required TResult Function(_Loopon value) loopon,
+    required TResult Function(_Shuffleon value) shuffleon,
+    required TResult Function(_Seeknextaudio value) seeknextaudio,
+    required TResult Function(_Seekpreviousaudio value) SeekPreviousAudio,
+    required TResult Function(_Updatequeue value) updatequeue,
+    required TResult Function(_Queue value) getqueue,
+    required TResult Function(_Removefromqueue value) removeitemfromqueue,
+    required TResult Function(_AddtoOnlinequeue value) addtonlinequeue,
+    required TResult Function(_Addsongtoqueue value) addsongtoqueue,
+    required TResult Function(_Clearqueueexceptplaying value)
+        clearqueueexceptplaying,
+    required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
+  }) {
+    return clearspecificaudio(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Dispose value)? dispose,
+    TResult? Function(_Onlineaudio value)? onlineaudio,
+    TResult? Function(_Localaudio value)? localaudio,
+    TResult? Function(_Pause value)? pause,
+    TResult? Function(_Resume value)? resume,
+    TResult? Function(_Loopon value)? loopon,
+    TResult? Function(_Shuffleon value)? shuffleon,
+    TResult? Function(_Seeknextaudio value)? seeknextaudio,
+    TResult? Function(_Seekpreviousaudio value)? SeekPreviousAudio,
+    TResult? Function(_Updatequeue value)? updatequeue,
+    TResult? Function(_Queue value)? getqueue,
+    TResult? Function(_Removefromqueue value)? removeitemfromqueue,
+    TResult? Function(_AddtoOnlinequeue value)? addtonlinequeue,
+    TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
+    TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
+    TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
+  }) {
+    return clearspecificaudio?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Dispose value)? dispose,
+    TResult Function(_Onlineaudio value)? onlineaudio,
+    TResult Function(_Localaudio value)? localaudio,
+    TResult Function(_Pause value)? pause,
+    TResult Function(_Resume value)? resume,
+    TResult Function(_Loopon value)? loopon,
+    TResult Function(_Shuffleon value)? shuffleon,
+    TResult Function(_Seeknextaudio value)? seeknextaudio,
+    TResult Function(_Seekpreviousaudio value)? SeekPreviousAudio,
+    TResult Function(_Updatequeue value)? updatequeue,
+    TResult Function(_Queue value)? getqueue,
+    TResult Function(_Removefromqueue value)? removeitemfromqueue,
+    TResult Function(_AddtoOnlinequeue value)? addtonlinequeue,
+    TResult Function(_Addsongtoqueue value)? addsongtoqueue,
+    TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
+    TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
+    required TResult orElse(),
+  }) {
+    if (clearspecificaudio != null) {
+      return clearspecificaudio(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ClearSpecificAudio implements AudioEvent {
+  const factory _ClearSpecificAudio(final String path, final int id) =
+      _$ClearSpecificAudioImpl;
+
+  String get path;
+  int get id;
+  @JsonKey(ignore: true)
+  _$$ClearSpecificAudioImplCopyWith<_$ClearSpecificAudioImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$YtPlayerEventImplCopyWith<$Res> {
+  factory _$$YtPlayerEventImplCopyWith(
+          _$YtPlayerEventImpl value, $Res Function(_$YtPlayerEventImpl) then) =
+      __$$YtPlayerEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Map<String, dynamic> audiodetails});
+}
+
+/// @nodoc
+class __$$YtPlayerEventImplCopyWithImpl<$Res>
+    extends _$AudioEventCopyWithImpl<$Res, _$YtPlayerEventImpl>
+    implements _$$YtPlayerEventImplCopyWith<$Res> {
+  __$$YtPlayerEventImplCopyWithImpl(
+      _$YtPlayerEventImpl _value, $Res Function(_$YtPlayerEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? audiodetails = null,
+  }) {
+    return _then(_$YtPlayerEventImpl(
+      null == audiodetails
+          ? _value._audiodetails
+          : audiodetails // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$YtPlayerEventImpl implements _YtPlayerEvent {
+  const _$YtPlayerEventImpl(final Map<String, dynamic> audiodetails)
+      : _audiodetails = audiodetails;
+
+  final Map<String, dynamic> _audiodetails;
+  @override
+  Map<String, dynamic> get audiodetails {
+    if (_audiodetails is EqualUnmodifiableMapView) return _audiodetails;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_audiodetails);
+  }
+
+  @override
+  String toString() {
+    return 'AudioEvent.ytaudio(audiodetails: $audiodetails)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$YtPlayerEventImpl &&
+            const DeepCollectionEquality()
+                .equals(other._audiodetails, _audiodetails));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_audiodetails));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$YtPlayerEventImplCopyWith<_$YtPlayerEventImpl> get copyWith =>
+      __$$YtPlayerEventImplCopyWithImpl<_$YtPlayerEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() dispose,
+    required TResult Function(
+            String key,
+            int index,
+            String downloadUrl,
+            String poster,
+            String name,
+            String artists,
+            List<Map> moreinfo,
+            List<AlbumSongEntity> allsongs,
+            List<SearchEntity> deachSongs,
+            List<playlistEntity> playlistsongs)
+        onlineaudio,
+    required TResult Function(List<SongModel> songs,
+            List<Map<String, dynamic>> favsongs, int index)
+        localaudio,
+    required TResult Function() pause,
+    required TResult Function() resume,
+    required TResult Function(bool islooped) loopon,
+    required TResult Function(bool isshuffled) shuffleon,
+    required TResult Function() seeknextaudio,
+    required TResult Function() SeekPreviousAudio,
+    required TResult Function(String mode, int newindex, int oldindex)
+        updatequeue,
+    required TResult Function() getqueue,
+    required TResult Function(String mode, int indextoberemoved)
+        removeitemfromqueue,
+    required TResult Function(String type, OnlineSongModel song)
+        addtonlinequeue,
+    required TResult Function(String type, Songmodel song) addsongtoqueue,
+    required TResult Function(String mode, int currentplaying)
+        clearqueueexceptplaying,
+    required TResult Function(SongModel currentsong, List<SongModel> allsongs)
+        parselocalaudio,
+    required TResult Function(String path, int id) clearspecificaudio,
+    required TResult Function(Map<String, dynamic> audiodetails) ytaudio,
+  }) {
+    return ytaudio(audiodetails);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? dispose,
+    TResult? Function(
+            String key,
+            int index,
+            String downloadUrl,
+            String poster,
+            String name,
+            String artists,
+            List<Map> moreinfo,
+            List<AlbumSongEntity> allsongs,
+            List<SearchEntity> deachSongs,
+            List<playlistEntity> playlistsongs)?
+        onlineaudio,
+    TResult? Function(List<SongModel> songs,
+            List<Map<String, dynamic>> favsongs, int index)?
+        localaudio,
+    TResult? Function()? pause,
+    TResult? Function()? resume,
+    TResult? Function(bool islooped)? loopon,
+    TResult? Function(bool isshuffled)? shuffleon,
+    TResult? Function()? seeknextaudio,
+    TResult? Function()? SeekPreviousAudio,
+    TResult? Function(String mode, int newindex, int oldindex)? updatequeue,
+    TResult? Function()? getqueue,
+    TResult? Function(String mode, int indextoberemoved)? removeitemfromqueue,
+    TResult? Function(String type, OnlineSongModel song)? addtonlinequeue,
+    TResult? Function(String type, Songmodel song)? addsongtoqueue,
+    TResult? Function(String mode, int currentplaying)? clearqueueexceptplaying,
+    TResult? Function(SongModel currentsong, List<SongModel> allsongs)?
+        parselocalaudio,
+    TResult? Function(String path, int id)? clearspecificaudio,
+    TResult? Function(Map<String, dynamic> audiodetails)? ytaudio,
+  }) {
+    return ytaudio?.call(audiodetails);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? dispose,
+    TResult Function(
+            String key,
+            int index,
+            String downloadUrl,
+            String poster,
+            String name,
+            String artists,
+            List<Map> moreinfo,
+            List<AlbumSongEntity> allsongs,
+            List<SearchEntity> deachSongs,
+            List<playlistEntity> playlistsongs)?
+        onlineaudio,
+    TResult Function(List<SongModel> songs, List<Map<String, dynamic>> favsongs,
+            int index)?
+        localaudio,
+    TResult Function()? pause,
+    TResult Function()? resume,
+    TResult Function(bool islooped)? loopon,
+    TResult Function(bool isshuffled)? shuffleon,
+    TResult Function()? seeknextaudio,
+    TResult Function()? SeekPreviousAudio,
+    TResult Function(String mode, int newindex, int oldindex)? updatequeue,
+    TResult Function()? getqueue,
+    TResult Function(String mode, int indextoberemoved)? removeitemfromqueue,
+    TResult Function(String type, OnlineSongModel song)? addtonlinequeue,
+    TResult Function(String type, Songmodel song)? addsongtoqueue,
+    TResult Function(String mode, int currentplaying)? clearqueueexceptplaying,
+    TResult Function(SongModel currentsong, List<SongModel> allsongs)?
+        parselocalaudio,
+    TResult Function(String path, int id)? clearspecificaudio,
+    TResult Function(Map<String, dynamic> audiodetails)? ytaudio,
+    required TResult orElse(),
+  }) {
+    if (ytaudio != null) {
+      return ytaudio(audiodetails);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Dispose value) dispose,
+    required TResult Function(_Onlineaudio value) onlineaudio,
+    required TResult Function(_Localaudio value) localaudio,
+    required TResult Function(_Pause value) pause,
+    required TResult Function(_Resume value) resume,
+    required TResult Function(_Loopon value) loopon,
+    required TResult Function(_Shuffleon value) shuffleon,
+    required TResult Function(_Seeknextaudio value) seeknextaudio,
+    required TResult Function(_Seekpreviousaudio value) SeekPreviousAudio,
+    required TResult Function(_Updatequeue value) updatequeue,
+    required TResult Function(_Queue value) getqueue,
+    required TResult Function(_Removefromqueue value) removeitemfromqueue,
+    required TResult Function(_AddtoOnlinequeue value) addtonlinequeue,
+    required TResult Function(_Addsongtoqueue value) addsongtoqueue,
+    required TResult Function(_Clearqueueexceptplaying value)
+        clearqueueexceptplaying,
+    required TResult Function(_Parselocalaudio value) parselocalaudio,
+    required TResult Function(_ClearSpecificAudio value) clearspecificaudio,
+    required TResult Function(_YtPlayerEvent value) ytaudio,
+  }) {
+    return ytaudio(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Dispose value)? dispose,
+    TResult? Function(_Onlineaudio value)? onlineaudio,
+    TResult? Function(_Localaudio value)? localaudio,
+    TResult? Function(_Pause value)? pause,
+    TResult? Function(_Resume value)? resume,
+    TResult? Function(_Loopon value)? loopon,
+    TResult? Function(_Shuffleon value)? shuffleon,
+    TResult? Function(_Seeknextaudio value)? seeknextaudio,
+    TResult? Function(_Seekpreviousaudio value)? SeekPreviousAudio,
+    TResult? Function(_Updatequeue value)? updatequeue,
+    TResult? Function(_Queue value)? getqueue,
+    TResult? Function(_Removefromqueue value)? removeitemfromqueue,
+    TResult? Function(_AddtoOnlinequeue value)? addtonlinequeue,
+    TResult? Function(_Addsongtoqueue value)? addsongtoqueue,
+    TResult? Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
+    TResult? Function(_Parselocalaudio value)? parselocalaudio,
+    TResult? Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult? Function(_YtPlayerEvent value)? ytaudio,
+  }) {
+    return ytaudio?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Dispose value)? dispose,
+    TResult Function(_Onlineaudio value)? onlineaudio,
+    TResult Function(_Localaudio value)? localaudio,
+    TResult Function(_Pause value)? pause,
+    TResult Function(_Resume value)? resume,
+    TResult Function(_Loopon value)? loopon,
+    TResult Function(_Shuffleon value)? shuffleon,
+    TResult Function(_Seeknextaudio value)? seeknextaudio,
+    TResult Function(_Seekpreviousaudio value)? SeekPreviousAudio,
+    TResult Function(_Updatequeue value)? updatequeue,
+    TResult Function(_Queue value)? getqueue,
+    TResult Function(_Removefromqueue value)? removeitemfromqueue,
+    TResult Function(_AddtoOnlinequeue value)? addtonlinequeue,
+    TResult Function(_Addsongtoqueue value)? addsongtoqueue,
+    TResult Function(_Clearqueueexceptplaying value)? clearqueueexceptplaying,
+    TResult Function(_Parselocalaudio value)? parselocalaudio,
+    TResult Function(_ClearSpecificAudio value)? clearspecificaudio,
+    TResult Function(_YtPlayerEvent value)? ytaudio,
+    required TResult orElse(),
+  }) {
+    if (ytaudio != null) {
+      return ytaudio(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _YtPlayerEvent implements AudioEvent {
+  const factory _YtPlayerEvent(final Map<String, dynamic> audiodetails) =
+      _$YtPlayerEventImpl;
+
+  Map<String, dynamic> get audiodetails;
+  @JsonKey(ignore: true)
+  _$$YtPlayerEventImplCopyWith<_$YtPlayerEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -5054,6 +5700,8 @@ mixin _$AudioState {
     required TResult Function(Duration pos, Duration dur,
             PlayerState playerState, Duration buffer, int index)
         onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -5081,6 +5729,8 @@ mixin _$AudioState {
     TResult? Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -5108,6 +5758,8 @@ mixin _$AudioState {
     TResult Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -5118,6 +5770,8 @@ mixin _$AudioState {
     required TResult Function(_Localstreams value) LocalStreams,
     required TResult Function(_Onlinesongs value) onlinesongs,
     required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -5127,6 +5781,8 @@ mixin _$AudioState {
     TResult? Function(_Localstreams value)? LocalStreams,
     TResult? Function(_Onlinesongs value)? onlinesongs,
     TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -5136,6 +5792,8 @@ mixin _$AudioState {
     TResult Function(_Localstreams value)? LocalStreams,
     TResult Function(_Onlinesongs value)? onlinesongs,
     TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -5177,18 +5835,12 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
+class _$InitialImpl implements _Initial {
   const _$InitialImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AudioState.initial'));
   }
 
   @override
@@ -5226,6 +5878,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(Duration pos, Duration dur,
             PlayerState playerState, Duration buffer, int index)
         onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
   }) {
     return initial();
   }
@@ -5256,6 +5910,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
   }) {
     return initial?.call();
   }
@@ -5286,6 +5942,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -5302,6 +5960,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(_Localstreams value) LocalStreams,
     required TResult Function(_Onlinesongs value) onlinesongs,
     required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
   }) {
     return initial(this);
   }
@@ -5314,6 +5974,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(_Localstreams value)? LocalStreams,
     TResult? Function(_Onlinesongs value)? onlinesongs,
     TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
   }) {
     return initial?.call(this);
   }
@@ -5326,6 +5988,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Localstreams value)? LocalStreams,
     TResult Function(_Onlinesongs value)? onlinesongs,
     TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -5403,7 +6067,7 @@ class __$$LocalsongsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
+class _$LocalsongsImpl implements _Localsongs {
   const _$LocalsongsImpl(
       this.isloading,
       this.isfailed,
@@ -5433,21 +6097,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
   final AudioPlayer audioPlayer;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioState.Localsongs(isloading: $isloading, isfailed: $isfailed, audios: $audios, valueStream: $valueStream, index: $index, audioPlayer: $audioPlayer)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioState.Localsongs'))
-      ..add(DiagnosticsProperty('isloading', isloading))
-      ..add(DiagnosticsProperty('isfailed', isfailed))
-      ..add(DiagnosticsProperty('audios', audios))
-      ..add(DiagnosticsProperty('valueStream', valueStream))
-      ..add(DiagnosticsProperty('index', index))
-      ..add(DiagnosticsProperty('audioPlayer', audioPlayer));
   }
 
   @override
@@ -5509,6 +6160,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
     required TResult Function(Duration pos, Duration dur,
             PlayerState playerState, Duration buffer, int index)
         onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
   }) {
     return Localsongs(
         isloading, isfailed, audios, valueStream, index, audioPlayer);
@@ -5540,6 +6193,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
     TResult? Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
   }) {
     return Localsongs?.call(
         isloading, isfailed, audios, valueStream, index, audioPlayer);
@@ -5571,6 +6226,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
     TResult Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (Localsongs != null) {
@@ -5588,6 +6245,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
     required TResult Function(_Localstreams value) LocalStreams,
     required TResult Function(_Onlinesongs value) onlinesongs,
     required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
   }) {
     return Localsongs(this);
   }
@@ -5600,6 +6259,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
     TResult? Function(_Localstreams value)? LocalStreams,
     TResult? Function(_Onlinesongs value)? onlinesongs,
     TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
   }) {
     return Localsongs?.call(this);
   }
@@ -5612,6 +6273,8 @@ class _$LocalsongsImpl with DiagnosticableTreeMixin implements _Localsongs {
     TResult Function(_Localstreams value)? LocalStreams,
     TResult Function(_Onlinesongs value)? onlinesongs,
     TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (Localsongs != null) {
@@ -5689,7 +6352,7 @@ class __$$LocalstreamsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
+class _$LocalstreamsImpl implements _Localstreams {
   const _$LocalstreamsImpl(this.pos, this.Dur, this.playerState, this.index);
 
   @override
@@ -5702,19 +6365,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
   final int index;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioState.LocalStreams(pos: $pos, Dur: $Dur, playerState: $playerState, index: $index)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioState.LocalStreams'))
-      ..add(DiagnosticsProperty('pos', pos))
-      ..add(DiagnosticsProperty('Dur', Dur))
-      ..add(DiagnosticsProperty('playerState', playerState))
-      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -5764,6 +6416,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
     required TResult Function(Duration pos, Duration dur,
             PlayerState playerState, Duration buffer, int index)
         onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
   }) {
     return LocalStreams(pos, Dur, playerState, index);
   }
@@ -5794,6 +6448,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
     TResult? Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
   }) {
     return LocalStreams?.call(pos, Dur, playerState, index);
   }
@@ -5824,6 +6480,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
     TResult Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (LocalStreams != null) {
@@ -5840,6 +6498,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
     required TResult Function(_Localstreams value) LocalStreams,
     required TResult Function(_Onlinesongs value) onlinesongs,
     required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
   }) {
     return LocalStreams(this);
   }
@@ -5852,6 +6512,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
     TResult? Function(_Localstreams value)? LocalStreams,
     TResult? Function(_Onlinesongs value)? onlinesongs,
     TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
   }) {
     return LocalStreams?.call(this);
   }
@@ -5864,6 +6526,8 @@ class _$LocalstreamsImpl with DiagnosticableTreeMixin implements _Localstreams {
     TResult Function(_Localstreams value)? LocalStreams,
     TResult Function(_Onlinesongs value)? onlinesongs,
     TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (LocalStreams != null) {
@@ -5950,7 +6614,7 @@ class __$$OnlinesongsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
+class _$OnlinesongsImpl implements _Onlinesongs {
   const _$OnlinesongsImpl(
       this.isloading,
       this.isfailed,
@@ -5980,21 +6644,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
   final AudioPlayer audioPlayer;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioState.onlinesongs(isloading: $isloading, isfailed: $isfailed, audios: $audios, valueStream: $valueStream, index: $index, audioPlayer: $audioPlayer)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioState.onlinesongs'))
-      ..add(DiagnosticsProperty('isloading', isloading))
-      ..add(DiagnosticsProperty('isfailed', isfailed))
-      ..add(DiagnosticsProperty('audios', audios))
-      ..add(DiagnosticsProperty('valueStream', valueStream))
-      ..add(DiagnosticsProperty('index', index))
-      ..add(DiagnosticsProperty('audioPlayer', audioPlayer));
   }
 
   @override
@@ -6056,6 +6707,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
     required TResult Function(Duration pos, Duration dur,
             PlayerState playerState, Duration buffer, int index)
         onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
   }) {
     return onlinesongs(
         isloading, isfailed, audios, valueStream, index, audioPlayer);
@@ -6087,6 +6740,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
     TResult? Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
   }) {
     return onlinesongs?.call(
         isloading, isfailed, audios, valueStream, index, audioPlayer);
@@ -6118,6 +6773,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
     TResult Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (onlinesongs != null) {
@@ -6135,6 +6792,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
     required TResult Function(_Localstreams value) LocalStreams,
     required TResult Function(_Onlinesongs value) onlinesongs,
     required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
   }) {
     return onlinesongs(this);
   }
@@ -6147,6 +6806,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
     TResult? Function(_Localstreams value)? LocalStreams,
     TResult? Function(_Onlinesongs value)? onlinesongs,
     TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
   }) {
     return onlinesongs?.call(this);
   }
@@ -6159,6 +6820,8 @@ class _$OnlinesongsImpl with DiagnosticableTreeMixin implements _Onlinesongs {
     TResult Function(_Localstreams value)? LocalStreams,
     TResult Function(_Onlinesongs value)? onlinesongs,
     TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (onlinesongs != null) {
@@ -6246,9 +6909,7 @@ class __$$OnlinestreamsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnlinestreamsImpl
-    with DiagnosticableTreeMixin
-    implements _Onlinestreams {
+class _$OnlinestreamsImpl implements _Onlinestreams {
   const _$OnlinestreamsImpl(
       this.pos, this.dur, this.playerState, this.buffer, this.index);
 
@@ -6264,20 +6925,8 @@ class _$OnlinestreamsImpl
   final int index;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AudioState.onlinestreams(pos: $pos, dur: $dur, playerState: $playerState, buffer: $buffer, index: $index)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AudioState.onlinestreams'))
-      ..add(DiagnosticsProperty('pos', pos))
-      ..add(DiagnosticsProperty('dur', dur))
-      ..add(DiagnosticsProperty('playerState', playerState))
-      ..add(DiagnosticsProperty('buffer', buffer))
-      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -6329,6 +6978,8 @@ class _$OnlinestreamsImpl
     required TResult Function(Duration pos, Duration dur,
             PlayerState playerState, Duration buffer, int index)
         onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
   }) {
     return onlinestreams(pos, dur, playerState, buffer, index);
   }
@@ -6359,6 +7010,8 @@ class _$OnlinestreamsImpl
     TResult? Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
   }) {
     return onlinestreams?.call(pos, dur, playerState, buffer, index);
   }
@@ -6389,6 +7042,8 @@ class _$OnlinestreamsImpl
     TResult Function(Duration pos, Duration dur, PlayerState playerState,
             Duration buffer, int index)?
         onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (onlinestreams != null) {
@@ -6405,6 +7060,8 @@ class _$OnlinestreamsImpl
     required TResult Function(_Localstreams value) LocalStreams,
     required TResult Function(_Onlinesongs value) onlinesongs,
     required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
   }) {
     return onlinestreams(this);
   }
@@ -6417,6 +7074,8 @@ class _$OnlinestreamsImpl
     TResult? Function(_Localstreams value)? LocalStreams,
     TResult? Function(_Onlinesongs value)? onlinesongs,
     TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
   }) {
     return onlinestreams?.call(this);
   }
@@ -6429,6 +7088,8 @@ class _$OnlinestreamsImpl
     TResult Function(_Localstreams value)? LocalStreams,
     TResult Function(_Onlinesongs value)? onlinesongs,
     TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (onlinestreams != null) {
@@ -6454,4 +7115,425 @@ abstract class _Onlinestreams implements AudioState {
   @JsonKey(ignore: true)
   _$$OnlinestreamsImplCopyWith<_$OnlinestreamsImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$YoutubePlayerStateImplCopyWith<$Res> {
+  factory _$$YoutubePlayerStateImplCopyWith(_$YoutubePlayerStateImpl value,
+          $Res Function(_$YoutubePlayerStateImpl) then) =
+      __$$YoutubePlayerStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index, List<Video> video});
+}
+
+/// @nodoc
+class __$$YoutubePlayerStateImplCopyWithImpl<$Res>
+    extends _$AudioStateCopyWithImpl<$Res, _$YoutubePlayerStateImpl>
+    implements _$$YoutubePlayerStateImplCopyWith<$Res> {
+  __$$YoutubePlayerStateImplCopyWithImpl(_$YoutubePlayerStateImpl _value,
+      $Res Function(_$YoutubePlayerStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+    Object? video = null,
+  }) {
+    return _then(_$YoutubePlayerStateImpl(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == video
+          ? _value._video
+          : video // ignore: cast_nullable_to_non_nullable
+              as List<Video>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$YoutubePlayerStateImpl implements _YoutubePlayerState {
+  const _$YoutubePlayerStateImpl(this.index, final List<Video> video)
+      : _video = video;
+
+  @override
+  final int index;
+  final List<Video> _video;
+  @override
+  List<Video> get video {
+    if (_video is EqualUnmodifiableListView) return _video;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_video);
+  }
+
+  @override
+  String toString() {
+    return 'AudioState.youtubeplayerstate(index: $index, video: $video)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$YoutubePlayerStateImpl &&
+            (identical(other.index, index) || other.index == index) &&
+            const DeepCollectionEquality().equals(other._video, _video));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, index, const DeepCollectionEquality().hash(_video));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$YoutubePlayerStateImplCopyWith<_$YoutubePlayerStateImpl> get copyWith =>
+      __$$YoutubePlayerStateImplCopyWithImpl<_$YoutubePlayerStateImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<Songmodel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)
+        Localsongs,
+    required TResult Function(
+            Duration pos, Duration Dur, PlayerState playerState, int index)
+        LocalStreams,
+    required TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<OnlineSongModel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)
+        onlinesongs,
+    required TResult Function(Duration pos, Duration dur,
+            PlayerState playerState, Duration buffer, int index)
+        onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
+  }) {
+    return youtubeplayerstate(index, video);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(
+            bool isloading,
+            bool isfailed,
+            List<Songmodel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        Localsongs,
+    TResult? Function(
+            Duration pos, Duration Dur, PlayerState playerState, int index)?
+        LocalStreams,
+    TResult? Function(
+            bool isloading,
+            bool isfailed,
+            List<OnlineSongModel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        onlinesongs,
+    TResult? Function(Duration pos, Duration dur, PlayerState playerState,
+            Duration buffer, int index)?
+        onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
+  }) {
+    return youtubeplayerstate?.call(index, video);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<Songmodel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        Localsongs,
+    TResult Function(
+            Duration pos, Duration Dur, PlayerState playerState, int index)?
+        LocalStreams,
+    TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<OnlineSongModel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        onlinesongs,
+    TResult Function(Duration pos, Duration dur, PlayerState playerState,
+            Duration buffer, int index)?
+        onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (youtubeplayerstate != null) {
+      return youtubeplayerstate(index, video);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Localsongs value) Localsongs,
+    required TResult Function(_Localstreams value) LocalStreams,
+    required TResult Function(_Onlinesongs value) onlinesongs,
+    required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return youtubeplayerstate(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Localsongs value)? Localsongs,
+    TResult? Function(_Localstreams value)? LocalStreams,
+    TResult? Function(_Onlinesongs value)? onlinesongs,
+    TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
+  }) {
+    return youtubeplayerstate?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Localsongs value)? Localsongs,
+    TResult Function(_Localstreams value)? LocalStreams,
+    TResult Function(_Onlinesongs value)? onlinesongs,
+    TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (youtubeplayerstate != null) {
+      return youtubeplayerstate(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _YoutubePlayerState implements AudioState {
+  const factory _YoutubePlayerState(final int index, final List<Video> video) =
+      _$YoutubePlayerStateImpl;
+
+  int get index;
+  List<Video> get video;
+  @JsonKey(ignore: true)
+  _$$YoutubePlayerStateImplCopyWith<_$YoutubePlayerStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$AudioStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl();
+
+  @override
+  String toString() {
+    return 'AudioState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<Songmodel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)
+        Localsongs,
+    required TResult Function(
+            Duration pos, Duration Dur, PlayerState playerState, int index)
+        LocalStreams,
+    required TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<OnlineSongModel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)
+        onlinesongs,
+    required TResult Function(Duration pos, Duration dur,
+            PlayerState playerState, Duration buffer, int index)
+        onlinestreams,
+    required TResult Function(int index, List<Video> video) youtubeplayerstate,
+    required TResult Function() loading,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(
+            bool isloading,
+            bool isfailed,
+            List<Songmodel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        Localsongs,
+    TResult? Function(
+            Duration pos, Duration Dur, PlayerState playerState, int index)?
+        LocalStreams,
+    TResult? Function(
+            bool isloading,
+            bool isfailed,
+            List<OnlineSongModel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        onlinesongs,
+    TResult? Function(Duration pos, Duration dur, PlayerState playerState,
+            Duration buffer, int index)?
+        onlinestreams,
+    TResult? Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult? Function()? loading,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<Songmodel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        Localsongs,
+    TResult Function(
+            Duration pos, Duration Dur, PlayerState playerState, int index)?
+        LocalStreams,
+    TResult Function(
+            bool isloading,
+            bool isfailed,
+            List<OnlineSongModel> audios,
+            ValueStream<AudioState> valueStream,
+            int index,
+            AudioPlayer audioPlayer)?
+        onlinesongs,
+    TResult Function(Duration pos, Duration dur, PlayerState playerState,
+            Duration buffer, int index)?
+        onlinestreams,
+    TResult Function(int index, List<Video> video)? youtubeplayerstate,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Localsongs value) Localsongs,
+    required TResult Function(_Localstreams value) LocalStreams,
+    required TResult Function(_Onlinesongs value) onlinesongs,
+    required TResult Function(_Onlinestreams value) onlinestreams,
+    required TResult Function(_YoutubePlayerState value) youtubeplayerstate,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Localsongs value)? Localsongs,
+    TResult? Function(_Localstreams value)? LocalStreams,
+    TResult? Function(_Onlinesongs value)? onlinesongs,
+    TResult? Function(_Onlinestreams value)? onlinestreams,
+    TResult? Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult? Function(_Loading value)? loading,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Localsongs value)? Localsongs,
+    TResult Function(_Localstreams value)? LocalStreams,
+    TResult Function(_Onlinesongs value)? onlinesongs,
+    TResult Function(_Onlinestreams value)? onlinestreams,
+    TResult Function(_YoutubePlayerState value)? youtubeplayerstate,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements AudioState {
+  const factory _Loading() = _$LoadingImpl;
 }

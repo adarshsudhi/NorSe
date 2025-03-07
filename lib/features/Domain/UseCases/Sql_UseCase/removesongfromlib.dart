@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:nebula/configs/Error/Errors.dart';
-import 'package:nebula/features/Domain/Repositorys/SqlReposiotory/Sqlreppository.dart';
+import 'package:norse/configs/Error/Errors.dart';
+import 'package:norse/features/Domain/Repositorys/SqlReposiotory/Sqlreppository.dart';
 
 class Removesongfromlibusecase {
   final Sqlrepository repo;

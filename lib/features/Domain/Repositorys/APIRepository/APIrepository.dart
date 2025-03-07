@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:nebula/configs/Error/Errors.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
+import 'package:norse/configs/Error/Errors.dart';
+import 'package:norse/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
+import 'package:norse/features/Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
 import '../../Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
@@ -24,10 +24,14 @@ abstract class APIRepository {
   Future<Either<Failures, List<topchartsEntity>>> topcharts();
   Future<Either<Failures, List<launchdataEntity>>> newlyreleased();
   Future<Either<Failures, List<launchdataEntity>>> gettopalbums();
-  Future<Either<Failures,Video>> getvideoinfo(String id);
-  Future<Either<Failures,AudioOnlyStreamInfo>> getstream(String id);
-  Future<Either<Failures,Map<String, dynamic>>>getlyrices(String id);
-  Future<Either<Failures,VideoSearchList>>getsearchvideo(String query);
-  Future<dynamic>getplaylist(String id,String mode);
-  Future<List<VideoOnlyStreamInfo>> getManifest(String id);
+  Future<Map<String, dynamic>> getvideoinfo(String id);
+  Future<Either<Failures, List<AudioOnlyStreamInfo>>> getstream(String id);
+  Future<Either<Failures, Map<String, dynamic>>> getlyrices(String id);
+  Future<Either<Failures, VideoSearchList>> getsearchvideo(String query);
+  Future<dynamic> getplaylist(String id, String mode);
+  Future<Either<Failures, List<VideoOnlyStreamInfo>>> getManifest(String url);
+  Future<Either<Failures, RelatedVideosList>> getrelatedvideos(String video);
+  Future<Either<Failures, ChannelUploadsList>> getchanneluploads(
+      dynamic channelid);
+  Future<List<String>> getsearchsuggestion(String query);
 }

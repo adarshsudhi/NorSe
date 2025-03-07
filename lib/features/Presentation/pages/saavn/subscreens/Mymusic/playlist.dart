@@ -22,7 +22,7 @@ class PlaylistWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Spaces.kheight20,
+        Spaces.kheight10,
         GestureDetector(
           onTap: () {
             showDialog(
@@ -104,11 +104,11 @@ class PlaylistWidget extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  height: 60,
-                  width: 60,
+                  height: 50,
+                  width: 50,
                   decoration: BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(5)),
                   child: const Center(
                       child: Center(
                     child: Icon(
@@ -123,9 +123,9 @@ class PlaylistWidget extends StatelessWidget {
                 ),
                 const Textutil(
                     text: 'Create playlist',
-                    fontsize: 17,
+                    fontsize: 16,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w500),
               ],
             ),
           ),
@@ -134,8 +134,8 @@ class PlaylistWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: GestureDetector(
-              onTap: () => Navigator.of(context)
-                  .pushNamed(Localfavsongpage.localfavpage),
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const Localfavsongpage())),
               child: BlocBuilder<FavoriteplaylistBloc, FavoriteplaylistState>(
                 builder: (context, state) {
                   return state.maybeWhen(
@@ -144,10 +144,10 @@ class PlaylistWidget extends StatelessWidget {
                           return Row(
                             children: [
                               Container(
-                                height: 60,
-                                width: 60,
+                                height: 50,
+                                width: 50,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(5),
                                     color: Colors.white.withOpacity(0.1)),
                               ),
                               const SizedBox(
@@ -155,23 +155,23 @@ class PlaylistWidget extends StatelessWidget {
                               ),
                               const Textutil(
                                   text: 'My Favorites',
-                                  fontsize: 17,
+                                  fontsize: 16,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.normal)
+                                  fontWeight: FontWeight.w500)
                             ],
                           );
                         }
                         return Row(
                           children: [
                             Container(
-                              height: 60,
-                              width: 60,
+                              height: 50,
+                              width: 50,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(5),
                                   color: Colors.white),
                               child: QueryArtworkWidget(
-                                  artworkHeight: 60,
-                                  artworkWidth: 60,
+                                  artworkHeight: 50,
+                                  artworkWidth: 50,
                                   artworkBorder: BorderRadius.circular(10),
                                   id: int.parse(songs[0]['id']),
                                   type: ArtworkType.AUDIO),
@@ -181,19 +181,19 @@ class PlaylistWidget extends StatelessWidget {
                             ),
                             const Textutil(
                                 text: 'My Favorites',
-                                fontsize: 17,
+                                fontsize: 16,
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold)
+                                fontWeight: FontWeight.w500)
                           ],
                         );
                       },
                       orElse: () => Row(
                             children: [
                               Container(
-                                height: 60,
-                                width: 60,
+                                height: 50,
+                                width: 50,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(5),
                                     color: Colors.white.withOpacity(0.1)),
                               ),
                               const SizedBox(
@@ -201,9 +201,9 @@ class PlaylistWidget extends StatelessWidget {
                               ),
                               const Textutil(
                                   text: 'My Favorites',
-                                  fontsize: 18,
+                                  fontsize: 16,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.normal)
+                                  fontWeight: FontWeight.w500)
                             ],
                           ));
                 },
@@ -227,18 +227,21 @@ class PlaylistWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 20),
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context,
-                                      Playlistsongspage.playlistsongpage,
-                                      arguments: playlists[index]['title']);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => Playlistsongspage(
+                                              playlistid: playlists[index]
+                                                  ['title'])));
                                 },
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: 60,
-                                      width: 60,
+                                      height: 50,
+                                      width: 50,
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                              BorderRadius.circular(5),
                                           color: Colors.white.withOpacity(0.1)),
                                       child: const Icon(
                                         Icons.music_note,

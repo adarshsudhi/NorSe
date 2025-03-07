@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nebula/features/Presentation/pages/Youtube/youtubeplayer/testytplayerscreen.dart';
+import 'package:norse/features/Presentation/pages/Youtube/youtubeplayer/testytplayerscreen.dart';
+import 'package:norse/features/Presentation/pages/Youtube/youtubescreen/ytpage.dart';
+import 'package:norse/features/Presentation/pages/saavn/subscreens/edittrackdetails/edittrackdetailspage.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import '../../features/Presentation/pages/MainHomePage/MainHomePage.dart';
 import '../../features/Presentation/pages/Youtube/youtube_playlistpage.dart';
 import '../../features/Presentation/pages/Youtube/ytsearchpage/ytsearchpage.dart';
@@ -41,7 +44,7 @@ Route<dynamic>? onGenerate(RouteSettings settings) {
           settings: settings,
           builder: (_) => SearchResultscreen(querydata: args));
 
-    case Downloadpage.Downloadscreen:
+    case Downloadpage.downloadscreen:
       return MaterialPageRoute(builder: (_) => const Downloadpage());
 
     case Localfavsongpage.localfavpage:
@@ -61,6 +64,7 @@ Route<dynamic>? onGenerate(RouteSettings settings) {
       final arg = settings.arguments as Albumsongspage;
       return MaterialPageRoute(
           builder: (_) => Albumsongspage(
+                type: arg.type,
                 id: arg.id,
                 albumname: arg.albumname,
               ));
@@ -69,11 +73,7 @@ Route<dynamic>? onGenerate(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const Aboutpage());
 
     case Testplayerscreen.textscreen:
-      final args = settings.arguments as String;
-      return MaterialPageRoute(
-          builder: (_) => Testplayerscreen(
-                currentscreen: args,
-              ));
+      return MaterialPageRoute(builder: (_) => const Testplayerscreen());
 
     case Onlineplayerscreen.onlineplayerscreen:
       return MaterialPageRoute(builder: (_) => const Onlineplayerscreen());
@@ -84,6 +84,7 @@ Route<dynamic>? onGenerate(RouteSettings settings) {
           builder: (_) => Onlinequeue(
                 audios: args.audios,
                 audioPlayer: args.audioPlayer,
+                controller: args.controller,
               ));
 
     case Settingpage.settingpage:
@@ -96,6 +97,9 @@ Route<dynamic>? onGenerate(RouteSettings settings) {
       final args = settings.arguments as Testytplayer;
       return MaterialPageRoute(
           builder: (_) => Testytplayer(
+                persentage: args.persentage,
+                height: args.height,
+                context: args.context,
                 video: args.video,
                 index: args.index,
               ));
@@ -110,6 +114,13 @@ Route<dynamic>? onGenerate(RouteSettings settings) {
 
     case Ytsearchpage.ytsearchpage:
       return MaterialPageRoute(builder: (_) => Ytsearchpage());
+
+    case EditAudioTagsPage.editaudiotagspage:
+      SongModel args = settings.arguments as SongModel;
+      return MaterialPageRoute(builder: (_) => EditAudioTagsPage(audio: args));
+
+    case Youtubepage.ytHome:
+      return MaterialPageRoute(builder: (_) => const Youtubepage());
 
     default:
   }

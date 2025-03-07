@@ -27,3 +27,16 @@ class Getsongsfromalbum extends AlbumsSongsEvent {
 
   const Getsongsfromalbum({required this.id});
 }
+
+class GetArtistSongs extends AlbumsSongsEvent {
+  final int id;
+  const GetArtistSongs({
+    required this.id,
+  });
+}
+
+class GetSongsFromGenre extends AlbumsSongsEvent {
+  final int id;
+
+  const GetSongsFromGenre({required this.id});
+}

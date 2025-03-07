@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nebula/configs/constants/Spaces.dart';
-import 'package:nebula/features/Presentation/pages/Youtube/youtubeplayer/testytplayerscreen.dart';
+import 'package:norse/configs/constants/Spaces.dart';
+import 'package:norse/features/Presentation/CustomWidgets/custumlistviewbuilder.dart';
+import 'package:norse/features/Presentation/pages/Youtube/youtubeplayer/testytplayerscreen.dart';
+import '../../../../../configs/notifier/notifiers.dart';
 import '../../../Blocs/youtubeBloc/searchyt_bloc/searchyt_bloc_bloc.dart';
+import '../../../Blocs/youtubeBloc/youtubeplayer_bloc/youtubeplayer_bloc.dart';
+import '../../../Blocs/youtubeBloc/ytrelatedvideos_bloc/ytrelatedvideos_bloc.dart';
 import '../../saavn/musicplayerpage/testonlineplayerscreen.dart';
 
 class Ytsearchpage extends StatelessWidget {
@@ -51,18 +54,113 @@ class Ytsearchpage extends StatelessWidget {
                                 children: [
                                   Spaces.kheight20,
                                   Expanded(
-                                    child: ListView.builder(
+                                      child: CustomListViewBuilderwidget(
+                                          length: videos.length,
+                                          widget: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                Notifiers.showplayer.value =
+                                                    false;
+                                                BlocProvider.of<
+                                                            YtrelatedvideosBloc>(
+                                                        context)
+                                                    .add(YtrelatedvideosEvent
+                                                        .relatedvideos(
+                                                            videos[index]
+                                                                .id
+                                                                .toString()));
+                                                BlocProvider.of<
+                                                            YoutubeplayerBloc>(
+                                                        context)
+                                                    .add(YoutubeplayerEvent
+                                                        .ytplayerevent(
+                                                            videos, index));
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  bottom: 20,
+                                                ),
+                                                child: SizedBox(
+                                                  height: 270,
+                                                  width: double.infinity,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          width:
+                                                              MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width,
+                                                          clipBehavior:
+                                                              Clip.antiAlias,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5)),
+                                                          child: Cachednetimagewidget(
+                                                              thumbnailSet:
+                                                                  videos[index]
+                                                                      .thumbnails),
+                                                        ),
+                                                      ),
+                                                      Spaces.kheight20,
+                                                      Textutil(
+                                                          text: videos[index]
+                                                              .title,
+                                                          fontsize: 17,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                      Textutil(
+                                                          text: videos[index]
+                                                              .author,
+                                                          fontsize: 13,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                      Textutil(
+                                                          text: videos[index]
+                                                                      .uploadDate !=
+                                                                  null
+                                                              ? formatdatetime(
+                                                                  videos[index]
+                                                                      .uploadDate!)
+                                                              : 'unknown',
+                                                          fontsize: 12,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          physics:
+                                              const BouncingScrollPhysics()) /* ListView.builder(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
                                       itemCount: videos.length,
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            Navigator.pushNamed(context,
-                                                Testytplayer.testytplayer,
-                                                arguments: Testytplayer(
-                                                    video: videos,
-                                                    index: index));
+                                            Notifiers.showplayer.value = false;
+                                            BlocProvider.of<
+                                                        YtrelatedvideosBloc>(
+                                                    context)
+                                                .add(YtrelatedvideosEvent
+                                                    .relatedvideos(videos[index]
+                                                        .id
+                                                        .toString()));
+                                            BlocProvider.of<YoutubeplayerBloc>(
+                                                    context)
+                                                .add(YoutubeplayerEvent
+                                                    .ytplayerevent(
+                                                        videos, index));
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -124,8 +222,8 @@ class Ytsearchpage extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                    ),
-                                  ),
+                                    ), */
+                                      ),
                                 ],
                               )
                             : const SizedBox();
@@ -136,7 +234,6 @@ class Ytsearchpage extends StatelessWidget {
                             child: Image.asset(
                               'assets/yt.png',
                               scale: 4,
-                              color: Colors.white,
                             ),
                           ),
                         );
@@ -189,7 +286,7 @@ class _YtsearchtextformfieldState extends State<Ytsearchtextformfield> {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(5)),
+          color: Colors.white, borderRadius: BorderRadius.circular(24)),
       child: TextFormField(
         focusNode: focusNode,
         controller: widget._textEditingController,
@@ -202,11 +299,12 @@ class _YtsearchtextformfieldState extends State<Ytsearchtextformfield> {
         decoration: InputDecoration(
             prefixIcon: Image.asset(
               'assets/yt.png',
-              scale: 12,
+              scale: 18,
             ),
             border: InputBorder.none,
+            contentPadding: const EdgeInsets.only(top: 10),
             hintText: 'YouTube',
-            hintStyle: Spaces.Getstyle(15, Colors.grey, FontWeight.normal)),
+            hintStyle: Spaces.Getstyle(13, Colors.grey, FontWeight.normal)),
       ),
     );
   }

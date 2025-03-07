@@ -1,31 +1,35 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:dart_des/dart_des.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' ;
 import 'package:http/http.dart' as http;
 import 'package:jiosaavn/jiosaavn.dart';
-import 'package:nebula/configs/APIEndpoints/API.dart';
-import 'package:nebula/features/Data/DataSource/RemoteDataSource/API/APIremotedatasource.dart';
-import 'package:nebula/features/Data/Models/MusicModels/AlbumsModel/AlbumModel.dart';
-import 'package:nebula/features/Data/Models/MusicModels/LauchDataModel/LaunchDataModel.dart';
-import 'package:nebula/features/Data/Models/MusicModels/SearchModel/SearchModel.dart';
-import 'package:nebula/features/Data/Models/MusicModels/topchartsmodels/topchartsmodel.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
-import 'package:nebula/features/Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
+import 'package:norse/features/Data/Models/MusicModels/LauchDataModel/LaunchDataModel.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import '../../../../../configs/APIEndpoints/API.dart';
 import '../../../../../configs/Error/Errors.dart';
+import '../../../../../configs/notifier/notifiers.dart';
+import '../../../../Domain/Entity/MusicEntity/AlbumDetailsEntity/AlbumDetailEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/LaunchDataEntity/LaunchDataEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/PlaylistEntity/PlaylistEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/SearchSongEntity/SearchEntity.dart';
+import '../../../../Domain/Entity/MusicEntity/TopChartsEntity/topchartentity.dart';
+import '../../../Models/MusicModels/AlbumsModel/AlbumModel.dart';
+import '../../../Models/MusicModels/SearchModel/SearchModel.dart';
+import '../../../Models/MusicModels/topchartsmodels/topchartsmodel.dart';
+import '../../LocalDataSource/SqlQuerys/Sqllocaldatasource.dart';
+import 'APIremotedatasource.dart';
 
 class APIremotedatasourceimp implements APIremoteDatasource {
+  final Sqldatasourcerepository sqldatasourcerepository;
   final YoutubeExplode yt;
   final JioSaavnClient jioSaavnClient;
   const APIremotedatasourceimp({
+    required this.sqldatasourcerepository,
     required this.yt,
     required this.jioSaavnClient,
   });
@@ -41,7 +45,12 @@ class APIremotedatasourceimp implements APIremoteDatasource {
         final res1 = jsonDecode(res);
         for (Map<String, dynamic> element in res1['data']['songs']) {
           AlbumSongEntity albumSongEntity = AlbumSongModels.fromMap(
-              element, element['downloadUrl'][4]['link']);
+              element,
+              element['downloadUrl'][Notifiers.qualityNotifier.value == '96kbps'
+                  ? 2
+                  : Notifiers.qualityNotifier.value == '160kbps'
+                      ? 3
+                      : 4]['link']);
           albumsongslist.add(albumSongEntity);
         }
       }
@@ -81,7 +90,12 @@ class APIremotedatasourceimp implements APIremoteDatasource {
                       ? items['more_info']['music']
                       : items['more_info']['artistMap']['primary_artists'][0]
                           ['name'],
-              downloadUrl: links[4]['link'].toString());
+              downloadUrl: links[Notifiers.qualityNotifier.value == '96kbps'
+                      ? 2
+                      : Notifiers.qualityNotifier.value == '160kbps'
+                          ? 3
+                          : 4]['link']
+                  .toString());
           results.add(searchEntity);
         }
       }
@@ -180,6 +194,9 @@ class APIremotedatasourceimp implements APIremoteDatasource {
 
       http.Response response =
           await http.get(uri, headers: {'cookie': 'L=$type', 'Accept': '*/*'});
+
+      await sqldatasourcerepository.storeresponse(response.body, type);
+
       if (response.statusCode == 200) {
         final ress =
             response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
@@ -225,7 +242,12 @@ class APIremotedatasourceimp implements APIremoteDatasource {
               id: songs['id'],
               images:
                   songs['image'].toString().replaceAll('150x150', '500x500'),
-              downloadUrl: links[4]['link'].toString(),
+              downloadUrl: links[Notifiers.qualityNotifier.value == '96kbps'
+                      ? 2
+                      : Notifiers.qualityNotifier.value == '160kbps'
+                          ? 3
+                          : 4]['link']
+                  .toString(),
               primaryArtists: songs["primary_artists"],
               more_info: moreinfo);
           playlistsongs.add(entity);
@@ -299,7 +321,6 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   Future<Either<Failures, List<topchartsEntity>>> topcharts() async {
     List<topchartsEntity> res = [];
     try {
-      log('message');
       String encoded = jsonEncode(ApiEndpoints().url);
       String uurl =
           encoded.replaceAll('search.getResults', 'webapi.getLaunchData');
@@ -307,6 +328,7 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       Map<String, dynamic> decoded = jsonDecode(finalproc);
       Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
       http.Response response = await http.get(uri);
+      await sqldatasourcerepository.storeresponse(response.body, 'topcharts');
       if (response.statusCode == 200) {
         final map = jsonDecode(response.body);
         for (var i in map['charts']) {
@@ -333,6 +355,8 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       Map<String, dynamic> decoded = jsonDecode(finalproc);
       Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
       http.Response response = await http.get(uri);
+      await sqldatasourcerepository.storeresponse(
+          response.body, 'newlyreleased');
       if (response.statusCode == 200) {
         final res = response.body.replaceAll('&quot;', '');
         final data = jsonDecode(res);
@@ -364,6 +388,7 @@ class APIremotedatasourceimp implements APIremoteDatasource {
       Map<String, dynamic> decoded = jsonDecode(finalproc);
       Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
       http.Response response = await http.get(uri);
+      await sqldatasourcerepository.storeresponse(response.body, 'topalbums');
       if (response.statusCode == 200) {
         final res =
             response.body.replaceAll('&quot;', '').replaceAll('&#039;', '');
@@ -388,6 +413,7 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   @override
   Future<List<Map<String, dynamic>>> decrypt(String encriptedmediaurl) async {
     try {
+      String data = '38346591';
       Uint8List encryptedBytes = base64.decode(encriptedmediaurl);
       List<int> keyBytes = utf8.encode(data);
       final decripted = DES(
@@ -407,40 +433,54 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   }
 
   @override
-  Future<Either<Failures, Video>> getvideoinfo(String id) async {
+  Future<Map<String, dynamic>> getvideoinfo(String id) async {
     try {
+      final channelinfo = await yt.channels.getByVideo(id);
       final info = await yt.videos.get(id);
+
+      String disklikeurl = "${(ApiEndpoints.ytdislike)}$id";
+
+      Uri url = Uri.parse(disklikeurl);
+
+      final response = await http.get(url);
+
+      Map<String, dynamic> body = jsonDecode(response.body);
+
+      Map<String, dynamic> allinfo = {
+        'channel': channelinfo,
+        'video': info,
+        'dislike': body['dislikes']
+      };
       if (info.title != '') {
-        return right(info);
+        return allinfo;
+      } else {
+        throw Exception('infoFailed');
       }
-      return left(const Failures.serverfailure());
     } catch (e) {
       throw Exception(e.toString());
     }
   }
 
   @override
-  Future<Either<Failures, AudioOnlyStreamInfo>> getstream(String id) async {
+  Future<Either<Failures, List<AudioOnlyStreamInfo>>> getstream(String id) async {
     try {
-      StreamManifest streamManifest =
-          await yt.videos.streamsClient.getManifest(id);
+       List<AudioOnlyStreamInfo> audioStream = [];
 
-      final List<AudioOnlyStreamInfo> sortedStreamInfo =
-          streamManifest.audioOnly.toList()
-            ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
+       StreamManifest streamManifest = await yt.videos.streams.getManifest(id);
 
-      final audio = sortedStreamInfo
-          .where((element) => element.audioCodec.contains('mp4'));
+       UnmodifiableListView<AudioOnlyStreamInfo> audioonly =  streamManifest.audioOnly;
 
-      AudioOnlyStreamInfo next = audio.reduce((value, element) =>
-          value.size.totalBytes > element.size.totalBytes ? value : element);
+       List<AudioOnlyStreamInfo> audioOnlyStreamInfo = List.from(audioonly);
 
-      if (sortedStreamInfo.isEmpty) {
-        return left(const Failures.serverfailure());
-      }
-      return right(next);
+       Iterable<AudioOnlyStreamInfo> res = audioOnlyStreamInfo.where((e)=>e.codec.subtype == "mp4");
+
+       for (var element in res) {
+         audioStream.add(element);
+       }
+
+       return right(audioStream);
     } catch (e) {
-      throw Exception(e.toString());
+      return left(const Failures.serverfailure());
     }
   }
 
@@ -487,23 +527,76 @@ class APIremotedatasourceimp implements APIremoteDatasource {
   }
 
   @override
-  Future<List<VideoOnlyStreamInfo>> getManifest(String id) async {
-    List<VideoOnlyStreamInfo> videos = [];
-    StreamManifest streamManifest =
-        await yt.videos.streamsClient.getManifest(id);
-    final List<VideoOnlyStreamInfo> sortedStreamInfo = streamManifest.videoOnly
-        .toList()
-      ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
+  Future<Either<Failures, List<VideoOnlyStreamInfo>>> getManifest(
+      String url) async {
 
-    for (var video in sortedStreamInfo) {
-      if (video.codec.subtype == 'mp4') {
-        videos.add(video);
+  try { 
+    List<VideoOnlyStreamInfo> filtered = [];
+         StreamManifest streamManifest = await  yt.videos.streams.getManifest(url);
+         UnmodifiableListView<VideoOnlyStreamInfo> unmodifiedlist = streamManifest.videoOnly;
+         List<VideoOnlyStreamInfo> videoOnlyStreamInfo = List.from(unmodifiedlist);
+         for (var vid in videoOnlyStreamInfo) {
+           if (vid.videoCodec.contains("avc1")) {
+             filtered.add(vid);
+           }
+         }
+         return right(filtered);
+        } catch (e) {
+          throw Exception(e.toString());
+        }
+  }
+  
+              
+
+  
+
+  @override
+  Future<Either<Failures, RelatedVideosList>> getrelatedvideos(
+      String videoid) async {
+    try {
+      Video video = await yt.videos.get(videoid);
+      RelatedVideosList? videos = await yt.videos.getRelatedVideos(video);
+      if (videos != null && videos.isNotEmpty) {
+        return right(videos);
+      } else {
+        return left(const Failures.serverfailure());
       }
+    } catch (e) {
+      throw Exception(e.toString());
     }
-    if (videos.isNotEmpty) {
-      return videos;
-    } else {
-      throw Exception('not video');
+  }
+
+  @override
+  Future<Either<Failures, ChannelUploadsList>> getchanneluploads(
+      dynamic channelid) async {
+    try {
+      ChannelUploadsList uploadsList = await yt.channels.getUploadsFromPage(
+          channelid,
+          videoSorting: VideoSorting.newest,
+          videoType: VideoType.normal);
+      if (uploadsList.isEmpty) {
+        return left(const Failures.serverfailure());
+      } else {
+        return right(uploadsList);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
+  }
+
+  @override
+  Future<List<String>> getsearchsuggestion(String query) async {
+    List<String> suggestions = [];
+    suggestions.clear();
+    final String encoded = jsonEncode(ApiEndpoints().url);
+    final uurl = encoded.replaceAll('Querydata', query).replaceAll('6', '20');
+    final decoded = jsonDecode(uurl);
+    Uri uri = Uri.https(ApiEndpoints.jiosaavnSearchBase, '/api.php', decoded);
+    final response = await http.get(uri);
+    final res = jsonDecode(response.body);
+    for (var item in res['results'].where((item) => item['type'] == 'song')) {
+      suggestions.add(item['title']);
+    }
+    return suggestions;
   }
 }
