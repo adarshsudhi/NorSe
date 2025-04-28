@@ -23,7 +23,7 @@
 
   <h1>Screenshots</h1>
 <p align='left'>
-<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/screeen-portrait.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/lyrucs-portrait.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/player.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/yt.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/queue.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/album.png?raw=true" width="32%">
+<img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/screeen-portrait.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/lyrucs-portrait.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/Screenshot_2025-04-28-10-06-00-346_com.example.norse.jpg?raw=true" width="32%"> 
 </p>
 
 <h1>Do you like the project ?</h1>
