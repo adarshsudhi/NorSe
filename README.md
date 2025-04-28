@@ -28,7 +28,7 @@
 
 
  <h1>Preview</h1>
- <iframe src="InShot_20250428_110328192_compressed.mp4" width="32%" controls autoplay muted loop></iframe>
+ <video src="https://github.com/adarshsudhi/Nebula/raw/main/shots/InShot_20250428_110328192_compressed.mp4" width="32%" controls autoplay muted loop></video>
 
 
 <h1>Do you like the project ?</h1>
