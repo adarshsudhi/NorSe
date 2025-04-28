@@ -28,7 +28,8 @@
 
 
  <h1>Preview</h1>
- <video src="https://github.com/adarshsudhi/Nebula/raw/main/shots/InShot_20250428_110328192_compressed.mp4" width="32%" controls autoplay muted loop></video>
+<video src="https://your-server.com/path/video.mp4](https://github.com/adarshsudhi/NorSe/blob/main/shots/InShot_20250428_110328192_compressed.mp4" width="32%" controls autoplay muted loop></video>
+
 
 
 <h1>Do you like the project ?</h1>
