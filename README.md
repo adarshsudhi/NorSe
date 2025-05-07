@@ -10,6 +10,11 @@
 <!-- GitHub Star Button -->
 
 
+
+
+
+
+
 <p>An Opensource music player build with flutter (Currently only for android)</p>  
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/Untitled design.png?raw=true" width=100%">
 <h1>Features</h1>
@@ -38,6 +43,10 @@
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/screeen-portrait.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/lyrucs-portrait.png?raw=true" width="32%"> <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/Screenshot_2025-04-28-10-06-00-346_com.example.norse-portrait.png?raw=true" width="32%"> 
 </p>
 
+
+<h1>Demo Video</h1>
+
+<video src="https://github.com/user-attachments/assets/b5622a49-70d2-455a-9075-285b414ab98d" controls width="500"></video>
 
  
 
