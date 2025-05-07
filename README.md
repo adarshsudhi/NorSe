@@ -1,7 +1,7 @@
 <h1>NorSe</h1>
 <p><img src="https://img.shields.io/github/downloads/adarshsudhi/NorSe/total" alt="Download count"/> <img src="https://img.shields.io/github/v/release/adarshsudhi/NorSe" alt="Latest release version"/></p>
 <p>
-  ⭐ <strong>Don't forget to <a href="https://github.com/adarshsudhi/norSe" target="_blank">star the repo</a> if you like it!</strong>
+  <strong>Don't forget to ⭐ the repo</a> if you like it!</strong>
 </p>
 
 [![GitHub stars](https://img.shields.io/github/stars/adarshsudhi/norSe?style=social)](https://github.com/adarshsudhi/norSe)
