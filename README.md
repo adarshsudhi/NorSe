@@ -1,6 +1,5 @@
 <h1>NorSe</h1>
-![GitHub All Releases](https://img.shields.io/github/downloads/adarshsudhi/NorSe/total)
-https://img.shields.io/github/downloads/adarshsudhi/NorSe/total
+<img src="https://img.shields.io/github/downloads/adarshsudhi/NorSe/total" alt="Download count"/>
 <p>An Opensource music player build with flutter (Currently only for android)</p>  
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/Untitled design.png?raw=true" width=100%">
 <h1>Features</h1>
