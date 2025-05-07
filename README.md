@@ -3,6 +3,8 @@
 <img src="https://github.com/adarshsudhi/Nebula/blob/main/shots/Untitled design.png?raw=true" width=100%">
 <h1>Features</h1>
   <ul>
+    <li>Youtube Streaming</li>
+    <li>Download Audios and Video in high quality</li>
     <li>High Quality Streaming</li>
     <li>Download songs in 320kbps</li>
     <li>Play / Pause</li>
@@ -11,10 +13,9 @@
     <li>Create playlist</li>
     <li>Add to favorite</li>
     <li>Queue Management (Seperate for offline and online)</li>
-    <li>Lyrics Supported (Limited numbers of songs only)</li>
-    <li>Download songs from Youtube</li>
+    <li>Lyrics Supported</li>
     <li>No ads</li>
-    <li>No Subscriptions</li>
+    <li>No Subscriptions Every Feature is free</li>
   </ul>
   <p>and Much more</p>
 
